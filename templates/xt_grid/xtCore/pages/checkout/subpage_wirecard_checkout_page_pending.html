@@ -1,0 +1,17 @@
+{hook key=checkout_success_tpl}
+<div id="checkout-shipping" class="row">
+    <div class="column xt-grid-16">
+        <h1>{txt key=TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_PENDING}</h1>
+
+        <p>{txt key=TEXT_WIRECARD_CHECKOUT_PAGE_CHECKOUT_PENDING_DESC}</p>
+
+        <p><a href="{link page='index' conn=NOSSL}">{css_button text=$smarty.const.BUTTON_NEXT}</a></p>
+    </div>
+    <!-- .column .xt-grid-16 -->
+</div><!-- #checkout-shipping .row -->
+<div class="row">
+    <div class="column xt-grid-16">
+        {hook key=checkout_success_tpl}
+    </div>
+    <!-- .column .xt-grid-16 -->
+</div><!-- .row -->

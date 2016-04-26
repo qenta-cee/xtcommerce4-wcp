@@ -1,0 +1,10 @@
+<h1>{txt key=TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_FAIL}</h1>
+<p>{txt key=TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_FAIL_DESC}</p>
+<p>
+    {foreach name=errors item=msg_item from=$messages}
+    &nbsp;&nbsp;&nbsp;- {$msg_item.message} {if $msg_item.param!=''} ({$msg_item.param}) {/if}<br>
+    {/foreach}
+</p>
+{form type=form action='cart' method=post conn=SSL}
+<p>{button text=$smarty.const.BUTTON_NEXT file='next.gif' type='form'}</p>
+{form type=formend}

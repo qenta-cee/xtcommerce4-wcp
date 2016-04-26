@@ -1,0 +1,313 @@
+{if $plugin}
+{capture name="paymenttypes"}
+<style>
+    .wirecardblock label {
+        ldelim
+    }
+
+    font-weight: bold
+
+    ;
+    {
+        rdelim
+    }
+</style>
+<table width="100%" border="0" cellspacing="0" cellpadding="6" class="wirecardblock">
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_SELECT eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment10 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_SELECT}
+        </td>
+        <td class="main"><label for="selected_payment10">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SELECT}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_CCARD eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment20 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_CCARD}
+        </td>
+        <td class="main"><label for="selected_payment20">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_CCARD}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_MAESTRO eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment40 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_MAESTRO}
+        </td>
+        <td class="main"><label for="selected_payment40">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MAESTRO}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_PAYBOX eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment50 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_PAYBOX}
+        </td>
+        <td class="main"><label for="selected_payment50">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYBOX}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_PAYSAFECARD eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment60 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_PAYSAFECARD}
+        </td>
+        <td class="main"><label for="selected_payment60">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYSAFECARD}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_EPS_ONLINETRANSACTION eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment70 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION}
+        </td>
+        <td class="main"><label for="selected_payment70">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_DIRECT_DEBIT eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment80 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT}
+        </td>
+        <td class="main"><label for="selected_payment80">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_QUICK eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment90 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_QUICK}
+        </td>
+        <td class="main"><label for="selected_payment90">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_QUICK}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_IDEAL eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment100 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_IDEAL}
+        </td>
+        <td class="main"><label for="selected_payment100">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_IDEAL}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_GIROPAY eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment110 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_GIROPAY}
+        </td>
+        <td class="main"><label for="selected_payment110">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_GIROPAY}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_PAYPAL eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment120 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_PAYPAL}
+        </td>
+        <td class="main"><label for="selected_payment120">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYPAL}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_SOFORTUEBERWEISUNG eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment130 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_SOFORTUEBERWEISUNG}
+        </td>
+        <td class="main"><label for="selected_payment130">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SOFORTUEBERWEISUNG}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_BMC eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment150 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_BMC}
+        </td>
+        <td class="main"><label for="selected_payment150">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BMC}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_INVOICE eq 'true' && $plugin->isInvoiceAllowed()}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment160 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_INVOICE}
+        </td>
+        <td class="main"><label for="selected_payment160">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INVOICE}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_INSTALLMENT eq 'true' && $plugin->isInstallmentAllowed()}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment170 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_INSTALLMENT}
+        </td>
+        <td class="main"><label for="selected_payment170">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INSTALLMENT}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_P24 eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment180 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_P24}
+        </td>
+        <td class="main"><label for="selected_payment180">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_P24}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_MONETA eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment190 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_MONETA}
+        </td>
+        <td class="main"><label for="selected_payment190">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MONETA}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_POLI eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment200 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_POLI}
+        </td>
+        <td class="main"><label for="selected_payment200">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_POLI}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_EKONTO eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment210 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_EKONTO}
+        </td>
+        <td class="main"><label for="selected_payment210">{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_EKONTO}</label>
+        </td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_TRUSTLY eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment220 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_TRUSTLY}
+        </td>
+        <td class="main"><label for="selected_payment220">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_TRUSTLY}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_MPASS eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment230 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_MPASS}
+        </td>
+        <td class="main"><label for="selected_payment230">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MPASS}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_SKRILLDIRECT eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment240 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_SKRILLDIRECT}
+        </td>
+        <td class="main"><label for="selected_payment240">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SKRILLDIRECT}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_SKRILLWALLET eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment250 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_SKRILLWALLET}
+        </td>
+        <td class="main"><label for="selected_payment250">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SKRILLWALLET}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_EPAY_BG eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment260 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_EPAY_BG}
+        </td>
+        <td class="main"><label for="selected_payment260">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_EPAY_BG}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_VOUCHER eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment270 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_VOUCHER}
+        </td>
+        <td class="main"><label for="selected_payment270">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_VOUCHER}</label></td>
+    </tr>
+    {/if}
+    {if $smarty.const.WIRECARD_CHECKOUT_PAGE_ACTIVATE_TATRAPAY eq 'true'}
+    <tr>
+        <td class="main" width="10px">{form id=selected_payment280 type=radio name=selected_payment
+            value=$payment_code:WIRECARD_CHECKOUT_PAGE_TATRAPAY}
+        </td>
+        <td class="main"><label for="selected_payment280">{txt
+            key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_TATRAPAY}</label></td>
+    </tr>
+    {/if}
+</table>
+{/capture}
+
+{if $plugin->getMajorVersion() >= 4 && $plugin->getMinorVersion() >= 1}
+
+{literal}
+<style>
+    .main {
+        padding: 3px;
+    }
+
+    .wdtitle {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+</style>
+{/literal}
+
+<span class="wdtitle">{$payment_name}</span><img style="float:right; margin-bottom: 10px;"
+                                                 src="plugins/wirecard_checkout_page/images/wd_logo.png" border="0"/>
+<br style="clear: both"/>
+
+<div class="box box-white box-hover">
+    <div class="payment">
+        <p class="bold">
+            {$smarty.capture.paymenttypes}
+        </p>
+    </div>
+</div>
+
+<div style="clear:both;height:0px;"></div>
+
+{else}
+
+<table class="paymentblock" width="100%" border="0" cellspacing="0" cellpadding="6">
+    <tr>
+        <td class="header" width="10px"></td>
+        <td class="header"><strong>{$payment_name}</strong></td>
+        <td class="header" align="right">{$payment_price.formated}</td>
+    </tr>
+
+    <tr>
+        <td colspan="3">
+            <table width="100%" border="0" cellspacing="0" cellpadding="6">
+                <tr>
+                    <td><img src="plugins/wirecard_checkout_page/images/wd_logo.png" border="0"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        {$smarty.capture.paymenttypes}
+                    </td>
+                    <td align="right">&nbsp;
+
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+<br/>
+
+{/if}
+{/if}

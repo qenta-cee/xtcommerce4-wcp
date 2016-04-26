@@ -1,0 +1,61 @@
+<div id="checkout" class="row">
+    <div class="column xt-grid-4">
+        <div class="box {if $page_action == shipping}active{/if} {if $page_action == payment OR $page_action == confirmation OR $page_action == success}done{/if}">
+            <p class="headline">{txt key=TEXT_SELECT_SHIPPING}</p>
+
+            <p>{txt key=TEXT_SELECT_SHIPPING_DESC}</p>
+        </div>
+        <!-- .box .active .done-->
+    </div>
+    <!-- .column .xt-grid-4 -->
+    <div class="column xt-grid-4">
+        <div class="box {if $page_action == payment}active{/if} {if $page_action == confirmation OR $page_action == success}done{/if}">
+            <p class="headline">{txt key=TEXT_SELECT_PAYMENT}</p>
+
+            <p>{txt key=TEXT_SELECT_PAYMENT_DESC}</p>
+        </div>
+        <!-- .box .active .done-->
+    </div>
+    <!-- .column .xt-grid-4 -->
+    <div class="column xt-grid-4">
+        <div class="box {if $page_action == confirmation}active{/if} {if $page_action == success}done{/if}">
+            <p class="headline">{txt key=TEXT_CONFIRMATION}</p>
+
+            <p>{txt key=TEXT_CONFIRMATION_DESC}</p>
+        </div>
+        <!-- .box .active .done-->
+    </div>
+    <!-- .column .xt-grid-4 -->
+    <div class="column xt-grid-4">
+        <div class="box {if $page_action == success}active{/if} {if $page_action == success}done{/if}">
+            <p class="headline">{txt key=TEXT_SUCCESS}</p>
+
+            <p>{txt key=TEXT_SUCCESS_DESC}</p>
+        </div>
+        <!-- .box .active .done-->
+    </div>
+    <!-- .column .xt-grid-4 -->
+</div><!-- #checkout .row -->
+<div class="row">
+    <div class="column xt-grid-16">
+        {$message}
+    </div>
+    <!-- .column .xt-grid-16 -->
+</div><!-- .row -->
+
+
+{if $page_action == failure}
+{include file="/xtCore/pages/checkout/subpage_wirecard_checkout_page_failure.html" type="tpl_include"}
+{/if}
+
+{if $page_action == cancel}
+{include file="/xtCore/pages/checkout/subpage_wirecard_checkout_page_cancel.html" type="tpl_include"}
+{/if}
+
+{if $page_action == success}
+{include file="/xtCore/pages/checkout/subpage_wirecard_checkout_page_success.html" type="tpl_include"}
+{/if}
+
+{if $page_action == pending}
+{include file="/xtCore/pages/checkout/subpage_wirecard_checkout_page_pending.html" type="tpl_include"}
+{/if}

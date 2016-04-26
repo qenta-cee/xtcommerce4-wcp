@@ -1,0 +1,32 @@
+<ul id="checkoutnavigation">
+    <li class="inactive"><span class="title">{txt key=TEXT_SELECT_SHIPPING}</span><br/><span class="description">{txt key=TEXT_SELECT_SHIPPING_DESC}</span>
+    </li>
+    <li class="inactive"><span class="title">{txt key=TEXT_SELECT_PAYMENT}</span><br/><span class="description">{txt key=TEXT_SELECT_PAYMENT_DESC}</span>
+    </li>
+    <li
+    {if $page_action == failure or $page_action == cancel}class="active"{else}class="inactive"{/if}><span class="title">{txt key=TEXT_CONFIRMATION}</span><br/><span
+        class="description">{txt key=TEXT_CONFIRMATION_DESC}</span></li>
+    <li
+    {if $page_action == success}class="active"{else}class="inactive"{/if}><span
+        class="title">{txt key=TEXT_SUCCESS}</span><br/><span
+        class="description">{txt key=TEXT_SUCCESS_DESC}</span></li>
+</ul>
+<div style="clear:both"></div>
+{$message}
+<br/>
+
+{if $page_action == failure}
+{include file="/xtCore/pages/checkout/subpage_wirecard_checkout_page_failure.html" type="tpl_include"}
+{/if}
+
+{if $page_action == cancel}
+{include file="/xtCore/pages/checkout/subpage_wirecard_checkout_page_cancel.html" type="tpl_include"}
+{/if}
+
+{if $page_action == success}
+{include file="/xtCore/pages/checkout/subpage_wirecard_checkout_page_success.html" type="tpl_include"}
+{/if}
+
+{if $page_action == pending}
+{include file="/xtCore/pages/checkout/subpage_wirecard_checkout_page_pending.html" type="tpl_include"}
+{/if}

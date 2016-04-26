@@ -1,0 +1,1047 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xtcommerceplugin>
+    <title>Wirecard Checkout Page</title>
+    <type>payment</type>
+    <version>1.4.4</version>
+    <code>wirecard_checkout_page</code>
+    <url>http://www.wirecard.at</url>
+    <description>Zahlungsmodul Wirecard CEE</description>
+    <icon>wd_logo.png</icon>
+    <payment>
+        <payment_code>wirecard_checkout_page</payment_code>
+        <payment_dir>wirecard_checkout_page</payment_dir>
+        <payment_icon></payment_icon>
+        <payment_tpl>wirecard_checkout_page.html</payment_tpl>
+        <de>
+            <title>Wirecard Checkout Page</title>
+            <description></description>
+        </de>
+        <en>
+            <title>Wirecard Checkout Page</title>
+            <description></description>
+        </en>
+    </payment>
+
+    <db_install><![CDATA[
+        include_once _SRV_WEBROOT . _SRV_WEB_PLUGINS. '/wirecard_checkout_page/installer/install.php';
+]]></db_install>
+
+    <plugin_code>
+        <code>
+            <hook>page_registry.php:bottom</hook>
+            <phpcode><![CDATA[
+define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checkout_page/pages/wirecard_checkout_page_checkout.php');
+    ]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>class.checkout.php:_getPayment</hook>
+            <phpcode><![CDATA[
+      if(!empty($_COOKIE['QTAFFIWM'])){
+        foreach($payment_data as $k => $v) {
+          if ($k != 'wirecard_checkout_page') {
+            unset($payment_data[$k]);
+          }
+        }
+        reset($payment_data);
+      }
+    ]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+
+        <code>
+            <hook>class.checkout.php:_selectPayment_tpl_data</hook>
+            <phpcode><![CDATA[
+      require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/checkout_selectpayment_tpl_data.php';
+    ]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+
+        <code>
+            <hook>order_edit.php:display_data</hook>
+            <phpcode><![CDATA[
+            require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/order_edit_display_data.php';
+    ]]></phpcode>
+            <order>0</order>
+            <active>1</active>
+        </code>
+
+    </plugin_code>
+
+    <configuration_payment>
+        <config>
+            <key>PROJECT_ID</key>
+            <type>textfield</type>
+            <value>D200001</value>
+            <sort_order>2</sort_order>
+            <de>
+                <title>Kundennummer</title>
+            </de>
+            <en>
+                <title>Customer ID</title>
+            </en>
+        </config>
+        <config>
+            <key>SHOP_ID</key>
+            <type>textfield</type>
+            <value>-</value>
+            <sort_order>2</sort_order>
+            <de>
+                <title>Shop Id</title>
+            </de>
+            <en>
+                <title>Shop Id</title>
+            </en>
+        </config>
+        <config>
+            <key>PROJECT_SECRET</key>
+            <type>textfield</type>
+            <value>B8AKTPWBRMNBV455FG6M2DANE99WU2</value>
+            <sort_order>6</sort_order>
+            <de>
+                <title>Secret</title>
+            </de>
+            <en>
+                <title>Secret</title>
+            </en>
+        </config>
+        <config>
+            <key>MAX_RETRIES</key>
+            <type>textfield</type>
+            <value>-1</value>
+            <sort_order>8</sort_order>
+            <de>
+                <title>Max. Versuche</title>
+            </de>
+            <en>
+                <title>Max. retries</title>
+            </en>
+        </config>
+        <config>
+            <key>SERVICE_URL</key>
+            <type>textfield</type>
+            <value></value>
+            <sort_order>10</sort_order>
+            <de>
+                <title>Service URL</title>
+            </de>
+            <en>
+                <title>Service URL</title>
+            </en>
+        </config>
+        <config>
+            <key>IMAGE_URL</key>
+            <type>textfield</type>
+            <value></value>
+            <sort_order>12</sort_order>
+            <de>
+                <title>Image URL</title>
+            </de>
+            <en>
+                <title>Image URL</title>
+            </en>
+        </config>
+        <config>
+            <key>DISPLAY_TEXT</key>
+            <type>textfield</type>
+            <value>Herzlichen Dank für Ihre Bestellung.</value>
+            <sort_order>14</sort_order>
+            <de>
+                <title>Display Text</title>
+            </de>
+            <en>
+                <title>Display Text</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_STATUS_COMPLETED</key>
+            <type>dropdown</type>
+            <url>status:order_status</url>
+            <value>23</value>
+            <sort_order>16</sort_order>
+            <de>
+                <title>Erfolgsstatus</title>
+            </de>
+            <en>
+                <title>success status</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_STATUS_FAILED</key>
+            <type>dropdown</type>
+            <url>status:order_status</url>
+            <value>32</value>
+            <sort_order>18</sort_order>
+            <de>
+                <title>Fehlerstatus</title>
+            </de>
+            <en>
+                <title>failure status</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_STATUS_CANCEL</key>
+            <type>dropdown</type>
+            <url>status:order_status</url>
+            <value>32</value>
+            <sort_order>20</sort_order>
+            <de>
+                <title>Abbruchstatus</title>
+            </de>
+            <en>
+                <title>CancelStatus</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_STATUS_PENDING</key>
+            <type>dropdown</type>
+            <url>status:order_status</url>
+            <value>17</value>
+            <sort_order>22</sort_order>
+            <de>
+                <title>Bestellstatus für ausstehende Zahlung</title>
+            </de>
+            <en>
+                <title>Order Status for Pending transactions</title>
+            </en>
+        </config>
+        <config>
+            <key>USE_IFRAME</key>
+            <type>dropdown</type>
+            <value>false</value>
+            <url>conf_truefalse</url>
+            <sort_order>24</sort_order>
+            <de>
+                <title>IFrame verwenden (Erklärung in Readme)</title>
+            </de>
+            <en>
+                <title>Use IFrame (Description in Readme)</title>
+            </en>
+        </config>
+        <config>
+            <key>SEND_CUSTOMER_DATA</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>26</sort_order>
+            <de>
+                <title>Kundeninformationen mitsenden</title>
+            </de>
+            <en>
+                <title>Send consumerinformation</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_SELECT</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>100</sort_order>
+            <de>
+                <title>Select aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Select</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_CCARD</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>110</sort_order>
+            <de>
+                <title>Kreditkarte aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Credit Card</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_MAESTRO</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>130</sort_order>
+            <de>
+                <title>Maestro SecureCode aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Maestro SecureCode</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_PAYBOX</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>140</sort_order>
+            <de>
+                <title>paybox</title>
+            </de>
+            <en>
+                <title>paybox</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_PAYSAFECARD</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>150</sort_order>
+            <de>
+                <title>paysafecard aktivieren</title>
+            </de>
+            <en>
+                <title>Activate paysafecard</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_EPS_ONLINETRANSACTION</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>160</sort_order>
+            <de>
+                <title>eps Online-Überweisung aktivieren</title>
+            </de>
+            <en>
+                <title>Activate eps Online Bank Transfer</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_DIRECT_DEBIT</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>170</sort_order>
+            <de>
+                <title>Lastschriftverfahren aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Direct Debit</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_QUICK</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>180</sort_order>
+            <de>
+                <title>@Quick aktivieren</title>
+            </de>
+            <en>
+                <title>Activate @Quick</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_IDEAL</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>190</sort_order>
+            <de>
+                <title>iDEAL aktivieren</title>
+            </de>
+            <en>
+                <title>Activate iDEAL</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_GIROPAY</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>200</sort_order>
+            <de>
+                <title>giropay aktivieren</title>
+            </de>
+            <en>
+                <title>Activate giropay</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_PAYPAL</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>210</sort_order>
+            <de>
+                <title>PayPal aktivieren</title>
+            </de>
+            <en>
+                <title>Activate PayPal</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_SOFORTUEBERWEISUNG</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>220</sort_order>
+            <de>
+                <title>SOFORT Überweisung (PIN/TAN) aktivieren</title>
+            </de>
+            <en>
+                <title>Activate SOFORT Banking (PIN/TAN)</title>
+            </en>
+        </config>
+
+        <config>
+            <key>ACTIVATE_BMC</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>240</sort_order>
+            <de>
+                <title>Bancontact/Mister Cash aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Bancontact/Mister Cash</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_INVOICE</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>250</sort_order>
+            <de>
+                <title>Rechnung aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Invoice</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_INSTALLMENT</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>260</sort_order>
+            <de>
+                <title>Ratenzahlung aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Installment</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_P24</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>270</sort_order>
+            <de>
+                <title>Przelewy24 aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Przelewy24</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_MONETA</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>280</sort_order>
+            <de>
+                <title>moneta.ru aktivieren</title>
+            </de>
+            <en>
+                <title>Activate moneta.ru</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_POLI</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>290</sort_order>
+            <de>
+                <title>POLi aktivieren</title>
+            </de>
+            <en>
+                <title>Activate POLi</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_EKONTO</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>300</sort_order>
+            <de>
+                <title>eKonto aktivieren</title>
+            </de>
+            <en>
+                <title>Activate eKonto</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_MPASS</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>310</sort_order>
+            <de>
+                <title>mpass aktivieren</title>
+            </de>
+            <en>
+                <title>Activate mpass</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_SKRILLDIRECT</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>320</sort_order>
+            <de>
+                <title>Skrill Direct aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Skrill Direct</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_SKRILLWALLET</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>330</sort_order>
+            <de>
+                <title>Skrill Digital Wallet aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Skrill Digital Wallet</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_TRUSTLY</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>310</sort_order>
+            <de>
+                <title>Trustly aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Trustly</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_EPAY_BG</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>310</sort_order>
+            <de>
+                <title>ePay.bg aktivieren</title>
+            </de>
+            <en>
+                <title>Activate ePay.bg</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_TATRAPAY</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>310</sort_order>
+            <de>
+                <title>TatraPay aktivieren</title>
+            </de>
+            <en>
+                <title>Activate TatraPay</title>
+            </en>
+        </config>
+        <config>
+            <key>ACTIVATE_VOUCHER</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>310</sort_order>
+            <de>
+                <title>Mein Gutschein aktivieren</title>
+            </de>
+            <en>
+                <title>Activate My Voucher</title>
+            </en>
+        </config>
+        <config>
+            <key>INVOICE_MIN_AMOUNT</key>
+            <type>textfield</type>
+            <value>0</value>
+            <sort_order>320</sort_order>
+            <de>
+                <title>Min. Bestellsumme für Rechnung</title>
+            </de>
+            <en>
+                <title>Invoice minimum amount</title>
+            </en>
+        </config>
+        <config>
+            <key>INVOICE_MAX_AMOUNT</key>
+            <type>textfield</type>
+            <value>0</value>
+            <sort_order>330</sort_order>
+            <de>
+                <title>Max. Bestellsumme für Rechnung</title>
+            </de>
+            <en>
+                <title>Invoice maximum amount</title>
+            </en>
+        </config>
+        <config>
+            <key>INSTALLMENT_MIN_AMOUNT</key>
+            <type>textfield</type>
+            <value>0</value>
+            <sort_order>340</sort_order>
+            <de>
+                <title>Min. Bestellsumme für Ratenzahlung</title>
+            </de>
+            <en>
+                <title>Installment minimum amount</title>
+            </en>
+        </config>
+        <config>
+            <key>INSTALLMENT_MAX_AMOUNT</key>
+            <type>textfield</type>
+            <value>0</value>
+            <sort_order>350</sort_order>
+            <de>
+                <title>Max. Bestellsumme für Ratenzahlung</title>
+            </de>
+            <en>
+                <title>Installment maximum amount</title>
+            </en>
+        </config>
+
+
+    </configuration_payment>
+
+    <language_content>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SELECT</key>
+            <class>store</class>
+            <de>
+                <value>Jetzt online bezahlen</value>
+            </de>
+            <en>
+                <value>Select (Wirecard CEE)</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_CCARD</key>
+            <class>store</class>
+            <de>
+                <value>Kreditkarte</value>
+            </de>
+            <en>
+                <value>Credit Card</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MAESTRO</key>
+            <class>store</class>
+            <de>
+                <value>Maestro SecureCode</value>
+            </de>
+            <en>
+                <value>Maestro SecureCode</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYBOX</key>
+            <class>store</class>
+            <de>
+                <value>paybox</value>
+            </de>
+            <en>
+                <value>paybox</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYSAFECARD</key>
+            <class>store</class>
+            <de>
+                <value>paysafecard</value>
+            </de>
+            <en>
+                <value>paysafecard</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION</key>
+            <class>store</class>
+            <de>
+                <value>eps Online-Überweisung</value>
+            </de>
+            <en>
+                <value>eps Online Bank Transfer</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT</key>
+            <class>store</class>
+            <de>
+                <value>Lastschriftverfahren</value>
+            </de>
+            <en>
+                <value>Direct Debit</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_QUICK</key>
+            <class>store</class>
+            <de>
+                <value>@Quick</value>
+            </de>
+            <en>
+                <value>@Quick</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_IDEAL</key>
+            <class>store</class>
+            <de>
+                <value>iDEAL</value>
+            </de>
+            <en>
+                <value>iDEAL</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_GIROPAY</key>
+            <class>store</class>
+            <de>
+                <value>giropay</value>
+            </de>
+            <en>
+                <value>giropay</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYPAL</key>
+            <class>store</class>
+            <de>
+                <value>PayPal</value>
+            </de>
+            <en>
+                <value>PayPal</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SOFORTUEBERWEISUNG</key>
+            <class>store</class>
+            <de>
+                <value>SOFORT Überweisung (PIN/TAN)</value>
+            </de>
+            <en>
+                <value>SOFORT Banking (PIN/TAN)</value>
+            </en>
+        </phrase>
+
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BMC</key>
+            <class>store</class>
+            <de>
+                <value>Bancontact/Mister Cash</value>
+            </de>
+            <en>
+                <value>Bancontact/Mister Cash</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INVOICE</key>
+            <class>store</class>
+            <de>
+                <value>Rechnung</value>
+            </de>
+            <en>
+                <value>Invoice</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INSTALLMENT</key>
+            <class>store</class>
+            <de>
+                <value>Ratenzahlung</value>
+            </de>
+            <en>
+                <value>Installment</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_P24</key>
+            <class>store</class>
+            <de>
+                <value>Przelewy24</value>
+            </de>
+            <en>
+                <value>Przelewy24</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MONETA</key>
+            <class>store</class>
+            <de>
+                <value>moneta.ru</value>
+            </de>
+            <en>
+                <value>moneta.ru</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_POLI</key>
+            <class>store</class>
+            <de>
+                <value>POLi</value>
+            </de>
+            <en>
+                <value>POLi</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_EKONTO</key>
+            <class>store</class>
+            <de>
+                <value>eKonto</value>
+            </de>
+            <en>
+                <value>eKonto</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_TRUSTLY</key>
+            <class>store</class>
+            <de>
+                <value>Trustly</value>
+            </de>
+            <en>
+                <value>Trustly</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MPASS</key>
+            <class>store</class>
+            <de>
+                <value>mpass</value>
+            </de>
+            <en>
+                <value>mpass</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SKRILLWALLET</key>
+            <class>store</class>
+            <de>
+                <value>Skrill Digital Wallet</value>
+            </de>
+            <en>
+                <value>Skrill Digital Wallet</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SKRILLDIRECT</key>
+            <class>store</class>
+            <de>
+                <value>Skrill Direct</value>
+            </de>
+            <en>
+                <value>Skrill Direct</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_VOUCHER</key>
+            <class>store</class>
+            <de>
+                <value>Mein Gutschein</value>
+            </de>
+            <en>
+                <value>My Voucher</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_EPAY_BG</key>
+            <class>store</class>
+            <de>
+                <value>ePay.bg</value>
+            </de>
+            <en>
+                <value>ePay.bg</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_TATRAPAY</key>
+            <class>store</class>
+            <de>
+                <value>TatraPay</value>
+            </de>
+            <en>
+                <value>TatraPay</value>
+            </en>
+        </phrase>
+
+        <phrase>
+            <key>TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_SUCCESS</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA[Ihre Bestellung wurde erfolgreich ausgef&uuml;hrt]]></value>
+            </de>
+            <en>
+                <value>Your order was successfully executed</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_WIRECARD_CHECKOUT_PAGE_CHECKOUT_SUCCESS_DESC</key>
+            <class>store</class>
+            <de>
+                <value>
+                    <![CDATA[Ihre Bestellung ist eingegangen und wird umgehend bearbeitet. Sie haben zur Kontrolle eine Best&auml;tigungs-E-Mail mit den Bestelldaten bekommen!]]></value>
+            </de>
+            <en>
+                <value>Your order has been received and will be processed
+                    immediately. For your personal control you
+                    received an email with
+                    your order details!
+                </value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_PENDING</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA[Ihre Bestellung wurde erfolgreich ausgef&uuml;hrt]]></value>
+            </de>
+            <en>
+                <value>Your order was successfully executed</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_WIRECARD_CHECKOUT_PAGE_CHECKOUT_PENDING_DESC</key>
+            <class>store</class>
+            <de>
+                <value>
+                    <![CDATA[Wir danken Ihnen f&uuml;r Ihren Online-Einkauf, wir werden Ihre Bestellung versenden, sobald wir die Zahlungsbestätigung von Ihrer Bank erhalten haben!]]></value>
+            </de>
+            <en>
+                <value>Thank you for your purchase, your order will be shipped as
+                    soon as we get the payment
+                    confirmation from your bank!
+                </value>
+            </en>
+        </phrase>
+
+        <phrase>
+            <key>TEXT_WIRECARD_CHECKOUT_PAGE_CHECKOUT_IFRAME_REDIRECT</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA[Sie werden in k&uuml;rze zum Shop weitergeleitet]]></value>
+            </de>
+            <en>
+                <value>You will be redirected to the onlineshop shortly!</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_WIRECARD_CHECKOUT_PAGE_CHECKOUT_SUCCESS_THANKS</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA[Wir danken Ihnen f&uuml;r Ihren Online-Einkauf!]]></value>
+            </de>
+            <en>
+                <value>Thank you for your purchase!</value>
+            </en>
+        </phrase>
+
+        <phrase>
+            <key>TEXT_WIRECARD_CHECKOUT_PAGE_CHECKOUT_TRANSFER_CODE</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA[Achten Sie darauf, als Verwendungszweck den &Uuml;berweisungscode anzugeben]]></value>
+
+            </de>
+            <en>
+                <value>Please ensure to use this transfer code as payment details
+                    for your transfer
+                </value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_WIRECARD_CHECKOUT_PAGE_CHECKOUT_TRANSFER_AMOUNT</key>
+            <class>store</class>
+            <de>
+                <value>Betrag</value>
+            </de>
+            <en>
+                <value>Amount</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_WIRECARD_CHECKOUT_PAGE_CHECKOUT_TRANSFER_BANK</key>
+            <class>store</class>
+            <de>
+                <value>
+                    <![CDATA[Bitte &uuml;berweisen Sie den Betrag f&uuml;r die Bestellung auf folgendes Konto]]></value>
+            </de>
+            <en>
+                <value>Please transfer the amount of the order to the following
+                    account
+                </value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_CANCEL</key>
+            <class>store</class>
+            <de>
+                <value>Der Zahlvorgang wurde abgebrochen.</value>
+            </de>
+            <en>
+                <value>The payment transaction was canceled.</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_CANCEL_DESC</key>
+            <class>store</class>
+            <de>
+                <value>Leider wurde der Zahlungsvorgang abgebrochen. Bei Fragen zu
+                    Ihrer Bestellung, wenden Sie sich
+                    bitte an den Shop-Betreiber.
+                </value>
+            </de>
+            <en>
+                <value>Regrettably the payment transaction was canceled. Please
+                    contact the shop owner for questions
+                    about your order.
+                </value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_FAIL</key>
+            <class>store</class>
+            <de>
+                <value>Es ist ein Fehler aufgetreten.</value>
+            </de>
+            <en>
+                <value>An error has occured.</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_FAIL_DESC</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA[Bitte &uuml;berpr&uuml;fen Sie Ihre Daten. Folgende Fehler sind aufgetreten:]]></value>
+            </de>
+            <en>
+                <value>Please check your data. Following errors occurred:</value>
+            </en>
+        </phrase>
+    </language_content>
+
+
+</xtcommerceplugin>
