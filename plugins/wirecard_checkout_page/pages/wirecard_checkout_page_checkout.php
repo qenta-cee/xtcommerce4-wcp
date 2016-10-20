@@ -292,6 +292,10 @@ if ($page->page_action == 'confirm') {
 } else {
     $strState = "";
     if (isset($_POST['trid'])) {
+
+        if(isset($_SESSION['redirect_url']))
+            unset($_SESSION['redirect_url']);
+
         if (WIRECARD_CHECKOUT_PAGE_USE_IFRAME == 'true' &&
             !isset($_POST['mainFrame'])
         ) {
