@@ -412,8 +412,9 @@ class wirecard_checkout_page
 
     function _initiateWirecardCheckoutPageSession()
     {
-        if( strlen($_SESSION['redirect_url']) )
+        if (strlen($_SESSION['redirect_url'])) {
             return $_SESSION['redirect_url'];
+        }
         $requestDataString = $this->_createWirecardCheckoutPagePostData();
         $fp = fsockopen('ssl://' . $this->initHost, $this->initPort, $errno, $errstr, 30);
         if (!$fp) {
