@@ -51,7 +51,7 @@ class wirecard_checkout_page
         'WIRECARD_CHECKOUT_PAGE_PAYBOX' => 'PBX',
         'WIRECARD_CHECKOUT_PAGE_PAYSAFECARD' => 'PSC',
         'WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION' => 'EPS',
-        'WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT' => 'ELV',
+        'WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT' => 'SEPA-DD',
         'WIRECARD_CHECKOUT_PAGE_QUICK' => 'QUICK',
         'WIRECARD_CHECKOUT_PAGE_IDEAL' => 'IDL',
         'WIRECARD_CHECKOUT_PAGE_GIROPAY' => 'GIROPAY',
@@ -412,6 +412,9 @@ class wirecard_checkout_page
 
     function _initiateWirecardCheckoutPageSession()
     {
+        if (strlen($_SESSION['redirect_url'])) {
+            return $_SESSION['redirect_url'];
+        }
         $requestDataString = $this->_createWirecardCheckoutPagePostData();
         $fp = fsockopen('ssl://' . $this->initHost, $this->initPort, $errno, $errstr, 30);
         if (!$fp) {
@@ -431,6 +434,7 @@ class wirecard_checkout_page
                 $responseEntry = explode('=', fgets($fp, 512));
                 if ($responseEntry[0] == 'redirectUrl') {
                     fclose($fp);
+                    $_SESSION['redirect_url'] = urldecode($responseEntry[1]);
                     return urldecode($responseEntry[1]);
                 } else {
                     if ($responseEntry[0] == 'message') {
