@@ -136,6 +136,10 @@ class wirecard_checkout_page
             $this->_setCustomerData($order_data);
         }
 
+        if (WIRECARD_CHECKOUT_PAGE_SEND_ORDER_NUMBER == 'true') {
+            echo 'send orderNumber';
+        }
+
         $requestFingerprintOrder = 'secret';
         $requestFingerprintSeed = WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET;
         foreach ($this->initParams AS $paramName => $paramValue) {
