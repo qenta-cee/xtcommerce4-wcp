@@ -1,0 +1,12 @@
+<div id="checkout-shipping">
+    <h1>
+        <i class="fa fa-check text-success"></i>
+        {txt key=TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_SUCCESS}
+    </h1>
+    <p>{txt key=TEXT_WIRECARD_CHECKOUT_PAGE_CHECKOUT_SUCCESS_DESC}</p>
+    <p>{txt key=TEXT_WIRECARD_CHECKOUT_PAGE_CHECKOUT_SUCCESS_THANKS}</p>
+
+    <p><a href="{link page='index' conn=NOSSL}" class="btn btn-secondary">{txt key=BUTTON_NEXT}</a></p>
+
+    {hook key=checkout_success_tpl}
+</div><!-- #checkout-shipping .row -->

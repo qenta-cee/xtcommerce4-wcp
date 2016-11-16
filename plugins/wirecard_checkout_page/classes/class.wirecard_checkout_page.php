@@ -136,10 +136,6 @@ class wirecard_checkout_page
             $this->_setCustomerData($order_data);
         }
 
-        if (WIRECARD_CHECKOUT_PAGE_SEND_ORDER_NUMBER == 'true') {
-            echo 'send orderNumber';
-        }
-
         $requestFingerprintOrder = 'secret';
         $requestFingerprintSeed = WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET;
         foreach ($this->initParams AS $paramName => $paramValue) {
@@ -347,6 +343,12 @@ class wirecard_checkout_page
         $request['currency'] = $order_data ['currency_code'];
         $request['language'] = $order_data ['language_code'];
 
+
+        if (WIRECARD_CHECKOUT_PAGE_SEND_ORDER_NUMBER == 'true') {
+            $request['orderNumber'] = $order_data['orders_id'];
+            //print_r($order_data);
+        }
+
         $strPaymentType = $this->paymentTypes[$_SESSION ['selected_payment_sub']];
 
         $request['trid'] = $this->_transaction_id;
@@ -372,6 +374,7 @@ class wirecard_checkout_page
         $request['pluginVersion'] = $pluginVersion;
         $request['consumerIpAddress'] = $_SERVER['REMOTE_ADDR'];
         $request['consumerUserAgent'] = $_SERVER['HTTP_USER_AGENT'];
+
         $this->initParams = array_merge($this->initParams, $request);
     }
 
@@ -385,6 +388,8 @@ class wirecard_checkout_page
 
     function _setCustomerData()
     {
+        global $order;
+        $order_data = $order->order_data;
         $genericData = $_SESSION['customer']->customer_default_address;
         $shippingData = $_SESSION['customer']->customer_shipping_address;
         $billingData = $_SESSION['customer']->customer_payment_address;
@@ -411,6 +416,7 @@ class wirecard_checkout_page
         $request['consumerBillingFax'] = $genericData['customers_fax'];
         $request['consumerBirthDate'] = $consumerBirthDate;
         $request['consumerEmail'] = $_SESSION['customer']->customer_info['customers_email_address'];
+
         $this->initParams = array_merge($this->initParams, $request);
     }
 

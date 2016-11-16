@@ -1,0 +1,15 @@
+<div id="checkout-shipping">
+    <h1>
+        <i class="fa fa-warning text-error"></i>
+        {txt key=TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_FAIL}
+    </h1>
+    <p>{txt key=TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_FAIL_DESC}</p>
+    <p>{foreach name=errors item=msg_item from=$messages}
+        &nbsp;&nbsp;&nbsp;- {$msg_item.message} {if $msg_item.param!=''} ({$msg_item.param}) {/if}<br>
+        {/foreach}
+    </p>
+
+    <p><a href="{link page='checkout' paction='payment' conn=SSL}" class="btn btn-secondary">{txt key=BUTTON_NEXT}</a></p>
+
+    {hook key=checkout_success_tpl}
+</div><!-- #checkout-shipping .row -->

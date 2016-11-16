@@ -1,0 +1,46 @@
+<div id="checkout">
+    <div class="progress checkout-progress">
+        <div class="{if $page_action == shipping}progress-bar-success progress-bar-striped active{/if} {if $page_action == payment OR $page_action == confirmation OR $page_action == success}progress-bar-success done{/if}"
+             title="{txt key=TEXT_SELECT_SHIPPING_DESC}"
+             onclick="{if $page_action == payment OR $page_action == confirmation}document.location.href='{link page='wirecard_checkout_page_checkout' paction='shipping' conn=SSL}'{/if}">
+            <span class="hidden-xs">{txt key=TEXT_SELECT_SHIPPING}</span>
+            <span class="visible-xs"></span>
+        </div>
+        <div class="progress-bar {if $page_action == payment}progress-bar-success progress-bar-striped active{else}progress-bar-default{/if} {if $page_action == confirmation OR $page_action == success}progress-bar-success done{/if}"
+             style="width: 25%"
+             title="{txt key=TEXT_SELECT_PAYMENT_DESC}"
+             onclick="{if $page_action == confirmation}document.location.href='{link page='wirecard_checkout_page_checkout' paction='payment' conn=SSL}'{/if}">
+            <span class="hidden-xs">{txt key=TEXT_SELECT_PAYMENT}</span>
+            <span class="visible-xs"></span>
+        </div>
+        <div class="cursor-help progress-bar {if $page_action == confirmation}progress-bar-success progress-bar-striped active{else}progress-bar-default{/if} {if $page_action == success}done{/if}"
+            style="width: 25%"
+            title="{txt key=TEXT_CONFIRMATION_DESC}">
+            <span class="hidden-xs">{txt key=TEXT_CONFIRMATION}</span>
+            <span class="visible-xs"></span>
+        </div>
+        <div class="cursor-help progress-bar {if $page_action == success}progress-bar-success progress-bar-striped active{else}progress-bar-default{/if} {if $page_action == success}progress-bar-success done{/if}"
+            style="width: 25%"
+            title="{txt key=TEXT_SUCCESS_DESC}">
+            <span class="hidden-xs">{txt key=TEXT_SUCCESS}</span>
+            <span class="visible-xs"></span>
+        </div>
+    </div>
+    {$message}
+
+    {if $page_action == failure}
+        {include file="$selected_template/xtCore/pages/checkout/subpage_wirecard_checkout_page_failure.html" type="tpl_include"}
+    {/if}
+
+    {if $page_action == cancel}
+        {include file="$selected_template/xtCore/pages/checkout/subpage_wirecard_checkout_page_cancel.html" type="tpl_include"}
+    {/if}
+
+    {if $page_action == success}
+        {include file="$selected_template/xtCore/pages/checkout/subpage_wirecard_checkout_page_success.html" type="tpl_include"}
+    {/if}
+
+    {if $page_action == pending}
+        {include file="$selected_template/xtCore/pages/checkout/subpage_wirecard_checkout_page_pending.html" type="tpl_include"}
+    {/if}
+</div>
