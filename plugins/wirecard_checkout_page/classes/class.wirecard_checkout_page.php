@@ -42,7 +42,7 @@ class wirecard_checkout_page
     var $initPort = '443';
     var $initParams = array();
 
-    var $version = '1.4.5';
+    var $version = '1.5.0';
 
     var $paymentTypes = array(
         'WIRECARD_CHECKOUT_PAGE_SELECT' => 'SELECT',
@@ -327,7 +327,13 @@ class wirecard_checkout_page
     {
         global $order, $language;
 
-        $pluginVersion = base64_encode('Veyton; 4.x; ; xtCommerce4; ' . $this->version);
+        if($this->getMajorVersion() <= 4) {
+            $shopSystem = 'Veyton; 4.x; ; xtCommerce4; ';
+        } else {
+            $shopSystem = 'xtCommerce5; ';
+        }
+        $pluginVersion = base64_encode($shopSystem . $this->version);
+
         $order_data = $order->order_data;
         $this->_transaction_id = $this->generate_trid();
 
@@ -342,12 +348,6 @@ class wirecard_checkout_page
         $request['amount'] = $order->order_total ['total'] ['plain'];
         $request['currency'] = $order_data ['currency_code'];
         $request['language'] = $order_data ['language_code'];
-
-
-        if (WIRECARD_CHECKOUT_PAGE_SEND_ORDER_NUMBER == 'true') {
-            $request['orderNumber'] = $order_data['orders_id'];
-            //print_r($order_data);
-        }
 
         $strPaymentType = $this->paymentTypes[$_SESSION ['selected_payment_sub']];
 
@@ -417,6 +417,11 @@ class wirecard_checkout_page
         $request['consumerBirthDate'] = $consumerBirthDate;
         $request['consumerEmail'] = $_SESSION['customer']->customer_info['customers_email_address'];
 
+        //orderNumber is not allowed
+        if (WIRECARD_CHECKOUT_PAGE_SEND_ORDER_NUMBER == 'true') {
+            $request['orderNumber'] = ( int )$order_data ['orders_id'];
+        }
+
         $this->initParams = array_merge($this->initParams, $request);
     }
 
@@ -427,6 +432,7 @@ class wirecard_checkout_page
         }
         $requestDataString = $this->_createWirecardCheckoutPagePostData();
         $fp = fsockopen('ssl://' . $this->initHost, $this->initPort, $errno, $errstr, 30);
+
         if (!$fp) {
             $message = 'No route to the payment service provider';
             $this->_failureRedirect($message);

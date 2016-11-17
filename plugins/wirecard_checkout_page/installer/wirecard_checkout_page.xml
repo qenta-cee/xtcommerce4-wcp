@@ -75,6 +75,54 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <order>1</order>
             <active>1</active>
         </code>
+        <code>
+            <hook>module_checkout.php:checkout_payment_check</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/module_checkout_payment_check.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>customer:_getParams_row_actions</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/class.customer.php_getParams_row_actions.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>module_checkout.php:checkout_pre_data</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/module_checkout_pre_data.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>module_checkout.php:checkout_data</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/module_checkout_data.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>module_checkout.php:checkout_proccess_order_processed</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/module_checkout_proccess_order_processed.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>css_admin.php:css</hook>
+            <phpcode><![CDATA[include_once(_SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/ejsadmin.php__css_styles.php');]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>account_tpl_account_data</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/account_tpl_account_data.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>class.orders.php:_sendOrderMail_bottom</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/class.orders.php_sendOrderMail_bottom.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
 
     </plugin_code>
 
