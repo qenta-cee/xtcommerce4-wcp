@@ -339,7 +339,7 @@ class wirecard_checkout_page
     {
         global $order, $language;
 
-        if($this->getMajorVersion() <= 4) {
+        if ($this->getMajorVersion() <= 4) {
             $shopSystem = 'Veyton; 4.x; ; xtCommerce4; ';
         } else {
             $shopSystem = 'xtCommerce5; ';
@@ -350,8 +350,9 @@ class wirecard_checkout_page
         $this->_transaction_id = $this->generate_trid();
 
         $shopId = trim(WIRECARD_CHECKOUT_PAGE_SHOP_ID);
-        if ($shopId != '-')
+        if ($shopId != '-') {
             $request['shopid'] = WIRECARD_CHECKOUT_PAGE_SHOP_ID;
+        }
         $request['customerId'] = WIRECARD_CHECKOUT_PAGE_PROJECT_ID;
 
         if (intval(WIRECARD_CHECKOUT_PAGE_MAX_RETRIES) >= 0) {
@@ -428,11 +429,6 @@ class wirecard_checkout_page
         $request['consumerBillingFax'] = $genericData['customers_fax'];
         $request['consumerBirthDate'] = $consumerBirthDate;
         $request['consumerEmail'] = $_SESSION['customer']->customer_info['customers_email_address'];
-
-        //orderNumber is not allowed
-        if (WIRECARD_CHECKOUT_PAGE_SEND_ORDER_NUMBER == 'true') {
-            $request['orderNumber'] = ( int )$order_data ['orders_id'];
-        }
 
         $this->initParams = array_merge($this->initParams, $request);
     }

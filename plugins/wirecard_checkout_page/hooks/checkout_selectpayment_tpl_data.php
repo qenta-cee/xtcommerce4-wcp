@@ -256,11 +256,10 @@ $customer_status = $customer_info['customers_status'];
 
 //sort paymenttypes for view
 foreach ($wcp_payments as $key => $row) {
-    if($row['group'] == 0 || $row['group'] == $customer_status) {
+    if ($row['group'] == 0 || $row['group'] == $customer_status) {
         $order[$key] = $row['order'];
         $name[$key] = $row['text'];
-    }
-    else {
+    } else {
         //unset paymenttype for customer without permissions
         unset($wcp_payments[$key]);
     }

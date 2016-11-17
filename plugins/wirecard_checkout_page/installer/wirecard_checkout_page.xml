@@ -290,19 +290,6 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
-            <key>SEND_ORDER_NUMBER</key>
-            <type>dropdown</type>
-            <value>false</value>
-            <url>conf_truefalse</url>
-            <sort_order>30</sort_order>
-            <de>
-                <title>Bestellnummmer mitsenden</title>
-            </de>
-            <en>
-                <title>Send orderNumber</title>
-            </en>
-        </config>
-        <config>
             <key>ACTIVATE_SELECT</key>
             <type>dropdown</type>
             <value>true</value>
