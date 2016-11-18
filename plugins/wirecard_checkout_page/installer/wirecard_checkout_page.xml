@@ -2,7 +2,7 @@
 <xtcommerceplugin>
     <title>Wirecard Checkout Page</title>
     <type>payment</type>
-    <version>1.4.5</version>
+    <version>1.5.0</version>
     <code>wirecard_checkout_page</code>
     <url>http://www.wirecard.at</url>
     <description>Zahlungsmodul Wirecard CEE</description>
@@ -66,6 +66,61 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/order_edit_display_data.php';
     ]]></phpcode>
             <order>0</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>admin_dropdown.php:dropdown</hook>
+            <phpcode>
+                <![CDATA[include(_SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/admin_dropdown.php_dropdown.php');]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>module_checkout.php:checkout_payment_check</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/module_checkout_payment_check.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>customer:_getParams_row_actions</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/class.customer.php_getParams_row_actions.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>module_checkout.php:checkout_pre_data</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/module_checkout_pre_data.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>module_checkout.php:checkout_data</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/module_checkout_data.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>module_checkout.php:checkout_proccess_order_processed</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/module_checkout_proccess_order_processed.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>css_admin.php:css</hook>
+            <phpcode><![CDATA[include_once(_SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/ejsadmin.php__css_styles.php');]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>account_tpl_account_data</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/account_tpl_account_data.php';]]></phpcode>
+            <order>1</order>
+            <active>1</active>
+        </code>
+        <code>
+            <hook>class.orders.php:_sendOrderMail_bottom</hook>
+            <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/class.orders.php_sendOrderMail_bottom.php';]]></phpcode>
+            <order>1</order>
             <active>1</active>
         </code>
 
@@ -248,6 +303,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_SELECT</key>
+            <type>dropdown</type>
+            <value>1</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Select</title>
+            </de>
+            <en>
+                <title>Sortingorder Select</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_SELECT</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Select</title>
+            </de>
+            <en>
+                <title>Customergroup for Select</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_CCARD</key>
             <type>dropdown</type>
             <value>true</value>
@@ -258,6 +337,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate Credit Card</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_CCARD</key>
+            <type>dropdown</type>
+            <value>2</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Kreditkarte</title>
+            </de>
+            <en>
+                <title>Sortingorder for creditcard</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_CCARD</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Kreditkarte</title>
+            </de>
+            <en>
+                <title>Customergroup for creditcard</title>
             </en>
         </config>
         <config>
@@ -274,6 +377,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_MAESTRO</key>
+            <type>dropdown</type>
+            <value>3</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Maestro</title>
+            </de>
+            <en>
+                <title>Sortingorder for maestro</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_MAESTRO</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Maestro</title>
+            </de>
+            <en>
+                <title>Customergroup for maestro</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_PAYBOX</key>
             <type>dropdown</type>
             <value>true</value>
@@ -284,6 +411,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>paybox</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_PAYBOX</key>
+            <type>dropdown</type>
+            <value>4</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für paybox</title>
+            </de>
+            <en>
+                <title>Sortingorder for paybox</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_PAYBOX</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für paybox</title>
+            </de>
+            <en>
+                <title>Customergroup for paybox</title>
             </en>
         </config>
         <config>
@@ -300,6 +451,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_PAYSAFECARD</key>
+            <type>dropdown</type>
+            <value>5</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für paysafecard</title>
+            </de>
+            <en>
+                <title>Sortingorder for paysafecard</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_PAYSAFECARD</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für paysafecard</title>
+            </de>
+            <en>
+                <title>Customergroup for paysafecard</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_EPS_ONLINETRANSACTION</key>
             <type>dropdown</type>
             <value>true</value>
@@ -310,6 +485,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate eps Online Bank Transfer</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_EPS_ONLINETRANSACTION</key>
+            <type>dropdown</type>
+            <value>6</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für eps Online-Überweisung</title>
+            </de>
+            <en>
+                <title>Sortingorder for eps Online Bank Transfer</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_EPS_ONLINETRANSACTION</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für eps Online-Überweisung</title>
+            </de>
+            <en>
+                <title>Customergroup for eps Online Bank Transfer</title>
             </en>
         </config>
         <config>
@@ -326,6 +525,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_DIRECT_DEBIT</key>
+            <type>dropdown</type>
+            <value>7</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Lastschriftverfahren</title>
+            </de>
+            <en>
+                <title>Sortingorder for Direct Debit</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_DIRECT_DEBIT</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Lastschriftverfahren</title>
+            </de>
+            <en>
+                <title>Customergroup for Direct Debit</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_QUICK</key>
             <type>dropdown</type>
             <value>true</value>
@@ -336,6 +559,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate @Quick</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_QUICK</key>
+            <type>dropdown</type>
+            <value>8</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für @Quick</title>
+            </de>
+            <en>
+                <title>Sortingorder for @Quick</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_QUICK</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für @Quick</title>
+            </de>
+            <en>
+                <title>Customergroup for @Quick</title>
             </en>
         </config>
         <config>
@@ -352,6 +599,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_IDEAL</key>
+            <type>dropdown</type>
+            <value>9</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für iDEAL</title>
+            </de>
+            <en>
+                <title>Sortingorder for iDEAL</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_IDEAL</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für iDEAL</title>
+            </de>
+            <en>
+                <title>Customergroup for iDEAL</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_GIROPAY</key>
             <type>dropdown</type>
             <value>true</value>
@@ -362,6 +633,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate giropay</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_GIROPAY</key>
+            <type>dropdown</type>
+            <value>10</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für giropay</title>
+            </de>
+            <en>
+                <title>Sortingorder for giropay</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_GIROPAY</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für giropay</title>
+            </de>
+            <en>
+                <title>Customergroup for giropay</title>
             </en>
         </config>
         <config>
@@ -378,6 +673,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_PAYPAL</key>
+            <type>dropdown</type>
+            <value>11</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für PayPal</title>
+            </de>
+            <en>
+                <title>Sortingorder for PayPal</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_PAYPAL</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für PayPal</title>
+            </de>
+            <en>
+                <title>Customergroup for PayPal</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_SOFORTUEBERWEISUNG</key>
             <type>dropdown</type>
             <value>true</value>
@@ -390,7 +709,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
                 <title>Activate SOFORT Banking (PIN/TAN)</title>
             </en>
         </config>
-
+        <config>
+            <key>ORDER_SOFORTUEBERWEISUNG</key>
+            <type>dropdown</type>
+            <value>12</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für SOFORT Überweisung</title>
+            </de>
+            <en>
+                <title>Sortingorder for SOFORT Banking</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_SOFORTUEBERWEISUNG</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für SOFORT Überweisung</title>
+            </de>
+            <en>
+                <title>Customergroup for SOFORT Banking</title>
+            </en>
+        </config>
         <config>
             <key>ACTIVATE_BMC</key>
             <type>dropdown</type>
@@ -402,6 +744,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate Bancontact/Mister Cash</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_BMC</key>
+            <type>dropdown</type>
+            <value>13</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Bancontact/Mister Cash</title>
+            </de>
+            <en>
+                <title>Sortingorder for Bancontact/Mister Cash</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_BMC</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Bancontact/Mister Cash</title>
+            </de>
+            <en>
+                <title>Customergroup for Bancontact/Mister Cash</title>
             </en>
         </config>
         <config>
@@ -418,6 +784,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_INVOICE</key>
+            <type>dropdown</type>
+            <value>14</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Rechnung</title>
+            </de>
+            <en>
+                <title>Sortingorder for Invoice</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_INVOICE</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Rechnung</title>
+            </de>
+            <en>
+                <title>Customergroup for Invoice</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_INSTALLMENT</key>
             <type>dropdown</type>
             <value>true</value>
@@ -428,6 +818,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate Installment</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_INSTALLMENT</key>
+            <type>dropdown</type>
+            <value>15</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Ratenzahlung</title>
+            </de>
+            <en>
+                <title>Sortingorder for Installment</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_INSTALLMENT</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Ratenzahlung</title>
+            </de>
+            <en>
+                <title>Customergroup for Installment</title>
             </en>
         </config>
         <config>
@@ -444,6 +858,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_P24</key>
+            <type>dropdown</type>
+            <value>16</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Przelewy24</title>
+            </de>
+            <en>
+                <title>Sortingorder for Przelewy24</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_P24</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Przelewy24</title>
+            </de>
+            <en>
+                <title>Customergroup for Przelewy24</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_MONETA</key>
             <type>dropdown</type>
             <value>true</value>
@@ -454,6 +892,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate moneta.ru</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_MONETA</key>
+            <type>dropdown</type>
+            <value>17</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für moneta.ru</title>
+            </de>
+            <en>
+                <title>Sortingorder for moneta.ru</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_MONETA</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für moneta.ru</title>
+            </de>
+            <en>
+                <title>Customergroup for moneta.ru</title>
             </en>
         </config>
         <config>
@@ -470,6 +932,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_POLI</key>
+            <type>dropdown</type>
+            <value>18</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für POLi</title>
+            </de>
+            <en>
+                <title>Sortingorder for POLi</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_POLI</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für POLi</title>
+            </de>
+            <en>
+                <title>Customergroup for POLi</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_EKONTO</key>
             <type>dropdown</type>
             <value>true</value>
@@ -480,6 +966,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate eKonto</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_EKONTO</key>
+            <type>dropdown</type>
+            <value>19</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für eKonto</title>
+            </de>
+            <en>
+                <title>Sortingorder for eKonto</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_EKONTO</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für eKonto</title>
+            </de>
+            <en>
+                <title>Customergroup for eKonto</title>
             </en>
         </config>
         <config>
@@ -496,6 +1006,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_MPASS</key>
+            <type>dropdown</type>
+            <value>20</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für mpass</title>
+            </de>
+            <en>
+                <title>Sortingorder for mpass</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_MPASS</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für mpass</title>
+            </de>
+            <en>
+                <title>Customergroup for mpass</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_SKRILLDIRECT</key>
             <type>dropdown</type>
             <value>true</value>
@@ -506,6 +1040,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate Skrill Direct</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_SKRILLDIRECT</key>
+            <type>dropdown</type>
+            <value>21</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Skrill Direct</title>
+            </de>
+            <en>
+                <title>Sortingorder for Skrill Direct</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_SKRILLDIRECT</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Skrill Direct</title>
+            </de>
+            <en>
+                <title>Customergroup for Skrill Direct</title>
             </en>
         </config>
         <config>
@@ -522,6 +1080,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_SKRILLWALLET</key>
+            <type>dropdown</type>
+            <value>22</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Skrill Digital Wallet</title>
+            </de>
+            <en>
+                <title>Sortingorder for Skrill Digital Wallet</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_SKRILLWALLET</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Skrill Digital Wallet</title>
+            </de>
+            <en>
+                <title>Customergroup for Skrill Digital Wallet</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_TRUSTLY</key>
             <type>dropdown</type>
             <value>true</value>
@@ -532,6 +1114,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate Trustly</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_TRUSTLY</key>
+            <type>dropdown</type>
+            <value>23</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Trustly</title>
+            </de>
+            <en>
+                <title>Sortingorder for Trustly</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_TRUSTLY</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Trustly</title>
+            </de>
+            <en>
+                <title>Customergroup for Trustly</title>
             </en>
         </config>
         <config>
@@ -548,6 +1154,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_EPAY_BG</key>
+            <type>dropdown</type>
+            <value>24</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für ePay.bg</title>
+            </de>
+            <en>
+                <title>Sortingorder for ePay.bg</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_EPAY_BG</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für ePay.bg</title>
+            </de>
+            <en>
+                <title>Customergroup for ePay.bg</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_TATRAPAY</key>
             <type>dropdown</type>
             <value>true</value>
@@ -561,6 +1191,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ORDER_TATRAPAY</key>
+            <type>dropdown</type>
+            <value>25</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für TatraPay</title>
+            </de>
+            <en>
+                <title>Sortingorder for TatraPay</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_TATRAPAY</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für TatraPay</title>
+            </de>
+            <en>
+                <title>Customergroup for TatraPay</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_VOUCHER</key>
             <type>dropdown</type>
             <value>true</value>
@@ -571,6 +1225,30 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </de>
             <en>
                 <title>Activate My Voucher</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_VOUCHER</key>
+            <type>dropdown</type>
+            <value>26</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Gutschein</title>
+            </de>
+            <en>
+                <title>Sortingorder for Voucher</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_VOUCHER</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Gutschein</title>
+            </de>
+            <en>
+                <title>Customergroup for Voucher</title>
             </en>
         </config>
         <config>

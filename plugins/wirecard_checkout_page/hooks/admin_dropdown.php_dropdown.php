@@ -36,33 +36,9 @@
 
 defined('_VALID_CALL') or die('Direct Access is not allowed.');
 
-if ($this->order_data['order_data']['payment_code'] == 'wirecard_checkout_page') {
-    /** @global ADODB_mysql $db */
-    global $db;
-
-    $rs = $db->GetAssoc("SELECT * FROM wirecard_checkout_page_transaction WHERE orderid=?", array((int)$this->order_data['order_data']['orders_id']));
-    if (count($rs))
-    {
-        $wcp_data = array_pop($rs);
-        if (strlen($wcp_data['RESPONSEDATA']))
-        {
-            $blacklist = array('last_order_id');
-            $info = json_decode($wcp_data['RESPONSEDATA']);
-            foreach ($info as $k => $v)
-            {
-                if (in_array($k, $blacklist))
-                    continue;
-                $tpl_data['order_data']['order_info_options'][] = array('text' => $k, 'value' => $v);
-            }
-
-        }
+if ($request['get'] == 'wirecard_set_payment_order') {
+	if (!isset($result)) $result = array();
+    for($order = 1; $order < 30; $order++) {
+        $result[] = array('id' => $order, 'name' => $order);
     }
-
-//    if($rs->RecordCount()>0) {
-//        print "xxx";
-//        foreach ($rs as $v)
-//            print_r($v);
-//    }
-
 }
-

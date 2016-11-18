@@ -29,20 +29,18 @@
 * Please do not use the plugin if you do not agree to these terms of use!
 *}
 
-<div id="checkout-shipping" class="row">
-    <div class="column xt-grid-16">
-        <h1>{txt key=TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_CANCEL}</h1>
+<div id="checkout-shipping">
+    <h1>
+        <i class="fa fa-warning text-error"></i>
+        {txt key=TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_FAIL}
+    </h1>
+    <p>{txt key=TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_FAIL_DESC}</p>
+    <p>{foreach name=errors item=msg_item from=$messages}
+        &nbsp;&nbsp;&nbsp;- {$msg_item.message} {if $msg_item.param!=''} ({$msg_item.param}) {/if}<br>
+        {/foreach}
+    </p>
 
-        <p>{txt key=TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_CANCEL_DESC}</p>
+    <p><a href="{link page='checkout' paction='payment' conn=SSL}" class="btn btn-secondary">{txt key=BUTTON_NEXT}</a></p>
 
-        <p><a href="{link page='checkout' paction='payment' conn=SSL}">{css_button text=$smarty.const.BUTTON_NEXT}</a>
-        </p>
-    </div>
-    <!-- .column .xt-grid-16 -->
+    {hook key=checkout_success_tpl}
 </div><!-- #checkout-shipping .row -->
-<div class="row">
-    <div class="column xt-grid-16">
-        {hook key=checkout_success_tpl}
-    </div>
-    <!-- .column .xt-grid-16 -->
-</div><!-- .row -->
