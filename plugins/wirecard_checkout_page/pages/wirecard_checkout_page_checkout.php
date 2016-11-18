@@ -76,9 +76,13 @@ if ($page->page_action == 'confirm') {
                     $fieldsNeeded = 3;
                 }
 
+                $tempArray = [];
                 $keyOrder = explode(',', $responseFingerprintOrder);
                 for ($i = 0; $i < count($keyOrder); $i++) {
                     $key = $keyOrder[$i];
+                    if ($key != 'secret') {
+                        $tempArray[(string)$key] = (string)$_POST[$key];
+                    }
                     if ($stripSlashes) {
                         $value = stripslashes($_POST[$key]);
                     } else {
@@ -97,14 +101,21 @@ if ($page->page_action == 'confirm') {
 
                     if (strcmp($key, 'secret') == 0) {
                         $str4responseFingerprint .= WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET;
+                        $tempArray[$key] = WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET;
                         $secretUsed = 1;
                     } else {
                         $str4responseFingerprint .= $value;
                     }
                 }
 
-                // recalc the fingerprint
-                $responseFingerprintCalc = md5($str4responseFingerprint);
+                $hash = hash_init('sha512', HASH_HMAC, WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
+
+                foreach ($tempArray AS $paramName => $paramValue) {
+                    hash_update($hash, $paramValue);
+                }
+
+                $responseFingerprintCalc = hash_final($hash);
+
 
                 if ((strcmp($responseFingerprintCalc, $responseFingerprint) != 0)) {
                     $message = "Fingerprint validation failed.";

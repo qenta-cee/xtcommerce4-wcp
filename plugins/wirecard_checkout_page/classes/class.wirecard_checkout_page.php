@@ -149,15 +149,23 @@ class wirecard_checkout_page
         }
 
         $requestFingerprintOrder = 'secret';
-        $requestFingerprintSeed = WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET;
+
+        $tempArray = array('secret' => WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
+
         foreach ($this->initParams AS $paramName => $paramValue) {
             $requestFingerprintOrder .= ',' . $paramName;
-            $requestFingerprintSeed .= $paramValue;
+            $tempArray[(string)$paramName] = (string)$paramValue;
         }
         $requestFingerprintOrder .= ',requestFingerprintOrder';
-        $requestFingerprintSeed .= $requestFingerprintOrder;
 
-        $requestFingerprint = md5($requestFingerprintSeed);
+        $tempArray['requestFingerprintOrder'] = $requestFingerprintOrder;
+
+        $hash = hash_init('sha512', HASH_HMAC, WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
+        foreach ($tempArray AS $paramName => $paramValue) {
+            hash_update($hash, $paramValue);
+        }
+
+        $requestFingerprint = hash_final($hash);
         $this->initParams['requestFingerprintOrder'] = $requestFingerprintOrder;
         $this->initParams['requestFingerprint'] = $requestFingerprint;
         $result = @$db->Execute(
@@ -387,6 +395,7 @@ class wirecard_checkout_page
         $request['pluginVersion'] = $pluginVersion;
         $request['consumerIpAddress'] = $_SERVER['REMOTE_ADDR'];
         $request['consumerUserAgent'] = $_SERVER['HTTP_USER_AGENT'];
+        $request['customerMerchantCrmId'] = md5($_SESSION['customer']->customer_info['customers_email_address']);
 
         $this->initParams = array_merge($this->initParams, $request);
     }
