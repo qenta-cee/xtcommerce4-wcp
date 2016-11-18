@@ -1,10 +1,11 @@
-# Wirecard Checkout Page plugin for xt:Commerce 4
+# Wirecard Checkout Page plugin for xt:Commerce 4 and xt:Commerce 5
 
 [![License](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/wirecard/xtcommerce4-wcp/master/LICENSE)
 [![xt:Commerce 4](https://img.shields.io/badge/xt:Commerce-v4.2-green.svg)](http://www.xt-commerce.com/)
+[![xt:Commerce 5](https://img.shields.io/badge/xt:Commerce-v5-green.svg)](http://www.xt-commerce.com/)
 [![PHP v5.3](https://img.shields.io/badge/php-v5.3-yellow.svg)](http://www.php.net)
 
-Wirecard Checkout Page plugin for xt:Commerce 4. 
+Wirecard Checkout Page plugin for xt:Commerce 4 and xt:Commerce 5. 
 
 Our [Online Guides](https://guides.wirecard.at/) provide further information on payment methods and additional features. Please observe our [terms of use](https://guides.wirecard.at/shop_plugins:info#terms_of_use) regarding plugins.
 
