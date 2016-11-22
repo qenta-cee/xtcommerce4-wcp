@@ -395,7 +395,7 @@ class wirecard_checkout_page
         $request['pluginVersion'] = $pluginVersion;
         $request['consumerIpAddress'] = $_SERVER['REMOTE_ADDR'];
         $request['consumerUserAgent'] = $_SERVER['HTTP_USER_AGENT'];
-        $request['customerMerchantCrmId'] = md5($_SESSION['customer']->customer_info['customers_email_address']);
+        $request['consumerMerchantCrmId'] = md5($_SESSION['customer']->customer_info['customers_email_address']);
 
         $this->initParams = array_merge($this->initParams, $request);
     }
