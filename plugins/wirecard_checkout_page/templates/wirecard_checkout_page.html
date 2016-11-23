@@ -32,11 +32,15 @@
 {if $plugin}
 
 {capture name="paymenttypes"}
+<h4>No WirecardCheckoutPage paymenttype activated</h4>
+{/capture}
+
+
+{if $plugin->getMajorVersion() > 4}
+{capture name="paymenttypes"}
 {foreach from=$wirecard_payment_types item=payment}
 {if $payment.active eq 'true'}
-{if $plugin->getMajorVersion() > 4}
 <li class="list-group-item clearfix list-group-item-25{$payment.name} cursor-pointer active" data-toggle="collapse" data-target=".item-25{$payment.name} .collapse">
-    {/if}
     <div class="item item-{$payment.img}{if $payment_code == $payment.name} selected{/if} payment-container">
         <img src="plugins/wirecard_checkout_page/images/paymenttypes/{$payment.img}.png" type=w_media_payment alt=$payment.text class="icon img-responsive img-thumbnail pull-right" style="max-height: 49px;
         max-width: 95px;">
@@ -60,12 +64,31 @@
             </label>
         </header>
     </div>
-    {if $plugin->getMajorVersion() > 4}
 </li>
-{/if}
 {/if}
 {/foreach}
 {/capture}
+{/if}
+
+{if $plugin->getMajorVersion() <= 4}
+{capture name="paymenttypes"}
+{foreach from=$wirecard_payment_types item=payment}
+{if $payment.active eq 'true'}
+<tr>
+    <td class="col-md-1">
+        <input id=selected_payment_{$payment.img} type="radio" name="selected_payment" value={$payment_code}:{$payment.name}>
+    </td>
+    <td class="col-md-4">
+        <img src="plugins/wirecard_checkout_page/images/paymenttypes/{$payment.img}.png" class="img-responsive" style="max-height: 49px; max-width: 90px;">
+    </td>
+    <td class="col-md-12">
+        <label for=selected_payment_{$payment.img}>{$payment.text}</label>
+    </td>
+</tr>
+{/if}
+{/foreach}
+{/capture}
+{/if}
 
 {if $plugin->getMajorVersion() >= 4 && $plugin->getMinorVersion() >= 1}
 {literal}
@@ -99,7 +122,9 @@
 <div class="box box-white box-hover">
     <div class="payment">
         <p class="bold">
-            {$smarty.capture.paymenttypes}
+            <table class="table tables-sm wcp-paymenttable">
+                {$smarty.capture.paymenttypes}
+            </table>
         </p>
     </div>
 </div>
