@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Shop System Plugins - Terms of Use
  *
@@ -54,7 +55,7 @@ class wirecard_checkout_page
     var $initPort = '443';
     var $initParams = array();
 
-    var $version = '1.5.0';
+    var $version = '1.5.1';
 
     var $paymentTypes = array(
         'WIRECARD_CHECKOUT_PAGE_SELECT' => 'SELECT',
@@ -385,6 +386,17 @@ class wirecard_checkout_page
                 'conn' => 'SSL'
             )
         );
+        if (WIRECARD_CHECKOUT_PAGE_SEND_ORDERNUMBER == 'true') {
+            $orderNumber = (int) $order_data['orders_id'];
+            while ($orderNumber <= (int) $_SESSION['last_order_id']) {
+                $orderNumber++;
+            }
+            //start from specific ordernumber
+            if (is_numeric(WIRECARD_CHECKOUT_PAGE_START_ORDERNUMBER)) {
+                $orderNumber += (int) WIRECARD_CHECKOUT_PAGE_START_ORDERNUMBER;
+            }
+           $request['orderNumber'] = (string) $orderNumber;
+        }
         $request['paymentType'] = (isset ($strPaymentType) && !empty ($strPaymentType)) ? $strPaymentType : "SELECT";
         $request['serviceURL'] = WIRECARD_CHECKOUT_PAGE_SERVICE_URL;
         $request['imageURL'] = WIRECARD_CHECKOUT_PAGE_IMAGE_URL;
