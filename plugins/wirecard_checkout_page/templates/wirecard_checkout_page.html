@@ -47,15 +47,7 @@
         <header>
             <label class="cursor-pointer">
                 <span class="check">
-                     {if $payment_hidden == true}
-                        <input id=selected_payment_{$payment.img} type=hidden name=selected_payment value={$payment_code}:{$payment.name} >
-                     {else}
-                        {if $payment_code == $payment_selected}
-                            <input id=selected_payment_{$payment.img} type=radio name=selected_payment value={$payment_code}:{$payment.name} checked=true>
-                        {else}
-                            <input id=selected_payment_{$payment.img} type=radio name=selected_payment value={$payment_code}:{$payment.name} >
-                        {/if}
-                     {/if}
+                    <input id=selected_payment_{$payment.img} type=radio name=selected_payment value={$payment_code}:{$payment.name} >
                 </span>
                 <span class="name payment-name">{$payment.text}</span>
                 {if $payment_price.formated}
