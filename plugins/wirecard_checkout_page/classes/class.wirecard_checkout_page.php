@@ -55,7 +55,7 @@ class wirecard_checkout_page
     var $initPort = '443';
     var $initParams = array();
 
-    var $version = '1.5.1';
+    var $version = '1.5.2';
 
     var $paymentTypes = array(
         'WIRECARD_CHECKOUT_PAGE_SELECT' => 'SELECT',
@@ -531,6 +531,18 @@ class wirecard_checkout_page
     {
         if (($type != 'mixed') && ($type != 'chars') && ($type != 'digits')) {
             return false;
+        }
+
+        if(!function_exists('ereg')) {
+            function ereg($pattern, $subject, &$matches = []) {
+                return preg_match('/'.$pattern.'/', $subject, $matches);
+            }
+        }
+
+        if(!function_exists('eregi')) {
+            function eregi($pattern, $subject, &$matches = []) {
+                return preg_match('/'.$pattern.'/i', $subject, $matches);
+            }
         }
 
         $rand_value = '';
