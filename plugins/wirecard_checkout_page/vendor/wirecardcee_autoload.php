@@ -41,7 +41,7 @@ function wirecardceecheckoutpage_autoload($class)
 
     foreach ($namespaces as $ns) {
 
-        if (strncmp($ns, $class, Tools::strlen($ns)) !== 0) {
+        if (strncmp($ns, $class, strlen($ns)) !== 0) {
             continue;
         } else {
             $namespace = $ns;
@@ -54,12 +54,12 @@ function wirecardceecheckoutpage_autoload($class)
 
     if (strcmp($class, $modelNamespace) > 0) {
         $classWithUnderscore = 'Wirecard_CheckoutPage_';
-        if ((strcmp($paymentNamespace, Tools::substr($class, Tools::strlen($paymentNamespace))) >= 0)
-            && ((Tools::substr($class, Tools::strlen($paymentNamespace))) != '')
+        if ((strcmp($paymentNamespace, substr($class, strlen($paymentNamespace))) >= 0)
+            && ((substr($class, strlen($paymentNamespace))) != '')
         ) {
-            $classWithUnderscore .= 'Payment_' . Tools::substr($class, Tools::strlen($paymentNamespace));
+            $classWithUnderscore .= 'Payment_' . substr($class, strlen($paymentNamespace));
         } else {
-            $classWithUnderscore .= Tools::substr($class, Tools::strlen($modelNamespace));
+            $classWithUnderscore .= substr($class, strlen($modelNamespace));
         }
         $class = $classWithUnderscore;
     }
