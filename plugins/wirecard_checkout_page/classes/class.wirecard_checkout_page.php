@@ -37,6 +37,8 @@
 
 defined('_VALID_CALL') or die ('Direct Access is not allowed.');
 
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
+
 class wirecard_checkout_page
 {
     var $data = array();
@@ -112,7 +114,7 @@ class wirecard_checkout_page
      * Seite vorbereitet (idR IFrame oder Fehlerseite)
      *
      * @param $order_data array mit den wichtigsten Infos zur Bestellung
-     * @return URL, zu der als nächstes gesprungen werden soll
+     * @return $URL, zu der als nächstes gesprungen werden soll
      * @access public
      */
     function pspRedirect($order_data = null)
@@ -126,16 +128,18 @@ class wirecard_checkout_page
         }
 
         $orders_id = ( int )$order_data ['orders_id'];
+        $redirect_url = $xtLink->_link(
+            array(
+                'page' => 'wirecard_checkout_page_checkout',
+                'paction' => 'failure',
+                'conn' => 'SSL',
+                'params' => 'code_1=210'
+            )
+        );
         if (!is_int($orders_id)) {
-            return $xtLink->_link(
-                array(
-                    'page' => 'wirecard_checkout_page_checkout',
-                    'paction' => 'failure',
-                    'conn' => 'SSL',
-                    'params' => 'code_1=210'
-                )
-            );
+            return $redirect_url;
         }
+
         # Special, da xt der Meinung ist alle alten GET Parameter mit anzuh�ngen
         $_GET = array();
 
@@ -144,36 +148,16 @@ class wirecard_checkout_page
         $paymentType1 = (isset ($strPaymentType) && !empty ($strPaymentType)) ? $strPaymentType : "SELECT";
 
         # Daten setzen
-        $this->_setSystemData($order_data);
-        if (WIRECARD_CHECKOUT_PAGE_SEND_CUSTOMER_DATA == 'true' || $paymentType1 == 'INSTALLMENT' || $paymentType1 == 'INVOICE') {
-            $this->_setCustomerData($order_data);
+        try {
+            $redirect_url = $this->initiate()->getRedirectUrl();
+        } catch (Exception $e){
+               $this->_failureRedirect($e->getMessage());
         }
 
-        $requestFingerprintOrder = 'secret';
-
-        $tempArray = array('secret' => WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
-
-        foreach ($this->initParams AS $paramName => $paramValue) {
-            $requestFingerprintOrder .= ',' . $paramName;
-            $tempArray[(string)$paramName] = (string)$paramValue;
-        }
-        $requestFingerprintOrder .= ',requestFingerprintOrder';
-
-        $tempArray['requestFingerprintOrder'] = $requestFingerprintOrder;
-
-        $hash = hash_init('sha512', HASH_HMAC, WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
-        foreach ($tempArray AS $paramName => $paramValue) {
-            hash_update($hash, $paramValue);
-        }
-
-        $requestFingerprint = hash_final($hash);
-        $this->initParams['requestFingerprintOrder'] = $requestFingerprintOrder;
-        $this->initParams['requestFingerprint'] = $requestFingerprint;
-        $result = @$db->Execute(
+        @$db->Execute(
             "INSERT INTO " . $this->_transaction_table . " (TRID, PAYSYS,    STATE, DATE) VALUES ('" . $this->_transaction_id . "', '" . $paymentType1 . "','REDIRECTED', NOW())"
         );
-        $paymentUrl = $this->_initiateWirecardCheckoutPageSession();
-        return $paymentUrl;
+        return $redirect_url;
     }
 
     /**
@@ -338,54 +322,62 @@ class wirecard_checkout_page
     }
 
     /**
-     * Setzt die Systemdaten für den Aufruf der Schnittstelle
-     *
-     * @param $order_data array mit den wichtigsten Infos zur Bestellung
-     * @access private
+     * @return WirecardCEE_QPay_Response_Initiation
      */
 
-    function _setSystemData()
+    function initiate()
     {
         global $order, $language;
 
-        if ($this->getMajorVersion() <= 4) {
-            $shopSystem = 'Veyton; 4.x; ; xtCommerce4; ';
-        } else {
-            $shopSystem = 'xtCommerce5; ';
-        }
-        $pluginVersion = base64_encode($shopSystem . $this->version);
-
         $order_data = $order->order_data;
         $this->_transaction_id = $this->generate_trid();
+        $payment_type = $this->paymentTypes[$_SESSION['selected_payment_sub']];
 
-        $shopId = trim(WIRECARD_CHECKOUT_PAGE_SHOP_ID);
-        if ($shopId != '-') {
-            $request['shopid'] = WIRECARD_CHECKOUT_PAGE_SHOP_ID;
-        }
-        $request['customerId'] = WIRECARD_CHECKOUT_PAGE_PROJECT_ID;
 
-        if (intval(WIRECARD_CHECKOUT_PAGE_MAX_RETRIES) >= 0) {
-            $request['maxRetries'] = intval(WIRECARD_CHECKOUT_PAGE_MAX_RETRIES);
-        }
-        $request['amount'] = $order->order_total ['total'] ['plain'];
-        $request['currency'] = $order_data ['currency_code'];
-        $request['language'] = $order_data ['language_code'];
+        $init = new WirecardCEE_QPay_FrontendClient($this->getConfigArray());
+        $init->trid = $this->_transaction_id;
 
-        $strPaymentType = $this->paymentTypes[$_SESSION ['selected_payment_sub']];
-
-        $request['trid'] = $this->_transaction_id;
-        $request['successURL'] = $this->_link(array('page' => 'wirecard_checkout_page_checkout', 'conn' => 'SSL'));
-        $request['failureURL'] = $this->_link(array('page' => 'wirecard_checkout_page_checkout', 'conn' => 'SSL'));
-        $request['cancelURL'] = $this->_link(array('page' => 'wirecard_checkout_page_checkout', 'conn' => 'SSL'));
-        $request['pendingURL'] = $this->_link(array('page' => 'wirecard_checkout_page_checkout', 'conn' => 'SSL'));
-        $request['confirmURL'] = $this->_link(
-            array(
+        $init->setAmount($order->order_total['total']['plain'])
+            ->setCurrency($order_data ['currency_code'])
+            ->setPaymentType((isset ($payment_type) && !empty ($payment_type)) ? $payment_type : "SELECT")
+            ->setSuccessUrl($this->_link(array(
+                'page' => 'wirecard_checkout_page_checkout',
+                'conn' => 'SSL'
+            )))
+            ->setPendingUrl($this->_link(array(
+                'page' => 'wirecard_checkout_page_checkout',
+                'conn' => 'SSL'
+            )))
+            ->setFailureUrl($this->_link(array(
+                'page' => 'wirecard_checkout_page_checkout',
+                'conn' => 'SSL'
+            )))
+            ->setCancelUrl($this->_link(array(
+                'page' => 'wirecard_checkout_page_checkout',
+                'conn' => 'SSL'
+            )))
+            ->setConfirmUrl($this->_link(array(
                 'lang_code' => $language->default_language,
                 'page' => 'wirecard_checkout_page_checkout',
                 'paction' => 'confirm',
                 'conn' => 'SSL'
-            )
-        );
+            )))
+            ->setServiceUrl(WIRECARD_CHECKOUT_PAGE_SERVICE_URL)
+            ->setImageUrl(WIRECARD_CHECKOUT_PAGE_IMAGE_URL)
+            ->setDisplayText(WIRECARD_CHECKOUT_PAGE_DISPLAY_TEXT)
+            ->setMaxRetries(intval(WIRECARD_CHECKOUT_PAGE_MAX_RETRIES))
+            ->setOrderDescription($this->_transaction_id . ' - ' . $order->order_data ['customers_email_address'])
+            ->setPluginVersion($this->_getPluginVersion())
+            ->createConsumerMerchantCrmId($_SESSION['customer']->customer_info['customers_email_address'])
+            ->setCustomerStatement(sprintf('%s: %s',_STORE_NAME, $order->oID));
+
+        $init->last_order_id = $_SESSION['last_order_id'];
+        $init->orderDesc = $this->_transaction_id . ' - ' . $order->order_data['customers_email_address'];
+
+        if (WIRECARD_CHECKOUT_PAGE_SEND_CUSTOMER_DATA == 'true' || $payment_type == 'INSTALLMENT' || $payment_type == 'INVOICE') {
+            $init->setConsumerData($this->getConsumerData());
+        }
+
         if (WIRECARD_CHECKOUT_PAGE_SEND_ORDERNUMBER == 'true') {
             $orderNumber = (int) $order_data['orders_id'];
             while ($orderNumber <= (int) $_SESSION['last_order_id']) {
@@ -395,21 +387,10 @@ class wirecard_checkout_page
             if (is_numeric(WIRECARD_CHECKOUT_PAGE_START_ORDERNUMBER)) {
                 $orderNumber += (int) WIRECARD_CHECKOUT_PAGE_START_ORDERNUMBER;
             }
-           $request['orderNumber'] = (string) $orderNumber;
+            $init->setOrderNumber((string) $orderNumber);
         }
-        $request['paymentType'] = (isset ($strPaymentType) && !empty ($strPaymentType)) ? $strPaymentType : "SELECT";
-        $request['serviceURL'] = WIRECARD_CHECKOUT_PAGE_SERVICE_URL;
-        $request['imageURL'] = WIRECARD_CHECKOUT_PAGE_IMAGE_URL;
-        $request['displayText'] = WIRECARD_CHECKOUT_PAGE_DISPLAY_TEXT;
-        $request['last_order_id'] = $_SESSION ['last_order_id'];
-        $request['orderDescription'] = $this->_transaction_id . ' - ' . $order->order_data ['customers_email_address'];
-        $request['orderDesc'] = $this->_transaction_id . ' - ' . $order->order_data['customers_email_address'];
-        $request['pluginVersion'] = $pluginVersion;
-        $request['consumerIpAddress'] = $_SERVER['REMOTE_ADDR'];
-        $request['consumerUserAgent'] = $_SERVER['HTTP_USER_AGENT'];
-        $request['consumerMerchantCrmId'] = md5($_SESSION['customer']->customer_info['customers_email_address']);
 
-        $this->initParams = array_merge($this->initParams, $request);
+        return $init->initiate();
     }
 
     function _link($data)
@@ -420,78 +401,65 @@ class wirecard_checkout_page
         return $link;
     }
 
-    function _setCustomerData()
+    /**
+     * set consumer data returning an array for legacy reasons or change the values in the reference
+     * @return WirecardCEE_Stdlib_ConsumerData
+     */
+    function getConsumerData()
     {
-        global $order;
-        $order_data = $order->order_data;
         $genericData = $_SESSION['customer']->customer_default_address;
         $shippingData = $_SESSION['customer']->customer_shipping_address;
         $billingData = $_SESSION['customer']->customer_payment_address;
 
-        $consumerBirthDateTimestamp = strtotime($genericData['customers_dob']);
-        $consumerBirthDate = date('Y-m-d', $consumerBirthDateTimestamp);
-        $request['consumerShippingFirstname'] = $shippingData['customers_firstname'];
-        $request['consumerShippingLastname'] = $shippingData['customers_lastname'];
-        $request['consumerShippingAddress1'] = $shippingData['customers_street_address'];
-        $request['consumerShippingAddress2'] = $shippingData['customers_suborb'];
-        $request['consumerShippingCity'] = $shippingData['customers_city'];
-        $request['consumerShippingCountry'] = $shippingData['customers_country_code'];
-        $request['consumerShippingZipCode'] = $shippingData['customers_postcode'];
-        $request['consumerShippingPhone'] = $genericData['customers_phone'];
-        $request['consumerShippingFax'] = $genericData['customers_fax'];
-        $request['consumerBillingFirstname'] = $billingData['customers_firstname'];
-        $request['consumerBillingLastname'] = $billingData['customers_lastname'];
-        $request['consumerBillingAddress1'] = $billingData['customers_street_address'];
-        $request['consumerBillingAddress2'] = $billingData['customers_suborb'];
-        $request['consumerBillingCity'] = $billingData['customers_city'];
-        $request['consumerBillingCountry'] = $billingData['customers_country_code'];
-        $request['consumerBillingZipCode'] = $billingData['customers_postcode'];
-        $request['consumerBillingPhone'] = $genericData['customers_phone'];
-        $request['consumerBillingFax'] = $genericData['customers_fax'];
-        $request['consumerBirthDate'] = $consumerBirthDate;
-        $request['consumerEmail'] = $_SESSION['customer']->customer_info['customers_email_address'];
+        $birth_date = date('Y-m-d', strtotime($genericData['customers_dob']));
+        $birth_date = DateTime::createFromFormat('Y-m-d', $birth_date);
 
-        $this->initParams = array_merge($this->initParams, $request);
+        $shipping_address = new WirecardCEE_Stdlib_ConsumerData_Address(WirecardCEE_Stdlib_ConsumerData_Address::TYPE_SHIPPING);
+        $billing_address = new WirecardCEE_Stdlib_ConsumerData_Address(WirecardCEE_Stdlib_ConsumerData_Address::TYPE_BILLING);
+
+        $shipping_address->setFirstname($shippingData['customers_firstname'])
+            ->setLastname($shippingData['customers_lastname'])
+            ->setAddress1($shippingData['customers_street_address'])
+            ->setAddress2($shippingData['customers_suborb'])
+            ->setCity($shippingData['customers_city'])
+            ->setZipCode($shippingData['customers_postcode'])
+            ->setCountry($shippingData['customers_country_code'])
+            ->setPhone($genericData['customers_phone'])
+            ->setFax($genericData['customers_fax']);
+
+
+        $billing_address->setFirstname($billingData['customers_firstname'])
+            ->setLastname($billingData['customers_lastname'])
+            ->setAddress1($billingData['customers_street_address'])
+            ->setAddress2($billingData['customers_suborb'])
+            ->setCity($billingData['customers_city'])
+            ->setZipCode($billingData['customers_postcode'])
+            ->setCountry($billingData['customers_country_code'])
+            ->setPhone($billingData['customers_phone'])
+            ->setFax($billingData['customers_fax']);
+
+        $consumer_data = new WirecardCEE_Stdlib_ConsumerData();
+        $consumer_data->addAddressInformation($billing_address)
+            ->addAddressInformation($shipping_address)
+            ->setBirthDate($birth_date)
+            ->setEmail($_SESSION['customer']->customer_info['customers_email_address'])
+            ->setUserAgent($_SERVER['HTTP_USER_AGENT'])
+            ->setIpAddress($this->getConsumerIpAddress());
+
+        return $consumer_data;
     }
 
-    function _initiateWirecardCheckoutPageSession()
-    {
-        if (strlen($_SESSION['redirect_url'])) {
-            return $_SESSION['redirect_url'];
-        }
-        $requestDataString = $this->_createWirecardCheckoutPagePostData();
-        $fp = fsockopen('ssl://' . $this->initHost, $this->initPort, $errno, $errstr, 30);
-
-        if (!$fp) {
-            $message = 'No route to the payment service provider';
-            $this->_failureRedirect($message);
-        } else {
-            $out = "POST " . $this->initPath . " HTTP/1.1\r\n";
-            $out .= "Host: " . $this->initHost . "\r\n";
-            $out .= "User-Agent: PHP Veyton Plugin \r\n";
-            $out .= "Content-type: application/x-www-form-urlencoded\r\n";
-            $out .= "Content-length: " . strlen($requestDataString) . "\r\n";
-            $out .= "Connection: close\r\n\r\n";
-            $out .= $requestDataString . "\n";
-            fwrite($fp, $out);
-            $response = Array();
-            while (!feof($fp)) {
-                $responseEntry = explode('=', fgets($fp, 512));
-                if ($responseEntry[0] == 'redirectUrl') {
-                    fclose($fp);
-                    $_SESSION['redirect_url'] = urldecode($responseEntry[1]);
-                    return urldecode($responseEntry[1]);
-                } else {
-                    if ($responseEntry[0] == 'message') {
-                        $message = $responseEntry[1];
-                        $this->_failureRedirect($message);
-                    }
-                }
-            }
-            fclose($fp);
-            $message = 'Invalid response from the payment service provider';
-            $this->_failureRedirect($message);
-        }
+    /**
+     * @param WirecardCEE_QPay_FrontendClient $init
+     * @return string
+     */
+    function _getPluginVersion(){
+        return WirecardCEE_QPay_FrontendClient::generatePluginVersion(
+            $this->getMajorVersion() <= 4?'Veyton; 4.x; ; xtCommerce4':'xtCommerce5',
+            _SYSTEM_VERSION,
+            'wirecard_checkout_page',
+            $this->version
+        );
     }
 
     function _createWirecardCheckoutPagePostData()
@@ -600,6 +568,40 @@ class wirecard_checkout_page
     {
         $parts = explode('.', _SYSTEM_VERSION);
         return (int)$parts[1];
+    }
+
+    private function getConsumerIpAddress()
+    {
+        if (!method_exists('Tools', 'getRemoteAddr')) {
+            if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) and $_SERVER['HTTP_X_FORWARDED_FOR']) {
+                if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',')) {
+                    $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+                    return $ips[0];
+                } else {
+                    return $_SERVER['HTTP_X_FORWARDED_FOR'];
+                }
+            }
+            return $_SERVER['REMOTE_ADDR'];
+        } else {
+            return Tools::getRemoteAddr();
+        }
+    }
+
+    /**
+     * return config data as needed by the client library
+     *
+     * @return array
+     */
+    public function getConfigArray()
+    {
+        global $order;
+        $cfg = array(
+            'LANGUAGE' => $order->order_data['language_code'],
+            'CUSTOMER_ID' => WIRECARD_CHECKOUT_PAGE_PROJECT_ID,
+            'SHOP_ID' => (trim(WIRECARD_CHECKOUT_PAGE_SHOP_ID) != '-')?WIRECARD_CHECKOUT_PAGE_SHOP_ID:'',
+            'SECRET' => WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
+
+        return $cfg;
     }
 
 }
