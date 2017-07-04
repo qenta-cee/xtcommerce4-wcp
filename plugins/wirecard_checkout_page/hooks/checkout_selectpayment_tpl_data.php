@@ -56,6 +56,14 @@ $wcp_payments = array(
         'img' => 'cc'
     ),
     array(
+        'name' => 'WIRECARD_CHECKOUT_PAGE_MASTERPASS',
+        'active' => WIRECARD_CHECKOUT_PAGE_ACTIVATE_MASTERPASS,
+        'order' => WIRECARD_CHECKOUT_PAGE_ORDER_MASTERPASS,
+        'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_MASTERPASS,
+        'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MASTERPASS,
+        'img' => 'masterpass'
+    ),
+    array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_MAESTRO',
         'active' => WIRECARD_CHECKOUT_PAGE_ACTIVATE_MAESTRO,
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_MAESTRO,
