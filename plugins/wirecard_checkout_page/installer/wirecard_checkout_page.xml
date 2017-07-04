@@ -389,6 +389,43 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ACTIVATE_MASTERPASS</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>112</sort_order>
+            <de>
+                <title>Masterpass aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Masterpass</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_MASTERPASS</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Masterpass</title>
+            </de>
+            <en>
+                <title>Customergroup for Masterpass</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_MASTERPASS</key>
+            <type>dropdown</type>
+            <value>3</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Masterpass</title>
+            </de>
+            <en>
+                <title>Sortingorder for Masterpass</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_MAESTRO</key>
             <type>dropdown</type>
             <value>true</value>

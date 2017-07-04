@@ -61,34 +61,32 @@ class wirecard_checkout_page
 
     var $paymentTypes = array(
         'WIRECARD_CHECKOUT_PAGE_SELECT' => 'SELECT',
-        'WIRECARD_CHECKOUT_PAGE_CCARD' => 'CCARD',
-        'WIRECARD_CHECKOUT_PAGE_MAESTRO' => 'MAESTRO',
-        'WIRECARD_CHECKOUT_PAGE_PAYBOX' => 'PBX',
-        'WIRECARD_CHECKOUT_PAGE_PAYSAFECARD' => 'PSC',
-        'WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION' => 'EPS',
-        'WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT' => 'SEPA-DD',
-        'WIRECARD_CHECKOUT_PAGE_QUICK' => 'QUICK',
-        'WIRECARD_CHECKOUT_PAGE_IDEAL' => 'IDL',
-        'WIRECARD_CHECKOUT_PAGE_GIROPAY' => 'GIROPAY',
-        'WIRECARD_CHECKOUT_PAGE_PAYPAL' => 'PAYPAL',
-        'WIRECARD_CHECKOUT_PAGE_SOFORTUEBERWEISUNG' => 'SOFORTUEBERWEISUNG',
-        'WIRECARD_CHECKOUT_PAGE_BMC' => 'BANCONTACT_MISTERCASH',
-        'WIRECARD_CHECKOUT_PAGE_INVOICE' => 'INVOICE',
-        'WIRECARD_CHECKOUT_PAGE_INSTALLMENT' => 'INSTALLMENT',
-        'WIRECARD_CHECKOUT_PAGE_P24' => 'PRZELEWY24',
-        'WIRECARD_CHECKOUT_PAGE_MONETA' => 'MONETA',
-        'WIRECARD_CHECKOUT_PAGE_POLI' => 'POLI',
-        'WIRECARD_CHECKOUT_PAGE_EKONTO' => 'EKONTO',
-        'WIRECARD_CHECKOUT_PAGE_TRUSTLY' => 'TRUSTLY',
-        'WIRECARD_CHECKOUT_PAGE_MPASS' => 'MPASS',
-        'WIRECARD_CHECKOUT_PAGE_SKRILLDIRECT' => 'SKRILLDIRECT',
-        'WIRECARD_CHECKOUT_PAGE_SKRILLWALLET' => 'SKRILLWALLET',
-        'WIRECARD_CHECKOUT_PAGE_TATRAPAY' => 'TATRAPAY',
-        'WIRECARD_CHECKOUT_PAGE_VOUCHER' => 'VOUCHER',
-        'WIRECARD_CHECKOUT_PAGE_EPAY_BG' => 'EPAY_BG',
+        'WIRECARD_CHECKOUT_PAGE_CCARD' => WirecardCEE_QPay_PaymentType::CCARD,
+        'WIRECARD_CHECKOUT_PAGE_MASTERPASS' => WirecardCEE_QPay_PaymentType::MASTERPASS,
+        'WIRECARD_CHECKOUT_PAGE_MAESTRO' => WirecardCEE_QPay_PaymentType::MAESTRO,
+        'WIRECARD_CHECKOUT_PAGE_PAYBOX' => WirecardCEE_QPay_PaymentType::PBX,
+        'WIRECARD_CHECKOUT_PAGE_PAYSAFECARD' => WirecardCEE_QPay_PaymentType::PSC,
+        'WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION' => WirecardCEE_QPay_PaymentType::EPS,
+        'WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT' => WirecardCEE_QPay_PaymentType::SEPADD,
+        'WIRECARD_CHECKOUT_PAGE_QUICK' => WirecardCEE_QPay_PaymentType::QUICK,
+        'WIRECARD_CHECKOUT_PAGE_IDEAL' => WirecardCEE_QPay_PaymentType::IDL,
+        'WIRECARD_CHECKOUT_PAGE_GIROPAY' => WirecardCEE_QPay_PaymentType::GIROPAY,
+        'WIRECARD_CHECKOUT_PAGE_PAYPAL' => WirecardCEE_QPay_PaymentType::PAYPAL,
+        'WIRECARD_CHECKOUT_PAGE_SOFORTUEBERWEISUNG' => WirecardCEE_QPay_PaymentType::SOFORTUEBERWEISUNG,
+        'WIRECARD_CHECKOUT_PAGE_BMC' => WirecardCEE_QPay_PaymentType::BMC,
+        'WIRECARD_CHECKOUT_PAGE_INVOICE' => WirecardCEE_QPay_PaymentType::INVOICE,
+        'WIRECARD_CHECKOUT_PAGE_INSTALLMENT' => WirecardCEE_QPay_PaymentType::INSTALLMENT,
+        'WIRECARD_CHECKOUT_PAGE_P24' => WirecardCEE_QPay_PaymentType::P24,
+        'WIRECARD_CHECKOUT_PAGE_MONETA' => WirecardCEE_QPay_PaymentType::MONETA,
+        'WIRECARD_CHECKOUT_PAGE_POLI' => WirecardCEE_QPay_PaymentType::POLI,
+        'WIRECARD_CHECKOUT_PAGE_EKONTO' => WirecardCEE_QPay_PaymentType::EKONTO,
+        'WIRECARD_CHECKOUT_PAGE_TRUSTLY' => WirecardCEE_QPay_PaymentType::TRUSTLY,
+        'WIRECARD_CHECKOUT_PAGE_MPASS' => WirecardCEE_QPay_PaymentType::MPASS,
+        'WIRECARD_CHECKOUT_PAGE_SKRILLWALLET' => WirecardCEE_QPay_PaymentType::SKRILLWALLET,
+        'WIRECARD_CHECKOUT_PAGE_TATRAPAY' => WirecardCEE_QPay_PaymentType::TATRAPAY,
+        'WIRECARD_CHECKOUT_PAGE_VOUCHER' => WirecardCEE_QPay_PaymentType::VOUCHER,
+        'WIRECARD_CHECKOUT_PAGE_EPAY_BG' => WirecardCEE_QPay_PaymentType::EPAYBG
     );
-
-    const INVOICE_INSTALLMENT_MIN_AGE = 18;
 
     /**
      * php style constructor
@@ -239,7 +237,7 @@ class wirecard_checkout_page
 
         }
 
-        if ($paymentAddress['customers_age'] < self::INVOICE_INSTALLMENT_MIN_AGE) {
+        if ($paymentAddress['customers_age'] < 18) {
             return false;
         }
 
@@ -302,7 +300,7 @@ class wirecard_checkout_page
 
         }
 
-        if ($paymentAddress['customers_age'] < self::INVOICE_INSTALLMENT_MIN_AGE) {
+        if ($paymentAddress['customers_age'] < 18) {
             return false;
         }
 
@@ -376,6 +374,10 @@ class wirecard_checkout_page
 
         if (WIRECARD_CHECKOUT_PAGE_SEND_CUSTOMER_DATA == 'true' || $payment_type == 'INSTALLMENT' || $payment_type == 'INVOICE') {
             $init->setConsumerData($this->getConsumerData());
+        }
+
+        if ($payment_type == 'MASTERPASS') {
+            $init->setShippingProfile('NO_SHIPPING');
         }
 
         if (WIRECARD_CHECKOUT_PAGE_SEND_ORDERNUMBER == 'true') {
