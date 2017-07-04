@@ -596,7 +596,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
                 <title>SEPA Direct Debit aktivieren</title>
             </de>
             <en>
-                <title>Activate Direct Debit</title>
+                <title>Activate SEPA Direct Debit</title>
             </en>
         </config>
         <config>
