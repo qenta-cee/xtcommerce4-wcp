@@ -593,7 +593,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <url>conf_truefalse</url>
             <sort_order>170</sort_order>
             <de>
-                <title>Lastschriftverfahren aktivieren</title>
+                <title>SEPA Direct Debit aktivieren</title>
             </de>
             <en>
                 <title>Activate Direct Debit</title>
@@ -605,10 +605,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <value>7</value>
             <url>wirecard_set_payment_order</url>
             <de>
-                <title>Reihenfolge für Lastschriftverfahren</title>
+                <title>Reihenfolge für SEPA Direct Debit</title>
             </de>
             <en>
-                <title>Sortingorder for Direct Debit</title>
+                <title>Sortingorder for SEPA Direct Debit</title>
             </en>
         </config>
         <config>
@@ -617,10 +617,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <value>0</value>
             <url>customers_status</url>
             <de>
-                <title>Kundengruppe für Lastschriftverfahren</title>
+                <title>Kundengruppe für SEPA Direct Debit</title>
             </de>
             <en>
-                <title>Customergroup for Direct Debit</title>
+                <title>Customergroup for SEPA Direct Debit</title>
             </en>
         </config>
         <config>
@@ -815,10 +815,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <url>conf_truefalse</url>
             <sort_order>240</sort_order>
             <de>
-                <title>Bancontact/Mister Cash aktivieren</title>
+                <title>Bancontact aktivieren</title>
             </de>
             <en>
-                <title>Activate Bancontact/Mister Cash</title>
+                <title>Activate Bancontact</title>
             </en>
         </config>
         <config>
@@ -827,10 +827,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <value>13</value>
             <url>wirecard_set_payment_order</url>
             <de>
-                <title>Reihenfolge für Bancontact/Mister Cash</title>
+                <title>Reihenfolge für Bancontact</title>
             </de>
             <en>
-                <title>Sortingorder for Bancontact/Mister Cash</title>
+                <title>Sortingorder for Bancontact</title>
             </en>
         </config>
         <config>
@@ -839,10 +839,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <value>0</value>
             <url>customers_status</url>
             <de>
-                <title>Kundengruppe für Bancontact/Mister Cash</title>
+                <title>Kundengruppe für Bancontact</title>
             </de>
             <en>
-                <title>Customergroup for Bancontact/Mister Cash</title>
+                <title>Customergroup for Bancontact</title>
             </en>
         </config>
         <config>
@@ -1369,10 +1369,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT</key>
             <class>store</class>
             <de>
-                <value>Lastschriftverfahren</value>
+                <value>SEPA Direct Debit</value>
             </de>
             <en>
-                <value>Direct Debit</value>
+                <value>SEPA Direct Debit</value>
             </en>
         </phrase>
         <phrase>
@@ -1430,10 +1430,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BMC</key>
             <class>store</class>
             <de>
-                <value>Bancontact/Mister Cash</value>
+                <value>Bancontact</value>
             </de>
             <en>
-                <value>Bancontact/Mister Cash</value>
+                <value>Bancontact</value>
             </en>
         </phrase>
         <phrase>
