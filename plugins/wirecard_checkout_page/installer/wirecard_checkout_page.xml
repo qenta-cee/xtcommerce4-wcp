@@ -1527,13 +1527,13 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </phrase>
         <phrase>
-            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SKRILLDIRECT</key>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MASTERPASS</key>
             <class>store</class>
             <de>
-                <value>Skrill Direct</value>
+                <value>Masterpass</value>
             </de>
             <en>
-                <value>Skrill Direct</value>
+                <value>Masterpass</value>
             </en>
         </phrase>
         <phrase>
