@@ -128,6 +128,19 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
 
     <configuration_payment>
         <config>
+            <key>CONFIGURATION</key>
+            <type>dropdown</type>
+            <url>wirecard_set_plugin_configuration</url>
+            <value>demo</value>
+            <sort_order>1</sort_order>
+            <de>
+                <title>Erfolgsstatus</title>
+            </de>
+            <en>
+                <title>success status</title>
+            </en>
+        </config>
+        <config>
             <key>PROJECT_ID</key>
             <type>textfield</type>
             <value>D200001</value>
@@ -143,7 +156,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <key>SHOP_ID</key>
             <type>textfield</type>
             <value>-</value>
-            <sort_order>2</sort_order>
+            <sort_order>3</sort_order>
             <de>
                 <title>Shop Id</title>
             </de>
@@ -441,7 +454,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ORDER_MAESTRO</key>
             <type>dropdown</type>
-            <value>3</value>
+            <value>4</value>
             <url>wirecard_set_payment_order</url>
             <de>
                 <title>Reihenfolge für Maestro</title>
@@ -478,7 +491,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ORDER_PAYBOX</key>
             <type>dropdown</type>
-            <value>4</value>
+            <value>5</value>
             <url>wirecard_set_payment_order</url>
             <de>
                 <title>Reihenfolge für paybox</title>
@@ -515,7 +528,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ORDER_PAYSAFECARD</key>
             <type>dropdown</type>
-            <value>5</value>
+            <value>6</value>
             <url>wirecard_set_payment_order</url>
             <de>
                 <title>Reihenfolge für paysafecard</title>
@@ -552,7 +565,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ORDER_EPS_ONLINETRANSACTION</key>
             <type>dropdown</type>
-            <value>6</value>
+            <value>7</value>
             <url>wirecard_set_payment_order</url>
             <de>
                 <title>Reihenfolge für eps Online-Überweisung</title>

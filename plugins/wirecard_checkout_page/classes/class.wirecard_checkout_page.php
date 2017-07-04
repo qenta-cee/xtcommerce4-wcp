@@ -597,13 +597,34 @@ class wirecard_checkout_page
     public function getConfigArray()
     {
         global $order;
-        $cfg = array(
-            'LANGUAGE' => $order->order_data['language_code'],
-            'CUSTOMER_ID' => WIRECARD_CHECKOUT_PAGE_PROJECT_ID,
-            'SHOP_ID' => (trim(WIRECARD_CHECKOUT_PAGE_SHOP_ID) != '-')?WIRECARD_CHECKOUT_PAGE_SHOP_ID:'',
-            'SECRET' => WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
+        $language = $order->order_data['language_code'];
 
-        return $cfg;
+        switch(WIRECARD_CHECKOUT_PAGE_CONFIGURATION){
+            case 'demo':
+                return array(
+                    'LANGUAGE' => $language,
+                    'CUSTOMER_ID' => 'D200001',
+                    'SHOP_ID' => '',
+                    'SECRET' => 'B8AKTPWBRMNBV455FG6M2DANE99WU2');
+            case 'test':
+                return array(
+                    'LANGUAGE' => $language,
+                    'CUSTOMER_ID' => 'D200411',
+                    'SHOP_ID' => '',
+                    'SECRET' => 'CHCSH7UGHVVX2P7EHDHSY4T2S4CGYK4QBE4M5YUUG2ND5BEZWNRZW5EJYVJQ');
+            case 'test3d':
+                return array(
+                    'LANGUAGE' => $language,
+                    'CUSTOMER_ID' => 'D200411',
+                    'SHOP_ID' => '3D',
+                    'SECRET' => 'DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F');
+            case 'production':
+                return array(
+                    'LANGUAGE' => $language,
+                    'CUSTOMER_ID' => WIRECARD_CHECKOUT_PAGE_PROJECT_ID,
+                    'SHOP_ID' => (trim(WIRECARD_CHECKOUT_PAGE_SHOP_ID) != '-')?WIRECARD_CHECKOUT_PAGE_SHOP_ID:'',
+                    'SECRET' => WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
+        }
     }
 
 }

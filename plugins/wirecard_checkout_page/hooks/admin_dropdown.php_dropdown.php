@@ -42,3 +42,12 @@ if ($request['get'] == 'wirecard_set_payment_order') {
         $result[] = array('id' => $order, 'name' => $order);
     }
 }
+
+if ($request['get'] == 'wirecard_set_plugin_configuration') {
+    if (!isset($result)) $result = array(
+        array('id' => 'demo', 'name' => 'Demo'),
+        array('id' => 'test', 'name' => 'Test'),
+        array('id' => 'test3d', 'name' => 'Test 3D'),
+        array('id' => 'production', 'name' => 'Production')
+    );
+}
