@@ -98,12 +98,6 @@
             <active>1</active>
         </code>
         <code>
-            <hook>css_admin.php:css</hook>
-            <phpcode><![CDATA[include_once(_SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/ejsadmin.php__css_styles.php');]]></phpcode>
-            <order>1</order>
-            <active>1</active>
-        </code>
-        <code>
             <hook>account_tpl_account_data</hook>
             <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/account_tpl_account_data.php';]]></phpcode>
             <order>1</order>
