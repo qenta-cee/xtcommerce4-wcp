@@ -147,7 +147,12 @@ class wirecard_checkout_page
 
         # Daten setzen
         try {
-            $redirect_url = $this->initiate()->getRedirectUrl();
+            $initiation = $this->initiate();
+            if($initiation->hasFailed()){
+                $this->_failureRedirect($initiation->getResponse()['message']);
+                die();
+            }
+            $redirect_url = $initiation->getRedirectUrl();
         } catch (Exception $e){
                $this->_failureRedirect($e->getMessage());
         }
@@ -327,7 +332,7 @@ class wirecard_checkout_page
         $init = new WirecardCEE_QPay_FrontendClient($this->getConfigArray());
         $init->trid = $this->_transaction_id;
 
-        $init->setAmount($order->order_total['total']['plain'])
+        $init->setAmount(number_format($order->order_total['total']['plain'],2))
             ->setCurrency($order_data ['currency_code'])
             ->setPaymentType((isset ($payment_type) && !empty ($payment_type)) ? $payment_type : "SELECT")
             ->setSuccessUrl($this->_link(array(
@@ -471,10 +476,10 @@ class wirecard_checkout_page
             $basket_item = new WirecardCEE_Stdlib_Basket_Item($order_product['products_id']);
             $basket_item->setName($order_product['products_name'])
                 ->setImageUrl($image_path . $image)
-                ->setUnitGrossAmount($order_product['products_price']['plain'])
-                ->setUnitNetAmount($order_product['products_price']['plain'] - $order_product['products_tax']['plain'])
-                ->setUnitTaxAmount($order_product['products_tax']['plain'])
-                ->setUnitTaxRate($order_product['products_tax_rate']);
+                ->setUnitGrossAmount(number_format($order_product['products_price']['plain'],2))
+                ->setUnitNetAmount(number_format($order_product['products_price']['plain'] - $order_product['products_tax']['plain'],2))
+                ->setUnitTaxAmount(number_format($order_product['products_tax']['plain'],2))
+                ->setUnitTaxRate(number_format($order_product['products_tax_rate'],2));
 
             $basket->addItem($basket_item,
                 number_format($order_product['products_quantity'], 0));
@@ -486,10 +491,10 @@ class wirecard_checkout_page
                 $shipping_item = new WirecardCEE_Stdlib_Basket_Item('shipping');
                 $shipping_item->setDescription('Shipping')
                     ->setName('Shipping')
-                    ->setUnitGrossAmount($entry['orders_total_final_price']['plain'])
-                    ->setUnitNetAmount($entry['orders_total_final_price']['plain'] - $entry['orders_total_final_tax']['plain'])
-                    ->setUnitTaxRate($entry['orders_total_tax_rate'])
-                    ->setUnitTaxAmount($entry['orders_total_final_tax']['plain']);
+                    ->setUnitGrossAmount(number_format($entry['orders_total_final_price']['plain'],2))
+                    ->setUnitNetAmount(number_format($entry['orders_total_final_price']['plain'] - $entry['orders_total_final_tax']['plain'],2))
+                    ->setUnitTaxRate(number_format($entry['orders_total_tax_rate'],2))
+                    ->setUnitTaxAmount(number_format($entry['orders_total_final_tax']['plain'],2));
 
                 $basket->addItem($shipping_item);
             }

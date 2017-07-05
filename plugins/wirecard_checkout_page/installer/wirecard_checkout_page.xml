@@ -295,28 +295,16 @@
             </en>
         </config>
         <config>
-            <key>SEND_ORDERNUMBER</key>
+            <key>SEND_BASKET_DATA</key>
             <type>dropdown</type>
             <value>false</value>
             <url>conf_truefalse</url>
-            <sort_order>28</sort_order>
+            <sort_order>27</sort_order>
             <de>
-                <title>Bestellnummer mitsenden</title>
+                <title>Warenkorbdaten mitsenden</title>
             </de>
             <en>
-                <title>Send ordernumber</title>
-            </en>
-        </config>
-        <config>
-            <key>START_ORDERNUMBER</key>
-            <type>textfield</type>
-            <value>0</value>
-            <sort_order>30</sort_order>
-            <de>
-                <title>Startwert zum berechnen der Bestellnummer</title>
-            </de>
-            <en>
-                <title>Startvalue for ordernumber calculation</title>
+                <title>Send basket data</title>
             </en>
         </config>
         <config>
@@ -1457,7 +1445,7 @@
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INVOICE</key>
             <class>store</class>
             <de>
-                <value>Rechnung</value>
+                <value>Kauf auf Rechnung</value>
             </de>
             <en>
                 <value>Invoice</value>
@@ -1467,7 +1455,7 @@
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INSTALLMENT</key>
             <class>store</class>
             <de>
-                <value>Ratenzahlung</value>
+                <value>Kauf auf Raten</value>
             </de>
             <en>
                 <value>Installment</value>
