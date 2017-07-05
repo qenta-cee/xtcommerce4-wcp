@@ -93,7 +93,7 @@ class wirecard_checkout_page
      *
      * @access public
      */
-    function wirecard_checkout_page()
+    function __construct()
     {
         global $xtLink;
         if (WIRECARD_CHECKOUT_PAGE_USE_IFRAME == 'true') {
@@ -237,10 +237,6 @@ class wirecard_checkout_page
 
         }
 
-        if ($paymentAddress['customers_age'] < 18) {
-            return false;
-        }
-
         if (WIRECARD_CHECKOUT_PAGE_INSTALLMENT_MIN_AMOUNT == 0 || WIRECARD_CHECKOUT_PAGE_INSTALLMENT_MAX_AMOUNT == 0) {
             return false;
         }
@@ -298,10 +294,6 @@ class wirecard_checkout_page
                 }
             }
 
-        }
-
-        if ($paymentAddress['customers_age'] < 18) {
-            return false;
         }
 
         if (WIRECARD_CHECKOUT_PAGE_INVOICE_MIN_AMOUNT == 0 || WIRECARD_CHECKOUT_PAGE_INVOICE_MAX_AMOUNT == 0) {
@@ -374,6 +366,18 @@ class wirecard_checkout_page
 
         if (WIRECARD_CHECKOUT_PAGE_SEND_CUSTOMER_DATA == 'true' || $payment_type == 'INSTALLMENT' || $payment_type == 'INVOICE') {
             $init->setConsumerData($this->getConsumerData());
+        }
+
+        if (WIRECARD_CHECKOUT_PAGE_SEND_BASKET_DATA == 'true'
+            || ($payment_type == 'INSTALLMENT' && (WIRECARD_CHECKOUT_PAGE_INSTALLMENT_PROVIDER == 'ratepay'))
+            || ($payment_type == 'INVOICE' && (
+                    WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'ratepay'
+                    || WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'wirecard'
+                )
+            )
+
+        ) {
+            $init->setBasket($this->getBasketData());
         }
 
         if ($payment_type == 'MASTERPASS') {
@@ -449,6 +453,49 @@ class wirecard_checkout_page
             ->setIpAddress($this->getConsumerIpAddress());
 
         return $consumer_data;
+    }
+
+    function getBasketData()
+    {
+        global $order, $db, $mediaImages;
+
+        $image_path = _SYSTEM_BASE_URL . "/" . $mediaImages->getPath() . "info/";
+        $basket = new WirecardCEE_Stdlib_Basket();
+        $sql = "SELECT products_image FROM " . TABLE_PRODUCTS . " WHERE products_id = %d";
+        $order_products = $order->order_products;
+
+        foreach ($order_products as $order_product) {
+            $image = $db->_Execute(sprintf($sql,
+                $order_product['products_id']))->GetRowAssoc()["products_image"];
+
+            $basket_item = new WirecardCEE_Stdlib_Basket_Item($order_product['products_id']);
+            $basket_item->setName($order_product['products_name'])
+                ->setImageUrl($image_path . $image)
+                ->setUnitGrossAmount($order_product['products_price']['plain'])
+                ->setUnitNetAmount($order_product['products_price']['plain'] - $order_product['products_tax']['plain'])
+                ->setUnitTaxAmount($order_product['products_tax']['plain'])
+                ->setUnitTaxRate($order_product['products_tax_rate']);
+
+            $basket->addItem($basket_item,
+                number_format($order_product['products_quantity'], 0));
+        }
+
+        $shipping_data = $order->order_total_data;
+        foreach ($shipping_data as $entry) {
+            if ($entry['orders_total_key'] == 'shipping') {
+                $shipping_item = new WirecardCEE_Stdlib_Basket_Item('shipping');
+                $shipping_item->setDescription('Shipping')
+                    ->setName('Shipping')
+                    ->setUnitGrossAmount($entry['orders_total_final_price']['plain'])
+                    ->setUnitNetAmount($entry['orders_total_final_price']['plain'] - $entry['orders_total_final_tax']['plain'])
+                    ->setUnitTaxRate($entry['orders_total_tax_rate'])
+                    ->setUnitTaxAmount($entry['orders_total_final_tax']['plain']);
+
+                $basket->addItem($shipping_item);
+            }
+        }
+
+        return $basket;
     }
 
     /**
