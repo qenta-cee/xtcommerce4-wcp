@@ -22,16 +22,12 @@
         </en>
     </payment>
 
-    <db_install><![CDATA[
-        include_once _SRV_WEBROOT . _SRV_WEB_PLUGINS. '/wirecard_checkout_page/installer/install.php';
-]]></db_install>
+    <db_install><![CDATA[include_once _SRV_WEBROOT . _SRV_WEB_PLUGINS. '/wirecard_checkout_page/installer/install.php';]]></db_install>
 
     <plugin_code>
         <code>
             <hook>page_registry.php:bottom</hook>
-            <phpcode><![CDATA[
-define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checkout_page/pages/wirecard_checkout_page_checkout.php');
-    ]]></phpcode>
+            <phpcode><![CDATA[define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checkout_page/pages/wirecard_checkout_page_checkout.php');]]></phpcode>
             <order>1</order>
             <active>1</active>
         </code>
@@ -53,18 +49,14 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
 
         <code>
             <hook>class.checkout.php:_selectPayment_tpl_data</hook>
-            <phpcode><![CDATA[
-      require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/checkout_selectpayment_tpl_data.php';
-    ]]></phpcode>
+            <phpcode><![CDATA[require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/checkout_selectpayment_tpl_data.php';]]></phpcode>
             <order>1</order>
             <active>1</active>
         </code>
 
         <code>
             <hook>order_edit.php:display_data</hook>
-            <phpcode><![CDATA[
-            require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/order_edit_display_data.php';
-    ]]></phpcode>
+            <phpcode><![CDATA[require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/order_edit_display_data.php';]]></phpcode>
             <order>0</order>
             <active>1</active>
         </code>
@@ -134,10 +126,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <value>demo</value>
             <sort_order>1</sort_order>
             <de>
-                <title>Erfolgsstatus</title>
+                <title>Konfiguration</title>
             </de>
             <en>
-                <title>success status</title>
+                <title>Configuration</title>
             </en>
         </config>
         <config>
@@ -1610,10 +1602,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
                     <![CDATA[Ihre Bestellung ist eingegangen und wird umgehend bearbeitet. Sie haben zur Kontrolle eine Best&auml;tigungs-E-Mail mit den Bestelldaten bekommen!]]></value>
             </de>
             <en>
-                <value>Your order has been received and will be processed
-                    immediately. For your personal control you
-                    received an email with
-                    your order details!
+                <value>Your order has been received and will be processed immediately. For your personal control you received an email with your order details!
                 </value>
             </en>
         </phrase>
@@ -1635,9 +1624,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
                     <![CDATA[Wir danken Ihnen f&uuml;r Ihren Online-Einkauf, wir werden Ihre Bestellung versenden, sobald wir die Zahlungsbestätigung von Ihrer Bank erhalten haben!]]></value>
             </de>
             <en>
-                <value>Thank you for your purchase, your order will be shipped as
-                    soon as we get the payment
-                    confirmation from your bank!
+                <value>Thank you for your purchase, your order will be shipped as soon as we get the payment confirmation from your bank!
                 </value>
             </en>
         </phrase>
@@ -1694,9 +1681,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
                     <![CDATA[Bitte &uuml;berweisen Sie den Betrag f&uuml;r die Bestellung auf folgendes Konto]]></value>
             </de>
             <en>
-                <value>Please transfer the amount of the order to the following
-                    account
-                </value>
+                <value>Please transfer the amount of the order to the following account</value>
             </en>
         </phrase>
         <phrase>
@@ -1713,16 +1698,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <key>TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_CANCEL_DESC</key>
             <class>store</class>
             <de>
-                <value>Leider wurde der Zahlungsvorgang abgebrochen. Bei Fragen zu
-                    Ihrer Bestellung, wenden Sie sich
-                    bitte an den Shop-Betreiber.
-                </value>
+                <value>Leider wurde der Zahlungsvorgang abgebrochen. Bei Fragen zu Ihrer Bestellung, wenden Sie sich bitte an den Shop-Betreiber.</value>
             </de>
             <en>
-                <value>Regrettably the payment transaction was canceled. Please
-                    contact the shop owner for questions
-                    about your order.
-                </value>
+                <value>Regrettably the payment transaction was canceled. Please contact the shop owner for questions about your order.</value>
             </en>
         </phrase>
         <phrase>
