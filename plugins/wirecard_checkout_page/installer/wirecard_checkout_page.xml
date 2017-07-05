@@ -1300,7 +1300,32 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
                 <title>Installment maximum amount</title>
             </en>
         </config>
-
+        <config>
+            <key>INVOICE_PROVIDER</key>
+            <type>dropdown</type>
+            <value>wirecard</value>
+            <url>wirecard_invoice_provider</url>
+            <sort_order>360</sort_order>
+            <de>
+                <title>Provider für Kauf auf Rechnung</title>
+            </de>
+            <en>
+                <title>Provider for Invoice</title>
+            </en>
+        </config>
+        <config>
+            <key>INSTALLMENT_PROVIDER</key>
+            <type>dropdown</type>
+            <value>ratepay</value>
+            <sort_order>370</sort_order>
+            <url>wirecard_installment_provider</url>
+            <de>
+                <title>Provider für Kauf auf Raten</title>
+            </de>
+            <en>
+                <title>Provider for Installment</title>
+            </en>
+        </config>
 
     </configuration_payment>
 
