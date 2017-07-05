@@ -216,22 +216,6 @@ $wcp_payments = array(
         'img' => 'ekonto'
     ),
     array(
-        'name' => 'WIRECARD_CHECKOUT_PAGE_MPASS',
-        'active' => WIRECARD_CHECKOUT_PAGE_ACTIVATE_MPASS,
-        'order' => WIRECARD_CHECKOUT_PAGE_ORDER_MPASS,
-        'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_MPASS,
-        'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MPASS,
-        'img' => 'mpass'
-    ),
-    array(
-        'name' => 'WIRECARD_CHECKOUT_PAGE_SKRILLDIRECT',
-        'active' => WIRECARD_CHECKOUT_PAGE_ACTIVATE_SKRILLDIRECT,
-        'order' => WIRECARD_CHECKOUT_PAGE_ORDER_SKRILLDIRECT,
-        'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_SKRILLDIRECT,
-        'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SKRILLDIRECT,
-        'img' => 'skrilldirect'
-    ),
-    array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_SKRILLWALLET',
         'active' => WIRECARD_CHECKOUT_PAGE_ACTIVATE_SKRILLWALLET,
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_SKRILLWALLET,
