@@ -1331,6 +1331,26 @@
 
     <language_content>
         <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYOLUTON_TERMS_ARE_REQUIRED</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA[Kunden m&uuml;ssen die Nutzungsbedingungen von payolution während des Bezahlprozesses akzeptieren.]]></value>
+            </de>
+            <en>
+                <value>Please accept the consent terms!</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INVOICE_INSTALLMENT_TOO_YOUNG</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA['Sie m&uuml;ssen 18 Jahre oder &auml;lter sein, um diese Zahlungsart verwenden zu d&uuml;rfen.]]></value>
+            </de>
+            <en>
+                <value>You have to be 18 years or older to use this payment.</value>
+            </en>
+        </phrase>
+        <phrase>
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYOLUTON_TERMS</key>
             <class>store</class>
             <de>

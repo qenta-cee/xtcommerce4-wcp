@@ -61,7 +61,7 @@
                 {if $payment.payolution_terms}
                 <div class="form-group">
                     <div class="checkbox">
-                        <label><input type="checkbox" name="wcp_payolution_terms">{$payment.consent_message}</label>
+                        <label><input type="checkbox" name="wcp_payolution_terms_{$payment.name}">{$payment.consent_message}</label>
                     </div>
                 </div>
                 {/if}
