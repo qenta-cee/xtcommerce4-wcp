@@ -38,6 +38,14 @@ if ($tpl_data['payment_code'] == 'wirecard_checkout_page') {
     $tpl_data['plugin'] = new wirecard_checkout_page();
 }
 
+$consent_message = preg_replace_callback("/_(.*)_/", function ($matches) {
+    if (strlen(WIRECARD_CHECKOUT_PAGE_PAYOLUTION_MID)) {
+        return "<a style='color:white;mix-blend-mode:difference;' href='https://payment.payolution.com/payolution-payment/infoport/dataprivacyconsent?mId=" . base64_encode(WIRECARD_CHECKOUT_PAGE_PAYOLUTION_MID) . "' target='_blank'>$matches[1]</a>";
+    } else {
+        return $matches[1];
+    }
+}, TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYOLUTON_TERMS);
+
 $wcp_payments = array(
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_SELECT',
@@ -157,7 +165,11 @@ $wcp_payments = array(
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_INVOICE,
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_INVOICE,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INVOICE,
-        'img' => 'invoice'
+        'img' => 'invoice',
+        'extra_fields' => true,
+        'payolution_terms' => WIRECARD_CHECKOUT_PAGE_PAYOLUTION_TERMS === "true" && WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'payolution',
+        'consent_message' => $consent_message,
+        'birthdate' => $_SESSION['customer']->customer_payment_address['customers_age'] < 18
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_INSTALLMENT',
@@ -165,7 +177,11 @@ $wcp_payments = array(
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_INSTALLMENT,
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_INSTALLMENT,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INSTALLMENT,
-        'img' => 'installment'
+        'img' => 'installment',
+        'extra_fields' => true,
+        'payolution_terms' => WIRECARD_CHECKOUT_PAGE_PAYOLUTION_TERMS === "true" && WIRECARD_CHECKOUT_PAGE_INSTALLMENT_PROVIDER == 'payolution',
+        'consent_message' => $consent_message,
+        'birthdate' => $_SESSION['customer']->customer_payment_address['customers_age'] < 18
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_P24',

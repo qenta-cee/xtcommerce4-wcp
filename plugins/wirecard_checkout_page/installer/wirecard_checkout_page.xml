@@ -1306,10 +1306,50 @@
                 <title>Provider for Installment</title>
             </en>
         </config>
+        <config>
+            <key>PAYOLUTION_TERMS</key>
+            <type>dropdown</type>
+            <value>false</value>
+            <url>conf_truefalse</url>
+            <sort_order>380</sort_order>
+            <de><title>Payolution Nutzungsbedingungen</title></de>
+            <en><title>Payolution terms</title></en>
+        </config>
+        <config>
+            <key>PAYOLUTION_MID</key>
+            <type>textfield</type>
+            <sort_order>390</sort_order>
+            <de>
+                <title>Payolution mID</title>
+            </de>
+            <en>
+                <title>Payolution mID</title>
+            </en>
+        </config>
 
     </configuration_payment>
 
     <language_content>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYOLUTON_TERMS</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA[Mit der &Uuml;bermittlung jener Daten an payolution, die f&uuml;r die Abwicklung von Zahlungen mit Kauf auf Rechnung und die Identit&auml;ts- und Bonit&auml;tspr&uuml;fung erforderlich sind, bin ich einverstanden. Meine _Einwilligung_ kann ich jederzeit mit Wirkung f&uuml;r die Zukunft widerrufen.]]></value>
+            </de>
+            <en>
+                <value>I agree that the data which are necessary for the liquidation of invoice payments and which are used to complete the identity and credit check are transmitted to payolution. My _consent_ can be revoked at any time with future effect.</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BIRTHDATE</key>
+            <class>store</class>
+            <de>
+                <value>Geburtsdatum</value>
+            </de>
+            <en>
+                <value>Birthdate</value>
+            </en>
+        </phrase>
         <phrase>
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SELECT</key>
             <class>store</class>
