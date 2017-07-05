@@ -389,18 +389,6 @@ class wirecard_checkout_page
             $init->setShippingProfile('NO_SHIPPING');
         }
 
-        if (WIRECARD_CHECKOUT_PAGE_SEND_ORDERNUMBER == 'true') {
-            $orderNumber = (int) $order_data['orders_id'];
-            while ($orderNumber <= (int) $_SESSION['last_order_id']) {
-                $orderNumber++;
-            }
-            //start from specific ordernumber
-            if (is_numeric(WIRECARD_CHECKOUT_PAGE_START_ORDERNUMBER)) {
-                $orderNumber += (int) WIRECARD_CHECKOUT_PAGE_START_ORDERNUMBER;
-            }
-            $init->setOrderNumber((string) $orderNumber);
-        }
-
         return $init->initiate();
     }
 
