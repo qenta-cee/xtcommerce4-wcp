@@ -101,7 +101,8 @@ $wcp_payments = array(
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_EPS_ONLINETRANSACTION,
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_EPS_ONLINETRANSACTION,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION,
-        'img' => 'eps'
+        'img' => 'eps',
+        'extra_fields' => true
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT',
@@ -125,7 +126,8 @@ $wcp_payments = array(
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_IDEAL,
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_IDEAL,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_IDEAL,
-        'img' => 'ideal'
+        'img' => 'ideal',
+        'extra_fields' => true
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_GIROPAY',

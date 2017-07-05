@@ -55,6 +55,33 @@
                 {/if}
             </label>
         </header>
+        {if $payment.extra_fields}
+        <div class="desc collapse" aria-expanded="true">
+            <fieldset>
+                {if $payment.name == 'WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION'}
+                <div class="form-group">
+                    <label>{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BIRTHDATE}</label>
+                    <select id="wcp_eps_financialInstitution" name="wcp_eps_financialInstitution" class="form-control">
+                        {foreach from=WirecardCEE_QPay_PaymentType::getFinancialInstitutions('EPS') key=value item=name}
+                        <option value="{$value}">{$name}</option>
+                        {/foreach}
+                    </select>
+                </div>
+                {/if}
+                {if $payment.name == 'WIRECARD_CHECKOUT_PAGE_IDEAL'}
+                <div class="form-group">
+                    <label>{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BIRTHDATE}</label>
+                    <select id="wcp_ideal_financialInstitution" name="wcp_ideal_financialInstitution" class="form-control">
+                        {foreach from=WirecardCEE_QPay_PaymentType::getFinancialInstitutions('IDL') key=value item=name}
+                        <option value="{$value}">{$name}</option>
+                        {/foreach}
+                    </select>
+                </div>
+                {/if}
+
+            </fieldset>
+        </div>
+        {/if}
     </div>
 </li>
 {/if}
