@@ -366,6 +366,10 @@ class wirecard_checkout_page
             ->createConsumerMerchantCrmId($_SESSION['customer']->customer_info['customers_email_address'])
             ->setCustomerStatement(sprintf('%s: %s',_STORE_NAME, $order->oID));
 
+        if(isset($_SESSION['financialInstitution'])){
+            $init->setFinancialInstitution($_SESSION['financialInstitution']);
+        }
+
         $init->last_order_id = $_SESSION['last_order_id'];
         $init->orderDesc = $this->_transaction_id . ' - ' . $order->order_data['customers_email_address'];
 

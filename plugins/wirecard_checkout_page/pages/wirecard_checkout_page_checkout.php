@@ -38,6 +38,9 @@ defined('_VALID_CALL') or die('Direct Access is not allowed.');
 define('TABLE_WIRECARD_CHECKOUT_PAGE_TRANSACTION', 'wirecard_checkout_page_transaction');
 
 $show_index_boxes = false;
+if(isset($_SESSION['financialInstitution'])){
+    unset($_SESSION['financialInstitution']);
+}
 
 if ($page->page_action == 'confirm') {
 
