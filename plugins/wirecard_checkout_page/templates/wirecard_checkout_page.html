@@ -58,6 +58,41 @@
         {if $payment.extra_fields}
         <div class="desc collapse" aria-expanded="true">
             <fieldset>
+                {if $payment.payolution_terms}
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="wcp_payolution_terms">{$payment.consent_message}</label>
+                    </div>
+                </div>
+                {/if}
+                {if $payment.birthdate}
+                <div class="form-group">
+                    <label>{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BIRTHDATE}</label>
+                    <div class="row"> <!-- added div.row -->
+                        <div class="col-xs-4"> <!-- added div.col-xs-4 -->
+                            <select id="wcp_dob_day_{$payment.name}" class="form-control" name="wcp_dob_day_{$payment.name}">
+                                {foreach from=range(1,31) item=day}
+                                <option value="{$day}">{$day}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                        <div class="col-xs-4"> <!-- added div.col-xs-4 -->
+                            <select id="wcp_dob_month_{$payment.name}" class="form-control" name="wcp_dob_month_{$payment.name}">
+                                {foreach from=range(1,12) item=month}
+                                <option value="{$month}">{$month}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                        <div class="col-xs-4"> <!-- added div.col-xs-4 -->
+                            <select id="wcp_dob_year_{$payment.name}" class="form-control" name="wcp_dob_year_{$payment.name}">
+                                {foreach from=range(date("Y"),date("Y")-75) item=year}
+                                <option value="{$year}">{$year}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                {/if}
                 {if $payment.name == 'WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION'}
                 <div class="form-group">
                     <label>{txt key=TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BIRTHDATE}</label>
@@ -153,6 +188,9 @@
 {elseif $plugin->getMajorVersion() > 4}
 {literal}
 <style>
+    li.active .desc.collapse {
+        display:block;
+    }
     .wdtitle {
         display: inline-block;
         font-size: 18px;
