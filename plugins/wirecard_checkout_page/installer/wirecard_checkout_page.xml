@@ -276,16 +276,29 @@
             </en>
         </config>
         <config>
-            <key>SEND_CUSTOMER_DATA</key>
+            <key>SEND_SHIPPING_DATA</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>25</sort_order>
+            <de>
+                <title>Versanddaten des Konsumenten mitsenden</title>
+            </de>
+            <en>
+                <title>Forward consumer shipping data</title>
+            </en>
+        </config>
+        <config>
+            <key>SEND_BILLING_DATA</key>
             <type>dropdown</type>
             <value>true</value>
             <url>conf_truefalse</url>
             <sort_order>26</sort_order>
             <de>
-                <title>Kundeninformationen mitsenden</title>
+                <title>Verrechnungsdaten des Konsumenten mitsenden</title>
             </de>
             <en>
-                <title>Send consumerinformation</title>
+                <title>Forward consumer billing data</title>
             </en>
         </config>
         <config>
@@ -329,7 +342,7 @@
         <config>
             <key>ACTIVATE_SELECT</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>100</sort_order>
             <de>
@@ -366,7 +379,7 @@
         <config>
             <key>ACTIVATE_CCARD</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>110</sort_order>
             <de>
@@ -403,7 +416,7 @@
         <config>
             <key>ACTIVATE_MASTERPASS</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>112</sort_order>
             <de>
@@ -440,7 +453,7 @@
         <config>
             <key>ACTIVATE_MAESTRO</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>130</sort_order>
             <de>
@@ -477,7 +490,7 @@
         <config>
             <key>ACTIVATE_PAYBOX</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>140</sort_order>
             <de>
@@ -514,7 +527,7 @@
         <config>
             <key>ACTIVATE_PAYSAFECARD</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>150</sort_order>
             <de>
@@ -551,7 +564,7 @@
         <config>
             <key>ACTIVATE_EPS_ONLINETRANSACTION</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>160</sort_order>
             <de>
@@ -588,7 +601,7 @@
         <config>
             <key>ACTIVATE_DIRECT_DEBIT</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>170</sort_order>
             <de>
@@ -625,7 +638,7 @@
         <config>
             <key>ACTIVATE_QUICK</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>180</sort_order>
             <de>
@@ -662,7 +675,7 @@
         <config>
             <key>ACTIVATE_IDEAL</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>190</sort_order>
             <de>
@@ -699,7 +712,7 @@
         <config>
             <key>ACTIVATE_GIROPAY</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>200</sort_order>
             <de>
@@ -736,7 +749,7 @@
         <config>
             <key>ACTIVATE_PAYPAL</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>210</sort_order>
             <de>
@@ -773,7 +786,7 @@
         <config>
             <key>ACTIVATE_SOFORTUEBERWEISUNG</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>220</sort_order>
             <de>
@@ -810,7 +823,7 @@
         <config>
             <key>ACTIVATE_BMC</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>240</sort_order>
             <de>
@@ -847,7 +860,7 @@
         <config>
             <key>ACTIVATE_INVOICE</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>250</sort_order>
             <de>
@@ -884,7 +897,7 @@
         <config>
             <key>ACTIVATE_INSTALLMENT</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>260</sort_order>
             <de>
@@ -921,7 +934,7 @@
         <config>
             <key>ACTIVATE_P24</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>270</sort_order>
             <de>
@@ -958,7 +971,7 @@
         <config>
             <key>ACTIVATE_MONETA</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>280</sort_order>
             <de>
@@ -995,7 +1008,7 @@
         <config>
             <key>ACTIVATE_POLI</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>290</sort_order>
             <de>
@@ -1032,7 +1045,7 @@
         <config>
             <key>ACTIVATE_EKONTO</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>300</sort_order>
             <de>
@@ -1069,7 +1082,7 @@
         <config>
             <key>ACTIVATE_SKRILLWALLET</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>330</sort_order>
             <de>
@@ -1106,7 +1119,7 @@
         <config>
             <key>ACTIVATE_TRUSTLY</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>310</sort_order>
             <de>
@@ -1143,7 +1156,7 @@
         <config>
             <key>ACTIVATE_EPAY_BG</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>310</sort_order>
             <de>
@@ -1180,7 +1193,7 @@
         <config>
             <key>ACTIVATE_TATRAPAY</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>310</sort_order>
             <de>
@@ -1217,7 +1230,7 @@
         <config>
             <key>ACTIVATE_VOUCHER</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>310</sort_order>
             <de>
@@ -1254,7 +1267,7 @@
         <config>
             <key>INVOICE_MIN_AMOUNT</key>
             <type>textfield</type>
-            <value>0</value>
+            <value>10</value>
             <sort_order>320</sort_order>
             <de>
                 <title>Min. Bestellsumme für Rechnung</title>
@@ -1266,7 +1279,7 @@
         <config>
             <key>INVOICE_MAX_AMOUNT</key>
             <type>textfield</type>
-            <value>0</value>
+            <value>3500</value>
             <sort_order>330</sort_order>
             <de>
                 <title>Max. Bestellsumme für Rechnung</title>
@@ -1278,7 +1291,7 @@
         <config>
             <key>INSTALLMENT_MIN_AMOUNT</key>
             <type>textfield</type>
-            <value>0</value>
+            <value>150</value>
             <sort_order>340</sort_order>
             <de>
                 <title>Min. Bestellsumme für Ratenzahlung</title>
@@ -1290,7 +1303,7 @@
         <config>
             <key>INSTALLMENT_MAX_AMOUNT</key>
             <type>textfield</type>
-            <value>0</value>
+            <value>3500</value>
             <sort_order>350</sort_order>
             <de>
                 <title>Max. Bestellsumme für Ratenzahlung</title>

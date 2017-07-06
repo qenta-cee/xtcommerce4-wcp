@@ -373,8 +373,15 @@ class wirecard_checkout_page
         $init->last_order_id = $_SESSION['last_order_id'];
         $init->orderDesc = $this->_transaction_id . ' - ' . $order->order_data['customers_email_address'];
 
-        if (WIRECARD_CHECKOUT_PAGE_SEND_CUSTOMER_DATA == 'true' || $payment_type == 'INSTALLMENT' || $payment_type == 'INVOICE') {
-            $init->setConsumerData($this->getConsumerData());
+        if (
+            WIRECARD_CHECKOUT_PAGE_SEND_SHIPPING_DATA == 'true'
+            || WIRECARD_CHECKOUT_PAGE_SEND_BILLING_DATA == 'true'
+            || $payment_type == 'INSTALLMENT'
+            || $payment_type == 'TRUSTLY'
+            || $payment_type == 'SKRILLWALLET'
+            || $payment_type == 'INVOICE'
+        ) {
+            $init->setConsumerData($this->getConsumerData($payment_type));
         }
 
         if (WIRECARD_CHECKOUT_PAGE_SEND_BASKET_DATA == 'true'
@@ -418,9 +425,10 @@ class wirecard_checkout_page
 
     /**
      * set consumer data returning an array for legacy reasons or change the values in the reference
+     * @param $payment_type
      * @return WirecardCEE_Stdlib_ConsumerData
      */
-    function getConsumerData()
+    function getConsumerData($payment_type)
     {
         $genericData = $_SESSION['customer']->customer_default_address;
         $shippingData = $_SESSION['customer']->customer_shipping_address;
@@ -454,12 +462,32 @@ class wirecard_checkout_page
             ->setFax($billingData['customers_fax']);
 
         $consumer_data = new WirecardCEE_Stdlib_ConsumerData();
-        $consumer_data->addAddressInformation($billing_address)
-            ->addAddressInformation($shipping_address)
-            ->setBirthDate($birth_date)
+        $consumer_data->setBirthDate($birth_date)
             ->setEmail($_SESSION['customer']->customer_info['customers_email_address'])
             ->setUserAgent($_SERVER['HTTP_USER_AGENT'])
             ->setIpAddress($this->getConsumerIpAddress());
+
+        if (WIRECARD_CHECKOUT_PAGE_SEND_BILLING_DATA == 'true'
+            || ($payment_type == 'INSTALLMENT' && (WIRECARD_CHECKOUT_PAGE_INSTALLMENT_PROVIDER == 'ratepay'))
+            || ($payment_type == 'INVOICE' && (
+                    WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'ratepay'
+                    || WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'wirecard'
+                )
+            )
+            || $payment_type == 'TRUSTLY'
+            || $payment_type == 'SKRILLWALLET'
+        ) {
+            $consumer_data->addAddressInformation($billing_address);
+        }
+        if (WIRECARD_CHECKOUT_PAGE_SEND_SHIPPING_DATA == 'true'
+            || ($payment_type == 'INSTALLMENT' && (WIRECARD_CHECKOUT_PAGE_INSTALLMENT_PROVIDER == 'ratepay'))
+            || ($payment_type == 'INVOICE' && (
+                    WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'ratepay'
+                    || WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'wirecard'
+                )
+            )) {
+            $consumer_data->addAddressInformation($shipping_address);
+        }
 
         return $consumer_data;
     }
