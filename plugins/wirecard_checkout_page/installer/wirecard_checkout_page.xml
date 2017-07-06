@@ -302,6 +302,31 @@
             </en>
         </config>
         <config>
+            <key>SEND_ORDERNUMBER</key>
+            <type>dropdown</type>
+            <value>false</value>
+            <url>conf_truefalse</url>
+            <sort_order>28</sort_order>
+            <de>
+                <title>Bestellnummer mitsenden</title>
+            </de>
+            <en>
+                <title>Send ordernumber</title>
+            </en>
+        </config>
+        <config>
+            <key>START_ORDERNUMBER</key>
+            <type>textfield</type>
+            <value>0</value>
+            <sort_order>30</sort_order>
+            <de>
+                <title>Startwert zum berechnen der Bestellnummer</title>
+            </de>
+            <en>
+                <title>Startvalue for ordernumber calculation</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_SELECT</key>
             <type>dropdown</type>
             <value>true</value>
