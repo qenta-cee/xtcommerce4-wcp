@@ -146,14 +146,12 @@
 
 {if $plugin->getMajorVersion() >= 4 && $plugin->getMinorVersion() >= 1}
 {literal}
+<script>
+    $(document).ready(function(){
+        $("span.wdtitle").parent().hide();
+    });
+</script>
 <style>
-    .wdtitle {
-        display: inline-block;
-        font-size: 14px;
-        font-weight: bold;
-        margin-top: 15px;
-    }
-
     .pull-right {
         float: right;
     }
@@ -169,8 +167,7 @@
 </style>
 {/literal}
 
-<span class="wdtitle">{$payment_name}</span><img class="wirecard-logo" style="float:right; margin-bottom: 10px;"
-                                                 src="plugins/wirecard_checkout_page/images/wd_logo.png" border="0"/>
+<span class="wdtitle">{$payment_name}</span>
 <br style="clear: both"/>
 
 <div class="box box-white box-hover">
@@ -187,22 +184,19 @@
 
 {elseif $plugin->getMajorVersion() > 4}
 {literal}
+<script>
+    $(document).ready(function(){
+        $("span.wdtitle").parent().hide();
+    });
+</script>
 <style>
     li.active .desc.collapse {
         display:block;
     }
-    .wdtitle {
-        display: inline-block;
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
 </style>
 {/literal}
 
-<span class="wdtitle">{$payment_name}</span><img class="wirecard-logo" style="float:right; margin-top: 5px; margin-bottom: 10px;"
-                                                 src="plugins/wirecard_checkout_page/images/wd_logo.png" border="0"/>
+<span class="wdtitle">{$payment_name}</span>
 </li>
 {$smarty.capture.paymenttypes}
 {else}
