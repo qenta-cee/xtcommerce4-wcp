@@ -34,6 +34,8 @@
  * terms of use!
  */
 
+global $db;
+
 defined('_VALID_CALL') or die('Direct Access is not allowed.');
 define('TABLE_WIRECARD_CHECKOUT_PAGE_TRANSACTION', 'wirecard_checkout_page_transaction');
 
@@ -95,10 +97,10 @@ if ($page->page_action == 'confirm') {
             'MESSAGE' => $message,
             'BRAND' => $brand,
             'RESPONSEDATA' => json_encode($aArrayToBeJSONized),
-            'PAYSYS' => $_POST['paymentType']
+            'PAYSYS' => $return->paymentType
         ),
         'UPDATE',
-        'TRID="' . $_POST['trid'] . '"'
+        'TRID="' . $return->trid . '"'
     );
     if (!$ok) {
         $confirmReturnMessage = wirecardCheckoutPageConfirmResponse(
@@ -109,10 +111,10 @@ if ($page->page_action == 'confirm') {
     if ($paymentState == WirecardCEE_QPay_ReturnFactory::STATE_SUCCESS) {
         if (strlen($return->last_order_id)) {
             $order = new order($return->last_order_id, -1);
-            $strOrderStatus = (isset($_POST['paymentType']) &&
-                !empty($_POST['paymentType'])) ? "QT" .
-                $_POST['paymentType'] : "";
-            updateOrderPayment($_POST['last_order_id'], $strOrderStatus);
+            $strOrderStatus = (strlen($return->paymentType) &&
+                !empty($return->paymentType)) ? "QT" .
+                $return->paymentType : "";
+            updateOrderPayment($return->last_order_id, $strOrderStatus);
             $txtOk = $db->AutoExecute(
                 TABLE_WIRECARD_CHECKOUT_PAGE_TRANSACTION,
                 Array(
@@ -130,9 +132,9 @@ if ($page->page_action == 'confirm') {
             }
         }
         $strMsg = 'The amount has been authorized and captured by Wirecard CEE.';
-        if (isset($_POST['avsResultMessage']) && isset($_POST['avsResultCode'])) {
-            $strMsg .= '<br />AVS Response: ' . $_POST['avsResultMessage'] . '(' .
-                $_POST['avsResultCode'] . ')';
+        if (strlen($return->avsResultMessage) && strlen($return->avsResultCode)) {
+            $strMsg .= '<br />AVS Response: ' . $return->avsResultMessage . '(' .
+                $return->avsResultCode . ')';
         }
 
         if (!$order->_sendOrderMail()) {
@@ -232,7 +234,7 @@ if ($page->page_action == 'confirm') {
                 'ORDERID' => $return->last_order_id
             ),
             'UPDATE',
-            'TRID="' . $_POST['trid'] . '"'
+            'TRID="' . $return->trid . '"'
         );
         if (!$txtOk) {
             $confirmReturnMessage = wirecardCheckoutPageConfirmResponse(
@@ -327,6 +329,7 @@ if ($page->page_action == 'confirm') {
             $messages[0]['message'] = htmlentities($_GET['message']);
         } else {
             $messages[0]['message'] = 'Invalid call';
+            $messages[1]['message'] = print_r($rs,true);
         }
         $checkout_data = array(
             'page_action' => 'failure',

@@ -373,16 +373,7 @@ class wirecard_checkout_page
         $init->last_order_id = $_SESSION['last_order_id'];
         $init->orderDesc = $this->_transaction_id . ' - ' . $order->order_data['customers_email_address'];
 
-        if (
-            WIRECARD_CHECKOUT_PAGE_SEND_SHIPPING_DATA == 'true'
-            || WIRECARD_CHECKOUT_PAGE_SEND_BILLING_DATA == 'true'
-            || $payment_type == 'INSTALLMENT'
-            || $payment_type == 'TRUSTLY'
-            || $payment_type == 'SKRILLWALLET'
-            || $payment_type == 'INVOICE'
-        ) {
-            $init->setConsumerData($this->getConsumerData($payment_type));
-        }
+        $init->setConsumerData($this->getConsumerData($payment_type));
 
         if (WIRECARD_CHECKOUT_PAGE_SEND_BASKET_DATA == 'true'
             || ($payment_type == 'INSTALLMENT' && (WIRECARD_CHECKOUT_PAGE_INSTALLMENT_PROVIDER == 'ratepay'))
