@@ -1682,8 +1682,7 @@
                     <![CDATA[Ihre Bestellung ist eingegangen und wird umgehend bearbeitet. Sie haben zur Kontrolle eine Best&auml;tigungs-E-Mail mit den Bestelldaten bekommen!]]></value>
             </de>
             <en>
-                <value>Your order has been received and will be processed immediately. For your personal control you received an email with your order details!
-                </value>
+                <value>Your order has been received and will be processed immediately. For your personal control you received an email with your order details!</value>
             </en>
         </phrase>
         <phrase>
@@ -1704,8 +1703,7 @@
                     <![CDATA[Wir danken Ihnen f&uuml;r Ihren Online-Einkauf, wir werden Ihre Bestellung versenden, sobald wir die Zahlungsbestätigung von Ihrer Bank erhalten haben!]]></value>
             </de>
             <en>
-                <value>Thank you for your purchase, your order will be shipped as soon as we get the payment confirmation from your bank!
-                </value>
+                <value>Thank you for your purchase, your order will be shipped as soon as we get the payment confirmation from your bank!</value>
             </en>
         </phrase>
 
@@ -1738,9 +1736,7 @@
 
             </de>
             <en>
-                <value>Please ensure to use this transfer code as payment details
-                    for your transfer
-                </value>
+                <value>Please ensure to use this transfer code as payment details for your transfer</value>
             </en>
         </phrase>
         <phrase>

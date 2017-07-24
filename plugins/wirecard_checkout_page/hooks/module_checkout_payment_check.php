@@ -42,7 +42,7 @@ if (strpos($selected_payment, ":") > -1) {
     $selected_payment = explode(":", $selected_payment)[1];
 
     if($selected_payment == 'WIRECARD_CHECKOUT_PAGE_IDEAL') {
-        $_SESSION['financialInstitution'] = $_POST["wcp_ideal_financialInsitution"];
+        $_SESSION['financialInstitution'] = $_POST["wcp_ideal_financialInstitution"];
     }
     if($selected_payment == 'WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION') {
         $_SESSION['financialInstitution'] = $_POST["wcp_eps_financialInstitution"];
