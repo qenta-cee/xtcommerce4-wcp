@@ -248,9 +248,13 @@ if ($page->page_action == 'confirm') {
     // send confirmation for status change
     die($confirmReturnMessage);
 } else {
-    $response = file_get_contents('php://input');
-    $return = WirecardCEE_QPay_ReturnFactory::getInstance($response, WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
 
+    if(count($_POST) > 1) {
+        
+        $response = file_get_contents('php://input');
+        $return = WirecardCEE_QPay_ReturnFactory::getInstance($response,
+            WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
+    }
     $strState = "";
     if (strlen($return->trid)) {
 
