@@ -70,7 +70,7 @@ if ($page->page_action == 'confirm') {
         _log($e->getTraceAsString());
     }
 
-    $confirmReturnMessage = wirecardCheckoutPageConfirmResponse('Invalid call.');
+    $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString('Invalid call.');
     if (get_magic_quotes_gpc() || get_magic_quotes_runtime()) {
         $stripSlashes = true;
     } else {
@@ -103,7 +103,7 @@ if ($page->page_action == 'confirm') {
         'TRID="' . $return->trid . '"'
     );
     if (!$ok) {
-        $confirmReturnMessage = wirecardCheckoutPageConfirmResponse(
+        $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString(
             'Transactiontable update failed.'
         );
     }
@@ -124,11 +124,11 @@ if ($page->page_action == 'confirm') {
                 'TRID="' . $return->trid . '"'
             );
             if (!$txtOk) {
-                $confirmReturnMessage = wirecardCheckoutPageConfirmResponse(
+                $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString(
                     'Transactiontable update failed.'
                 );
             } else {
-                $confirmReturnMessage = wirecardCheckoutPageConfirmResponse();
+                $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString();
             }
         }
         $strMsg = 'The amount has been authorized and captured by Wirecard CEE.';
@@ -138,7 +138,7 @@ if ($page->page_action == 'confirm') {
         }
 
         if (!$order->_sendOrderMail()) {
-            $confirmReturnMessage = wirecardCheckoutPageConfirmResponse(
+            $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString(
                 'Can\'t send confirmation mail.'
             );
         }
@@ -166,11 +166,11 @@ if ($page->page_action == 'confirm') {
                 'TRID="' . $return->trid . '"'
             );
             if (!$txtOk) {
-                $confirmReturnMessage = wirecardCheckoutPageConfirmResponse(
+                $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString(
                     'Transactiontable update failed.'
                 );
             } else {
-                $confirmReturnMessage = wirecardCheckoutPageConfirmResponse();
+                $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString();
             }
         }
         $strMsg = 'The payment is pending, waiting for bank approval.';
@@ -205,11 +205,11 @@ if ($page->page_action == 'confirm') {
                 'TRID="' . $return->trid . '"'
             );
             if (!$txtOk) {
-                $confirmReturnMessage = wirecardCheckoutPageConfirmResponse(
+                $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString(
                     'Transactiontable update failed.'
                 );
             } else {
-                $confirmReturnMessage = wirecardCheckoutPageConfirmResponse();
+                $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString();
             }
         }
     }
@@ -237,17 +237,23 @@ if ($page->page_action == 'confirm') {
             'TRID="' . $return->trid . '"'
         );
         if (!$txtOk) {
-            $confirmReturnMessage = wirecardCheckoutPageConfirmResponse(
+            $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString(
                 'Transactiontable update failed.'
             );
         } else {
-            $confirmReturnMessage = wirecardCheckoutPageConfirmResponse();
+            $confirmReturnMessage = WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString();
         }
     }
 
     // send confirmation for status change
     die($confirmReturnMessage);
 } else {
+    $response = file_get_contents('php://input');
+    $return = WirecardCEE_QPay_ReturnFactory::getInstance($response, WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
+    if (!$return->validate()) {
+        throw new Exception('Validation error: invalid response');
+    }
+    
     $strState = "";
     if (strlen($return->trid)) {
 
@@ -288,7 +294,6 @@ if ($page->page_action == 'confirm') {
             </body>
             </html>
             <?php
-            die();
         }
         $rs = $db->Execute(
             'SELECT STATE,MESSAGE FROM ' .
@@ -375,22 +380,11 @@ function updateOrderPayment($oid, $strOrderStatus)
             $strOrderStatus . '"'
         );
         if (!$ok) {
-            return wirecardCheckoutPageConfirmResponse(
+            die(WirecardCEE_QPay_ReturnFactory::generateConfirmResponseString(
                 'Paymenttype update failed'
-            );
+            ));
         }
     }
-    return true;
-}
-
-function wirecardCheckoutPageConfirmResponse($message = null)
-{
-    if ($message != null) {
-        $value = 'result="NOK" message="' . $message . '" ';
-    } else {
-        $value = 'result="OK"';
-    }
-    return '<QPAY-CONFIRMATION-RESPONSE ' . $value . ' />';
 }
 
 function _log($msg){
