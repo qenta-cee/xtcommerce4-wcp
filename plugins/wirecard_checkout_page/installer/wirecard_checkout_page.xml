@@ -1396,6 +1396,16 @@
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BIRTHDATE</key>
             <class>store</class>
             <de>
+                <value>Finanzinstitut</value>
+            </de>
+            <en>
+                <value>Financial institution</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_FINANCIALINSTITUTION</key>
+            <class>store</class>
+            <de>
                 <value>Geburtsdatum</value>
             </de>
             <en>

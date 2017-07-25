@@ -250,10 +250,7 @@ if ($page->page_action == 'confirm') {
 } else {
     $response = file_get_contents('php://input');
     $return = WirecardCEE_QPay_ReturnFactory::getInstance($response, WIRECARD_CHECKOUT_PAGE_PROJECT_SECRET);
-    if (!$return->validate()) {
-        throw new Exception('Validation error: invalid response');
-    }
-    
+
     $strState = "";
     if (strlen($return->trid)) {
 
