@@ -1396,20 +1396,20 @@
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BIRTHDATE</key>
             <class>store</class>
             <de>
-                <value>Finanzinstitut</value>
+                <value>Geburtsdatum</value>
             </de>
             <en>
-                <value>Financial institution</value>
+                <value>Birthdate</value>
             </en>
         </phrase>
         <phrase>
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_FINANCIALINSTITUTION</key>
             <class>store</class>
             <de>
-                <value>Geburtsdatum</value>
+                <value>Finanzinstitut</value>
             </de>
             <en>
-                <value>Birthdate</value>
+                <value>Financial institution</value>
             </en>
         </phrase>
         <phrase>
