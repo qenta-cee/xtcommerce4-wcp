@@ -102,6 +102,7 @@ $wcp_payments = array(
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_EPS_ONLINETRANSACTION,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION,
         'img' => 'eps',
+        'financialInstitutions' => WirecardCEE_QPay_PaymentType::getFinancialInstitutions('EPS'),
         'extra_fields' => true
     ),
     array(
@@ -127,6 +128,7 @@ $wcp_payments = array(
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_IDEAL,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_IDEAL,
         'img' => 'ideal',
+        'financialInstitutions' => WirecardCEE_QPay_PaymentType::getFinancialInstitutions('IDL'),
         'extra_fields' => true
     ),
     array(
