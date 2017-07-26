@@ -57,7 +57,7 @@ class wirecard_checkout_page
     var $initPort = '443';
     var $initParams = array();
 
-    var $version = '1.5.2';
+    var $version = '1.6.0';
 
     var $paymentTypes = array(
         'WIRECARD_CHECKOUT_PAGE_SELECT' => 'SELECT',
