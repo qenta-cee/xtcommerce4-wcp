@@ -42,3 +42,27 @@ if ($request['get'] == 'wirecard_set_payment_order') {
         $result[] = array('id' => $order, 'name' => $order);
     }
 }
+
+if ($request['get'] == 'wirecard_set_plugin_configuration') {
+    if (!isset($result)) $result = array(
+        array('id' => 'demo', 'name' => 'Demo'),
+        array('id' => 'test', 'name' => 'Test'),
+        array('id' => 'test3d', 'name' => 'Test 3D'),
+        array('id' => 'production', 'name' => 'Production')
+    );
+}
+
+if ($request['get'] == 'wirecard_installment_provider') {
+    if (!isset($result)) $result = array(
+        array('id' => 'ratepay', 'name' => 'RatePay'),
+        array('id' => 'payolution', 'name' => 'Payolution')
+    );
+}
+
+if ($request['get'] == 'wirecard_invoice_provider') {
+    if (!isset($result)) $result = array(
+        array('id' => 'wirecard', 'name' => 'Wirecard'),
+        array('id' => 'ratepay', 'name' => 'RatePay'),
+        array('id' => 'payolution', 'name' => 'Payolution')
+    );
+}

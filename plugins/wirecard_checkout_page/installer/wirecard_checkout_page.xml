@@ -2,7 +2,7 @@
 <xtcommerceplugin>
     <title>Wirecard Checkout Page</title>
     <type>payment</type>
-    <version>1.5.2</version>
+    <version>1.6.0</version>
     <code>wirecard_checkout_page</code>
     <url>http://www.wirecard.at</url>
     <description>Zahlungsmodul Wirecard CEE</description>
@@ -22,16 +22,12 @@
         </en>
     </payment>
 
-    <db_install><![CDATA[
-        include_once _SRV_WEBROOT . _SRV_WEB_PLUGINS. '/wirecard_checkout_page/installer/install.php';
-]]></db_install>
+    <db_install><![CDATA[include_once _SRV_WEBROOT . _SRV_WEB_PLUGINS. '/wirecard_checkout_page/installer/install.php';]]></db_install>
 
     <plugin_code>
         <code>
             <hook>page_registry.php:bottom</hook>
-            <phpcode><![CDATA[
-define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checkout_page/pages/wirecard_checkout_page_checkout.php');
-    ]]></phpcode>
+            <phpcode><![CDATA[define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checkout_page/pages/wirecard_checkout_page_checkout.php');]]></phpcode>
             <order>1</order>
             <active>1</active>
         </code>
@@ -53,18 +49,14 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
 
         <code>
             <hook>class.checkout.php:_selectPayment_tpl_data</hook>
-            <phpcode><![CDATA[
-      require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/checkout_selectpayment_tpl_data.php';
-    ]]></phpcode>
+            <phpcode><![CDATA[require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/checkout_selectpayment_tpl_data.php';]]></phpcode>
             <order>1</order>
             <active>1</active>
         </code>
 
         <code>
             <hook>order_edit.php:display_data</hook>
-            <phpcode><![CDATA[
-            require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/order_edit_display_data.php';
-    ]]></phpcode>
+            <phpcode><![CDATA[require _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/order_edit_display_data.php';]]></phpcode>
             <order>0</order>
             <active>1</active>
         </code>
@@ -106,12 +98,6 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <active>1</active>
         </code>
         <code>
-            <hook>css_admin.php:css</hook>
-            <phpcode><![CDATA[include_once(_SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/ejsadmin.php__css_styles.php');]]></phpcode>
-            <order>1</order>
-            <active>1</active>
-        </code>
-        <code>
             <hook>account_tpl_account_data</hook>
             <phpcode><![CDATA[include _SRV_WEBROOT._SRV_WEB_PLUGINS.'wirecard_checkout_page/hooks/account_tpl_account_data.php';]]></phpcode>
             <order>1</order>
@@ -128,6 +114,19 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
 
     <configuration_payment>
         <config>
+            <key>CONFIGURATION</key>
+            <type>dropdown</type>
+            <url>wirecard_set_plugin_configuration</url>
+            <value>demo</value>
+            <sort_order>1</sort_order>
+            <de>
+                <title>Konfiguration</title>
+            </de>
+            <en>
+                <title>Configuration</title>
+            </en>
+        </config>
+        <config>
             <key>PROJECT_ID</key>
             <type>textfield</type>
             <value>D200001</value>
@@ -143,7 +142,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <key>SHOP_ID</key>
             <type>textfield</type>
             <value>-</value>
-            <sort_order>2</sort_order>
+            <sort_order>3</sort_order>
             <de>
                 <title>Shop Id</title>
             </de>
@@ -277,16 +276,42 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
-            <key>SEND_CUSTOMER_DATA</key>
+            <key>SEND_SHIPPING_DATA</key>
+            <type>dropdown</type>
+            <value>true</value>
+            <url>conf_truefalse</url>
+            <sort_order>25</sort_order>
+            <de>
+                <title>Versanddaten des Konsumenten mitsenden</title>
+            </de>
+            <en>
+                <title>Forward consumer shipping data</title>
+            </en>
+        </config>
+        <config>
+            <key>SEND_BILLING_DATA</key>
             <type>dropdown</type>
             <value>true</value>
             <url>conf_truefalse</url>
             <sort_order>26</sort_order>
             <de>
-                <title>Kundeninformationen mitsenden</title>
+                <title>Verrechnungsdaten des Konsumenten mitsenden</title>
             </de>
             <en>
-                <title>Send consumerinformation</title>
+                <title>Forward consumer billing data</title>
+            </en>
+        </config>
+        <config>
+            <key>SEND_BASKET_DATA</key>
+            <type>dropdown</type>
+            <value>false</value>
+            <url>conf_truefalse</url>
+            <sort_order>27</sort_order>
+            <de>
+                <title>Warenkorbdaten mitsenden</title>
+            </de>
+            <en>
+                <title>Send basket data</title>
             </en>
         </config>
         <config>
@@ -317,7 +342,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_SELECT</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>100</sort_order>
             <de>
@@ -354,7 +379,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_CCARD</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>110</sort_order>
             <de>
@@ -389,9 +414,46 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
+            <key>ACTIVATE_MASTERPASS</key>
+            <type>dropdown</type>
+            <value>false</value>
+            <url>conf_truefalse</url>
+            <sort_order>112</sort_order>
+            <de>
+                <title>Masterpass aktivieren</title>
+            </de>
+            <en>
+                <title>Activate Masterpass</title>
+            </en>
+        </config>
+        <config>
+            <key>PERMISSION_MASTERPASS</key>
+            <type>dropdown</type>
+            <value>0</value>
+            <url>customers_status</url>
+            <de>
+                <title>Kundengruppe für Masterpass</title>
+            </de>
+            <en>
+                <title>Customergroup for Masterpass</title>
+            </en>
+        </config>
+        <config>
+            <key>ORDER_MASTERPASS</key>
+            <type>dropdown</type>
+            <value>3</value>
+            <url>wirecard_set_payment_order</url>
+            <de>
+                <title>Reihenfolge für Masterpass</title>
+            </de>
+            <en>
+                <title>Sortingorder for Masterpass</title>
+            </en>
+        </config>
+        <config>
             <key>ACTIVATE_MAESTRO</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>130</sort_order>
             <de>
@@ -404,7 +466,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ORDER_MAESTRO</key>
             <type>dropdown</type>
-            <value>3</value>
+            <value>4</value>
             <url>wirecard_set_payment_order</url>
             <de>
                 <title>Reihenfolge für Maestro</title>
@@ -428,7 +490,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_PAYBOX</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>140</sort_order>
             <de>
@@ -441,7 +503,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ORDER_PAYBOX</key>
             <type>dropdown</type>
-            <value>4</value>
+            <value>5</value>
             <url>wirecard_set_payment_order</url>
             <de>
                 <title>Reihenfolge für paybox</title>
@@ -465,7 +527,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_PAYSAFECARD</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>150</sort_order>
             <de>
@@ -478,7 +540,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ORDER_PAYSAFECARD</key>
             <type>dropdown</type>
-            <value>5</value>
+            <value>6</value>
             <url>wirecard_set_payment_order</url>
             <de>
                 <title>Reihenfolge für paysafecard</title>
@@ -502,7 +564,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_EPS_ONLINETRANSACTION</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>160</sort_order>
             <de>
@@ -515,7 +577,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ORDER_EPS_ONLINETRANSACTION</key>
             <type>dropdown</type>
-            <value>6</value>
+            <value>7</value>
             <url>wirecard_set_payment_order</url>
             <de>
                 <title>Reihenfolge für eps Online-Überweisung</title>
@@ -539,14 +601,14 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_DIRECT_DEBIT</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>170</sort_order>
             <de>
-                <title>Lastschriftverfahren aktivieren</title>
+                <title>SEPA Direct Debit aktivieren</title>
             </de>
             <en>
-                <title>Activate Direct Debit</title>
+                <title>Activate SEPA Direct Debit</title>
             </en>
         </config>
         <config>
@@ -555,10 +617,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <value>7</value>
             <url>wirecard_set_payment_order</url>
             <de>
-                <title>Reihenfolge für Lastschriftverfahren</title>
+                <title>Reihenfolge für SEPA Direct Debit</title>
             </de>
             <en>
-                <title>Sortingorder for Direct Debit</title>
+                <title>Sortingorder for SEPA Direct Debit</title>
             </en>
         </config>
         <config>
@@ -567,16 +629,16 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <value>0</value>
             <url>customers_status</url>
             <de>
-                <title>Kundengruppe für Lastschriftverfahren</title>
+                <title>Kundengruppe für SEPA Direct Debit</title>
             </de>
             <en>
-                <title>Customergroup for Direct Debit</title>
+                <title>Customergroup for SEPA Direct Debit</title>
             </en>
         </config>
         <config>
             <key>ACTIVATE_QUICK</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>180</sort_order>
             <de>
@@ -613,7 +675,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_IDEAL</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>190</sort_order>
             <de>
@@ -650,7 +712,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_GIROPAY</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>200</sort_order>
             <de>
@@ -687,7 +749,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_PAYPAL</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>210</sort_order>
             <de>
@@ -724,7 +786,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_SOFORTUEBERWEISUNG</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>220</sort_order>
             <de>
@@ -761,14 +823,14 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_BMC</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>240</sort_order>
             <de>
-                <title>Bancontact/Mister Cash aktivieren</title>
+                <title>Bancontact aktivieren</title>
             </de>
             <en>
-                <title>Activate Bancontact/Mister Cash</title>
+                <title>Activate Bancontact</title>
             </en>
         </config>
         <config>
@@ -777,10 +839,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <value>13</value>
             <url>wirecard_set_payment_order</url>
             <de>
-                <title>Reihenfolge für Bancontact/Mister Cash</title>
+                <title>Reihenfolge für Bancontact</title>
             </de>
             <en>
-                <title>Sortingorder for Bancontact/Mister Cash</title>
+                <title>Sortingorder for Bancontact</title>
             </en>
         </config>
         <config>
@@ -789,16 +851,16 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <value>0</value>
             <url>customers_status</url>
             <de>
-                <title>Kundengruppe für Bancontact/Mister Cash</title>
+                <title>Kundengruppe für Bancontact</title>
             </de>
             <en>
-                <title>Customergroup for Bancontact/Mister Cash</title>
+                <title>Customergroup for Bancontact</title>
             </en>
         </config>
         <config>
             <key>ACTIVATE_INVOICE</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>250</sort_order>
             <de>
@@ -835,7 +897,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_INSTALLMENT</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>260</sort_order>
             <de>
@@ -872,7 +934,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_P24</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>270</sort_order>
             <de>
@@ -909,7 +971,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_MONETA</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>280</sort_order>
             <de>
@@ -946,7 +1008,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_POLI</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>290</sort_order>
             <de>
@@ -983,7 +1045,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_EKONTO</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>300</sort_order>
             <de>
@@ -1018,83 +1080,9 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </config>
         <config>
-            <key>ACTIVATE_MPASS</key>
-            <type>dropdown</type>
-            <value>true</value>
-            <url>conf_truefalse</url>
-            <sort_order>310</sort_order>
-            <de>
-                <title>mpass aktivieren</title>
-            </de>
-            <en>
-                <title>Activate mpass</title>
-            </en>
-        </config>
-        <config>
-            <key>ORDER_MPASS</key>
-            <type>dropdown</type>
-            <value>20</value>
-            <url>wirecard_set_payment_order</url>
-            <de>
-                <title>Reihenfolge für mpass</title>
-            </de>
-            <en>
-                <title>Sortingorder for mpass</title>
-            </en>
-        </config>
-        <config>
-            <key>PERMISSION_MPASS</key>
-            <type>dropdown</type>
-            <value>0</value>
-            <url>customers_status</url>
-            <de>
-                <title>Kundengruppe für mpass</title>
-            </de>
-            <en>
-                <title>Customergroup for mpass</title>
-            </en>
-        </config>
-        <config>
-            <key>ACTIVATE_SKRILLDIRECT</key>
-            <type>dropdown</type>
-            <value>true</value>
-            <url>conf_truefalse</url>
-            <sort_order>320</sort_order>
-            <de>
-                <title>Skrill Direct aktivieren</title>
-            </de>
-            <en>
-                <title>Activate Skrill Direct</title>
-            </en>
-        </config>
-        <config>
-            <key>ORDER_SKRILLDIRECT</key>
-            <type>dropdown</type>
-            <value>21</value>
-            <url>wirecard_set_payment_order</url>
-            <de>
-                <title>Reihenfolge für Skrill Direct</title>
-            </de>
-            <en>
-                <title>Sortingorder for Skrill Direct</title>
-            </en>
-        </config>
-        <config>
-            <key>PERMISSION_SKRILLDIRECT</key>
-            <type>dropdown</type>
-            <value>0</value>
-            <url>customers_status</url>
-            <de>
-                <title>Kundengruppe für Skrill Direct</title>
-            </de>
-            <en>
-                <title>Customergroup for Skrill Direct</title>
-            </en>
-        </config>
-        <config>
             <key>ACTIVATE_SKRILLWALLET</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>330</sort_order>
             <de>
@@ -1131,7 +1119,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_TRUSTLY</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>310</sort_order>
             <de>
@@ -1168,7 +1156,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_EPAY_BG</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>310</sort_order>
             <de>
@@ -1205,7 +1193,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_TATRAPAY</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>310</sort_order>
             <de>
@@ -1242,7 +1230,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>ACTIVATE_VOUCHER</key>
             <type>dropdown</type>
-            <value>true</value>
+            <value>false</value>
             <url>conf_truefalse</url>
             <sort_order>310</sort_order>
             <de>
@@ -1279,7 +1267,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>INVOICE_MIN_AMOUNT</key>
             <type>textfield</type>
-            <value>0</value>
+            <value>10</value>
             <sort_order>320</sort_order>
             <de>
                 <title>Min. Bestellsumme für Rechnung</title>
@@ -1291,7 +1279,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>INVOICE_MAX_AMOUNT</key>
             <type>textfield</type>
-            <value>0</value>
+            <value>3500</value>
             <sort_order>330</sort_order>
             <de>
                 <title>Max. Bestellsumme für Rechnung</title>
@@ -1303,7 +1291,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>INSTALLMENT_MIN_AMOUNT</key>
             <type>textfield</type>
-            <value>0</value>
+            <value>150</value>
             <sort_order>340</sort_order>
             <de>
                 <title>Min. Bestellsumme für Ratenzahlung</title>
@@ -1315,7 +1303,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
         <config>
             <key>INSTALLMENT_MAX_AMOUNT</key>
             <type>textfield</type>
-            <value>0</value>
+            <value>3500</value>
             <sort_order>350</sort_order>
             <de>
                 <title>Max. Bestellsumme für Ratenzahlung</title>
@@ -1324,11 +1312,106 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
                 <title>Installment maximum amount</title>
             </en>
         </config>
-
+        <config>
+            <key>INVOICE_PROVIDER</key>
+            <type>dropdown</type>
+            <value>wirecard</value>
+            <url>wirecard_invoice_provider</url>
+            <sort_order>360</sort_order>
+            <de>
+                <title>Provider für Kauf auf Rechnung</title>
+            </de>
+            <en>
+                <title>Provider for Invoice</title>
+            </en>
+        </config>
+        <config>
+            <key>INSTALLMENT_PROVIDER</key>
+            <type>dropdown</type>
+            <value>ratepay</value>
+            <sort_order>370</sort_order>
+            <url>wirecard_installment_provider</url>
+            <de>
+                <title>Provider für Kauf auf Raten</title>
+            </de>
+            <en>
+                <title>Provider for Installment</title>
+            </en>
+        </config>
+        <config>
+            <key>PAYOLUTION_TERMS</key>
+            <type>dropdown</type>
+            <value>false</value>
+            <url>conf_truefalse</url>
+            <sort_order>380</sort_order>
+            <de><title>Payolution Nutzungsbedingungen</title></de>
+            <en><title>Payolution terms</title></en>
+        </config>
+        <config>
+            <key>PAYOLUTION_MID</key>
+            <type>textfield</type>
+            <sort_order>390</sort_order>
+            <de>
+                <title>Payolution mID</title>
+            </de>
+            <en>
+                <title>Payolution mID</title>
+            </en>
+        </config>
 
     </configuration_payment>
 
     <language_content>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYOLUTON_TERMS_ARE_REQUIRED</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA[Kunden m&uuml;ssen die Nutzungsbedingungen von payolution während des Bezahlprozesses akzeptieren.]]></value>
+            </de>
+            <en>
+                <value>Please accept the consent terms!</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INVOICE_INSTALLMENT_TOO_YOUNG</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA['Sie m&uuml;ssen 18 Jahre oder &auml;lter sein, um diese Zahlungsart verwenden zu d&uuml;rfen.]]></value>
+            </de>
+            <en>
+                <value>You have to be 18 years or older to use this payment.</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYOLUTON_TERMS</key>
+            <class>store</class>
+            <de>
+                <value><![CDATA[Mit der &Uuml;bermittlung jener Daten an payolution, die f&uuml;r die Abwicklung von Zahlungen mit Kauf auf Rechnung und die Identit&auml;ts- und Bonit&auml;tspr&uuml;fung erforderlich sind, bin ich einverstanden. Meine _Einwilligung_ kann ich jederzeit mit Wirkung f&uuml;r die Zukunft widerrufen.]]></value>
+            </de>
+            <en>
+                <value>I agree that the data which are necessary for the liquidation of invoice payments and which are used to complete the identity and credit check are transmitted to payolution. My _consent_ can be revoked at any time with future effect.</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BIRTHDATE</key>
+            <class>store</class>
+            <de>
+                <value>Geburtsdatum</value>
+            </de>
+            <en>
+                <value>Birthdate</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_FINANCIALINSTITUTION</key>
+            <class>store</class>
+            <de>
+                <value>Finanzinstitut</value>
+            </de>
+            <en>
+                <value>Financial institution</value>
+            </en>
+        </phrase>
         <phrase>
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SELECT</key>
             <class>store</class>
@@ -1393,10 +1476,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT</key>
             <class>store</class>
             <de>
-                <value>Lastschriftverfahren</value>
+                <value>SEPA Direct Debit</value>
             </de>
             <en>
-                <value>Direct Debit</value>
+                <value>SEPA Direct Debit</value>
             </en>
         </phrase>
         <phrase>
@@ -1454,17 +1537,17 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_BMC</key>
             <class>store</class>
             <de>
-                <value>Bancontact/Mister Cash</value>
+                <value>Bancontact</value>
             </de>
             <en>
-                <value>Bancontact/Mister Cash</value>
+                <value>Bancontact</value>
             </en>
         </phrase>
         <phrase>
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INVOICE</key>
             <class>store</class>
             <de>
-                <value>Rechnung</value>
+                <value>Kauf auf Rechnung</value>
             </de>
             <en>
                 <value>Invoice</value>
@@ -1474,7 +1557,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INSTALLMENT</key>
             <class>store</class>
             <de>
-                <value>Ratenzahlung</value>
+                <value>Kauf auf Raten</value>
             </de>
             <en>
                 <value>Installment</value>
@@ -1551,13 +1634,13 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             </en>
         </phrase>
         <phrase>
-            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SKRILLDIRECT</key>
+            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MASTERPASS</key>
             <class>store</class>
             <de>
-                <value>Skrill Direct</value>
+                <value>Masterpass</value>
             </de>
             <en>
-                <value>Skrill Direct</value>
+                <value>Masterpass</value>
             </en>
         </phrase>
         <phrase>
@@ -1609,11 +1692,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
                     <![CDATA[Ihre Bestellung ist eingegangen und wird umgehend bearbeitet. Sie haben zur Kontrolle eine Best&auml;tigungs-E-Mail mit den Bestelldaten bekommen!]]></value>
             </de>
             <en>
-                <value>Your order has been received and will be processed
-                    immediately. For your personal control you
-                    received an email with
-                    your order details!
-                </value>
+                <value>Your order has been received and will be processed immediately. For your personal control you received an email with your order details!</value>
             </en>
         </phrase>
         <phrase>
@@ -1634,10 +1713,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
                     <![CDATA[Wir danken Ihnen f&uuml;r Ihren Online-Einkauf, wir werden Ihre Bestellung versenden, sobald wir die Zahlungsbestätigung von Ihrer Bank erhalten haben!]]></value>
             </de>
             <en>
-                <value>Thank you for your purchase, your order will be shipped as
-                    soon as we get the payment
-                    confirmation from your bank!
-                </value>
+                <value>Thank you for your purchase, your order will be shipped as soon as we get the payment confirmation from your bank!</value>
             </en>
         </phrase>
 
@@ -1670,9 +1746,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
 
             </de>
             <en>
-                <value>Please ensure to use this transfer code as payment details
-                    for your transfer
-                </value>
+                <value>Please ensure to use this transfer code as payment details for your transfer</value>
             </en>
         </phrase>
         <phrase>
@@ -1693,9 +1767,7 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
                     <![CDATA[Bitte &uuml;berweisen Sie den Betrag f&uuml;r die Bestellung auf folgendes Konto]]></value>
             </de>
             <en>
-                <value>Please transfer the amount of the order to the following
-                    account
-                </value>
+                <value>Please transfer the amount of the order to the following account</value>
             </en>
         </phrase>
         <phrase>
@@ -1712,16 +1784,10 @@ define('PAGE_WIRECARD_CHECKOUT_PAGE_CHECKOUT', _SRV_WEB_PLUGINS.'wirecard_checko
             <key>TEXT_PAGE_TITLE_WIRECARD_CHECKOUT_PAGE_CHECKOUT_CANCEL_DESC</key>
             <class>store</class>
             <de>
-                <value>Leider wurde der Zahlungsvorgang abgebrochen. Bei Fragen zu
-                    Ihrer Bestellung, wenden Sie sich
-                    bitte an den Shop-Betreiber.
-                </value>
+                <value>Leider wurde der Zahlungsvorgang abgebrochen. Bei Fragen zu Ihrer Bestellung, wenden Sie sich bitte an den Shop-Betreiber.</value>
             </de>
             <en>
-                <value>Regrettably the payment transaction was canceled. Please
-                    contact the shop owner for questions
-                    about your order.
-                </value>
+                <value>Regrettably the payment transaction was canceled. Please contact the shop owner for questions about your order.</value>
             </en>
         </phrase>
         <phrase>

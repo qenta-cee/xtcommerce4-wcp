@@ -38,6 +38,14 @@ if ($tpl_data['payment_code'] == 'wirecard_checkout_page') {
     $tpl_data['plugin'] = new wirecard_checkout_page();
 }
 
+$consent_message = preg_replace_callback("/_(.*)_/", function ($matches) {
+    if (strlen(WIRECARD_CHECKOUT_PAGE_PAYOLUTION_MID)) {
+        return "<a style='color:white;mix-blend-mode:difference;' href='https://payment.payolution.com/payolution-payment/infoport/dataprivacyconsent?mId=" . base64_encode(WIRECARD_CHECKOUT_PAGE_PAYOLUTION_MID) . "' target='_blank'>$matches[1]</a>";
+    } else {
+        return $matches[1];
+    }
+}, TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_PAYOLUTON_TERMS);
+
 $wcp_payments = array(
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_SELECT',
@@ -54,6 +62,14 @@ $wcp_payments = array(
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_CCARD,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_CCARD,
         'img' => 'cc'
+    ),
+    array(
+        'name' => 'WIRECARD_CHECKOUT_PAGE_MASTERPASS',
+        'active' => WIRECARD_CHECKOUT_PAGE_ACTIVATE_MASTERPASS,
+        'order' => WIRECARD_CHECKOUT_PAGE_ORDER_MASTERPASS,
+        'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_MASTERPASS,
+        'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MASTERPASS,
+        'img' => 'masterpass'
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_MAESTRO',
@@ -85,7 +101,8 @@ $wcp_payments = array(
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_EPS_ONLINETRANSACTION,
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_EPS_ONLINETRANSACTION,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION,
-        'img' => 'eps'
+        'img' => 'eps',
+        'extra_fields' => true
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT',
@@ -109,7 +126,8 @@ $wcp_payments = array(
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_IDEAL,
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_IDEAL,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_IDEAL,
-        'img' => 'ideal'
+        'img' => 'ideal',
+        'extra_fields' => true
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_GIROPAY',
@@ -149,7 +167,11 @@ $wcp_payments = array(
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_INVOICE,
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_INVOICE,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INVOICE,
-        'img' => 'invoice'
+        'img' => 'invoice',
+        'extra_fields' => true,
+        'payolution_terms' => WIRECARD_CHECKOUT_PAGE_PAYOLUTION_TERMS === "true" && WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'payolution',
+        'consent_message' => $consent_message,
+        'birthdate' => $_SESSION['customer']->customer_payment_address['customers_age'] < 18
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_INSTALLMENT',
@@ -157,7 +179,11 @@ $wcp_payments = array(
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_INSTALLMENT,
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_INSTALLMENT,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_INSTALLMENT,
-        'img' => 'installment'
+        'img' => 'installment',
+        'extra_fields' => true,
+        'payolution_terms' => WIRECARD_CHECKOUT_PAGE_PAYOLUTION_TERMS === "true" && WIRECARD_CHECKOUT_PAGE_INSTALLMENT_PROVIDER == 'payolution',
+        'consent_message' => $consent_message,
+        'birthdate' => $_SESSION['customer']->customer_payment_address['customers_age'] < 18
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_P24',
@@ -190,22 +216,6 @@ $wcp_payments = array(
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_EKONTO,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_EKONTO,
         'img' => 'ekonto'
-    ),
-    array(
-        'name' => 'WIRECARD_CHECKOUT_PAGE_MPASS',
-        'active' => WIRECARD_CHECKOUT_PAGE_ACTIVATE_MPASS,
-        'order' => WIRECARD_CHECKOUT_PAGE_ORDER_MPASS,
-        'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_MPASS,
-        'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_MPASS,
-        'img' => 'mpass'
-    ),
-    array(
-        'name' => 'WIRECARD_CHECKOUT_PAGE_SKRILLDIRECT',
-        'active' => WIRECARD_CHECKOUT_PAGE_ACTIVATE_SKRILLDIRECT,
-        'order' => WIRECARD_CHECKOUT_PAGE_ORDER_SKRILLDIRECT,
-        'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_SKRILLDIRECT,
-        'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SKRILLDIRECT,
-        'img' => 'skrilldirect'
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_SKRILLWALLET',
