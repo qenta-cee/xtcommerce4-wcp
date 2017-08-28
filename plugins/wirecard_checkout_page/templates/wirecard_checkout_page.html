@@ -35,6 +35,9 @@
 <h4>No WirecardCheckoutPage paymenttype activated</h4>
 {/capture}
 
+{if $ratepay}
+    {$ratepay}
+{/if}
 
 {if $plugin->getMajorVersion() > 4}
     {capture name="paymenttypes"}
