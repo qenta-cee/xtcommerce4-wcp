@@ -57,7 +57,7 @@ class wirecard_checkout_page
     var $initPort = '443';
     var $initParams = array();
 
-    var $version = '1.6.0';
+    var $version = '1.6.1';
 
     var $paymentTypes = array(
         'WIRECARD_CHECKOUT_PAGE_SELECT' => 'SELECT',
@@ -365,6 +365,11 @@ class wirecard_checkout_page
             ->setPluginVersion($this->_getPluginVersion())
             ->createConsumerMerchantCrmId($_SESSION['customer']->customer_info['customers_email_address'])
             ->setCustomerStatement(sprintf('%s: %s',_STORE_NAME, $order->oID));
+
+        if(isset($_SESSION['wcp-consumerDeviceId'])){
+        	$init->consumerDeviceId = $_SESSION['wcp-consumerDeviceId'];
+        	unset($_SESSION['wcp-consumerDeviceId']);
+        }
 
         if(isset($_SESSION['financialInstitution'])){
             $init->setFinancialInstitution($_SESSION['financialInstitution']);
