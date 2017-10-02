@@ -790,10 +790,10 @@
             <url>conf_truefalse</url>
             <sort_order>220</sort_order>
             <de>
-                <title>SOFORT Überweisung (PIN/TAN) aktivieren</title>
+                <title>Sofort. aktivieren</title>
             </de>
             <en>
-                <title>Activate SOFORT Banking (PIN/TAN)</title>
+                <title>Activate Online bank transfer.</title>
             </en>
         </config>
         <config>
@@ -802,10 +802,10 @@
             <value>12</value>
             <url>wirecard_set_payment_order</url>
             <de>
-                <title>Reihenfolge für SOFORT Überweisung</title>
+                <title>Reihenfolge für Sofort.</title>
             </de>
             <en>
-                <title>Sortingorder for SOFORT Banking</title>
+                <title>Sortingorder for Online bank transfer.</title>
             </en>
         </config>
         <config>
@@ -814,10 +814,10 @@
             <value>0</value>
             <url>customers_status</url>
             <de>
-                <title>Kundengruppe für SOFORT Überweisung</title>
+                <title>Kundengruppe für Sofort.</title>
             </de>
             <en>
-                <title>Customergroup for SOFORT Banking</title>
+                <title>Customergroup for Online bank transfer.</title>
             </en>
         </config>
         <config>
@@ -1526,10 +1526,10 @@
             <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SOFORTUEBERWEISUNG</key>
             <class>store</class>
             <de>
-                <value>SOFORT Überweisung (PIN/TAN)</value>
+                <value>Sofort.</value>
             </de>
             <en>
-                <value>SOFORT Banking (PIN/TAN)</value>
+                <value>Online bank transfer.</value>
             </en>
         </phrase>
 
