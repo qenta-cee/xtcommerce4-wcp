@@ -153,7 +153,7 @@ $wcp_payments = array(
         'order' => WIRECARD_CHECKOUT_PAGE_ORDER_SOFORTUEBERWEISUNG,
         'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_SOFORTUEBERWEISUNG,
         'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_SOFORTUEBERWEISUNG,
-        'img' => 'sofortbanking-de'
+        'img' => 'sofortbanking'
     ),
     array(
         'name' => 'WIRECARD_CHECKOUT_PAGE_BMC',
