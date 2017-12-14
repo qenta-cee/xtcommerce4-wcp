@@ -2,7 +2,7 @@
 <xtcommerceplugin>
     <title>Wirecard Checkout Page</title>
     <type>payment</type>
-    <version>1.6.3</version>
+    <version>1.6.4</version>
     <code>wirecard_checkout_page</code>
     <url>http://www.wirecard.at</url>
     <description>Zahlungsmodul Wirecard CEE</description>
