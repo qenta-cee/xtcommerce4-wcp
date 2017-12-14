@@ -95,7 +95,8 @@ class wirecard_checkout_page
     function __construct()
     {
         global $xtLink;
-        if (WIRECARD_CHECKOUT_PAGE_USE_IFRAME == 'true') {
+        if (WIRECARD_CHECKOUT_PAGE_USE_IFRAME == 'true' &&
+            $_SESSION['selected_payment_sub'] != 'WIRECARD_CHECKOUT_PAGE_SOFORTUEBERWEISUNG') {
             $this->external = false;
             $this->iframe = true;
             $this->IFRAME_URL = $xtLink->_link(array('page' => 'checkout', 'paction' => 'pay_frame', 'conn' => 'SSL'));
