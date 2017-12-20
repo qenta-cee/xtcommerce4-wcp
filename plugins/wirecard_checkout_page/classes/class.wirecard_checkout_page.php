@@ -57,7 +57,7 @@ class wirecard_checkout_page
     var $initPort = '443';
     var $initParams = array();
 
-    var $version = '1.6.3';
+    var $version = '1.6.4';
 
     var $paymentTypes = array(
         'WIRECARD_CHECKOUT_PAGE_SELECT' => 'SELECT',
@@ -68,7 +68,6 @@ class wirecard_checkout_page
         'WIRECARD_CHECKOUT_PAGE_PAYSAFECARD' => WirecardCEE_QPay_PaymentType::PSC,
         'WIRECARD_CHECKOUT_PAGE_EPS_ONLINETRANSACTION' => WirecardCEE_QPay_PaymentType::EPS,
         'WIRECARD_CHECKOUT_PAGE_DIRECT_DEBIT' => WirecardCEE_QPay_PaymentType::SEPADD,
-        'WIRECARD_CHECKOUT_PAGE_QUICK' => WirecardCEE_QPay_PaymentType::QUICK,
         'WIRECARD_CHECKOUT_PAGE_IDEAL' => WirecardCEE_QPay_PaymentType::IDL,
         'WIRECARD_CHECKOUT_PAGE_GIROPAY' => WirecardCEE_QPay_PaymentType::GIROPAY,
         'WIRECARD_CHECKOUT_PAGE_PAYPAL' => WirecardCEE_QPay_PaymentType::PAYPAL,
@@ -96,7 +95,8 @@ class wirecard_checkout_page
     function __construct()
     {
         global $xtLink;
-        if (WIRECARD_CHECKOUT_PAGE_USE_IFRAME == 'true') {
+        if (WIRECARD_CHECKOUT_PAGE_USE_IFRAME == 'true' &&
+            $_SESSION['selected_payment_sub'] != 'WIRECARD_CHECKOUT_PAGE_SOFORTUEBERWEISUNG') {
             $this->external = false;
             $this->iframe = true;
             $this->IFRAME_URL = $xtLink->_link(array('page' => 'checkout', 'paction' => 'pay_frame', 'conn' => 'SSL'));

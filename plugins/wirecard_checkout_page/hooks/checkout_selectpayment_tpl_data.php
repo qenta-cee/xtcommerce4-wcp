@@ -113,14 +113,6 @@ if ($tpl_data['payment_code'] == 'wirecard_checkout_page') {
             'img' => 'sepadd'
         ),
         array(
-            'name' => 'WIRECARD_CHECKOUT_PAGE_QUICK',
-            'active' => WIRECARD_CHECKOUT_PAGE_ACTIVATE_QUICK,
-            'order' => WIRECARD_CHECKOUT_PAGE_ORDER_QUICK,
-            'group' => WIRECARD_CHECKOUT_PAGE_PERMISSION_QUICK,
-            'text' => TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_QUICK,
-            'img' => 'quick'
-        ),
-        array(
             'name' => 'WIRECARD_CHECKOUT_PAGE_IDEAL',
             'active' => WIRECARD_CHECKOUT_PAGE_ACTIVATE_IDEAL,
             'order' => WIRECARD_CHECKOUT_PAGE_ORDER_IDEAL,

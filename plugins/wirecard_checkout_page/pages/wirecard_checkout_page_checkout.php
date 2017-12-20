@@ -91,7 +91,7 @@ if ($page->page_action == 'confirm') {
     $ok = $db->AutoExecute(
         TABLE_WIRECARD_CHECKOUT_PAGE_TRANSACTION,
         Array(
-            'ORDERNUMBER' => $return->getOrderNumber(),
+            'ORDERNUMBER' => $return->last_order_id,
             'ORDERDESCRIPTION' => $return->order_desc,
             'STATE' => $return->getPaymentState(),
             'MESSAGE' => $message,

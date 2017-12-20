@@ -2,7 +2,7 @@
 <xtcommerceplugin>
     <title>Wirecard Checkout Page</title>
     <type>payment</type>
-    <version>1.6.3</version>
+    <version>1.6.4</version>
     <code>wirecard_checkout_page</code>
     <url>http://www.wirecard.at</url>
     <description>Zahlungsmodul Wirecard CEE</description>
@@ -633,43 +633,6 @@
             </de>
             <en>
                 <title>Customergroup for SEPA Direct Debit</title>
-            </en>
-        </config>
-        <config>
-            <key>ACTIVATE_QUICK</key>
-            <type>dropdown</type>
-            <value>false</value>
-            <url>conf_truefalse</url>
-            <sort_order>180</sort_order>
-            <de>
-                <title>@Quick aktivieren</title>
-            </de>
-            <en>
-                <title>Activate @Quick</title>
-            </en>
-        </config>
-        <config>
-            <key>ORDER_QUICK</key>
-            <type>dropdown</type>
-            <value>8</value>
-            <url>wirecard_set_payment_order</url>
-            <de>
-                <title>Reihenfolge für @Quick</title>
-            </de>
-            <en>
-                <title>Sortingorder for @Quick</title>
-            </en>
-        </config>
-        <config>
-            <key>PERMISSION_QUICK</key>
-            <type>dropdown</type>
-            <value>0</value>
-            <url>customers_status</url>
-            <de>
-                <title>Kundengruppe für @Quick</title>
-            </de>
-            <en>
-                <title>Customergroup for @Quick</title>
             </en>
         </config>
         <config>
@@ -1480,16 +1443,6 @@
             </de>
             <en>
                 <value>SEPA Direct Debit</value>
-            </en>
-        </phrase>
-        <phrase>
-            <key>TEXT_PAYMENT_WIRECARD_CHECKOUT_PAGE_QUICK</key>
-            <class>store</class>
-            <de>
-                <value>@Quick</value>
-            </de>
-            <en>
-                <value>@Quick</value>
             </en>
         </phrase>
         <phrase>
