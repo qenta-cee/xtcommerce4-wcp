@@ -36,13 +36,13 @@
 
 defined('_VALID_CALL') or die('Direct Access is not allowed.');
 if ($request['get'] == 'wirecard_set_payment_order') {
-    if (!isset($result)) $result = array();
+    $result = array();
     for($order = 1; $order < 30; $order++) {
         $result[] = array('id' => $order, 'name' => $order);
     }
 }
 if ($request['get'] == 'wirecard_set_plugin_configuration') {
-    if (isset($result)) $result = array(
+    $result = array(
         array('id' => 'demo', 'name' => 'Demo'),
         array('id' => 'test', 'name' => 'Test'),
         array('id' => 'test3d', 'name' => 'Test 3D'),
@@ -50,13 +50,13 @@ if ($request['get'] == 'wirecard_set_plugin_configuration') {
     );
 }
 if ($request['get'] == 'wirecard_installment_provider') {
-    if (isset($result)) $result = array(
+    $result = array(
         array('id' => 'ratepay', 'name' => 'RatePay'),
         array('id' => 'payolution', 'name' => 'Payolution')
     );
 }
 if ($request['get'] == 'wirecard_invoice_provider') {
-    if (isset($result)) $result = array(
+    $result = array(
         array('id' => 'wirecard', 'name' => 'Wirecard'),
         array('id' => 'ratepay', 'name' => 'RatePay'),
         array('id' => 'payolution', 'name' => 'Payolution')
