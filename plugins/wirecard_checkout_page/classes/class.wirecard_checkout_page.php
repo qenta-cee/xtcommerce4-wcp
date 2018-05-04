@@ -332,7 +332,7 @@ class wirecard_checkout_page
         $init = new WirecardCEE_QPay_FrontendClient($this->getConfigArray());
         $init->trid = $this->_transaction_id;
 
-        $init->setAmount(number_format($order->order_total['total']['plain'],2))
+        $init->setAmount(number_format($order->order_total['total']['plain'], 2, '.', ''))
             ->setCurrency($order_data ['currency_code'])
             ->setPaymentType((isset ($payment_type) && !empty ($payment_type)) ? $payment_type : "SELECT")
             ->setSuccessUrl($this->_link(array(
