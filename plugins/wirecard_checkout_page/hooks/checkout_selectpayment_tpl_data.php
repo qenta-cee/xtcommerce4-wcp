@@ -256,9 +256,18 @@ if ($tpl_data['payment_code'] == 'wirecard_checkout_page') {
     $customer_info = $customer->customer_info;
     //get customergroup of current customer
     $customer_status = $customer_info['customers_status'];
+    $is_allowed = new wirecard_checkout_page();
+    $installment_is_allowed = $is_allowed->isInstallmentAllowed();
+    $invoice_is_allowed = $is_allowed->isInvoiceAllowed();
 
     //sort paymenttypes for view
-    foreach ($wcp_payments as $key => $row) {
+    foreach ($wcp_payments as $key => &$row) {
+        if (($invoice_is_allowed == false) && ($row['name'] == 'WIRECARD_CHECKOUT_PAGE_INVOICE')) {
+            $row['active'] = 'false';
+        }
+        if (($installment_is_allowed == false) && ($row['name'] == 'WIRECARD_CHECKOUT_PAGE_INSTALLMENT')) {
+            $row['active'] = 'false';
+        }
         if ($row['group'] == 0 || $row['group'] == $customer_status) {
             $order[$key] = $row['order'];
             $name[$key] = $row['text'];
