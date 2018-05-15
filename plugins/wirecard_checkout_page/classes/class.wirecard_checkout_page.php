@@ -57,7 +57,7 @@ class wirecard_checkout_page
     var $initPort = '443';
     var $initParams = array();
 
-    var $version = '1.6.5';
+    var $version = '1.6.6';
 
     var $paymentTypes = array(
         'WIRECARD_CHECKOUT_PAGE_SELECT' => 'SELECT',
@@ -464,24 +464,16 @@ class wirecard_checkout_page
             ->setIpAddress($this->getConsumerIpAddress());
 
         if (WIRECARD_CHECKOUT_PAGE_SEND_BILLING_DATA == 'true'
-            || ($payment_type == 'INSTALLMENT' && (WIRECARD_CHECKOUT_PAGE_INSTALLMENT_PROVIDER == 'ratepay'))
-            || ($payment_type == 'INVOICE' && (
-                    WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'ratepay'
-                    || WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'wirecard'
-                )
-            )
+            || ($payment_type == 'INSTALLMENT')
+            || ($payment_type == 'INVOICE')
             || $payment_type == 'TRUSTLY'
             || $payment_type == 'SKRILLWALLET'
         ) {
             $consumer_data->addAddressInformation($billing_address);
         }
         if (WIRECARD_CHECKOUT_PAGE_SEND_SHIPPING_DATA == 'true'
-            || ($payment_type == 'INSTALLMENT' && (WIRECARD_CHECKOUT_PAGE_INSTALLMENT_PROVIDER == 'ratepay'))
-            || ($payment_type == 'INVOICE' && (
-                    WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'ratepay'
-                    || WIRECARD_CHECKOUT_PAGE_INVOICE_PROVIDER == 'wirecard'
-                )
-            )) {
+            || ($payment_type == 'INSTALLMENT')
+            || ($payment_type == 'INVOICE')) {
             $consumer_data->addAddressInformation($shipping_address);
         }
 
