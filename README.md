@@ -2,9 +2,11 @@
 
 [![License](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/wirecard/xtcommerce4-wcp/master/LICENSE)
 [![xt:Commerce 4](https://img.shields.io/badge/xt:Commerce-v4.2-green.svg)](http://www.xt-commerce.com/)
-[![xt:Commerce 5](https://img.shields.io/badge/xt:Commerce-v5.0.08-green.svg)](http://www.xt-commerce.com/)
+[![xt:Commerce 5.0](https://img.shields.io/badge/xt:Commerce-v5.0.08-green.svg)](http://www.xt-commerce.com/)
+[![xt:Commerce 5.1](https://img.shields.io/badge/xt:Commerce-v5.1.3-green.svg)](http://www.xt-commerce.com/)
 [![PHP v5.6](https://img.shields.io/badge/php-v5.6-yellow.svg)](http://www.php.net)
 [![PHP v7.0](https://img.shields.io/badge/php-v7.0-yellow.svg)](http://www.php.net)
+[![PHP v7.1](https://img.shields.io/badge/php-v7.1-yellow.svg)](http://www.php.net)
 
 Wirecard Checkout Page plugin for xt:Commerce 4 and xt:Commerce 5. 
 
