@@ -8,6 +8,14 @@
 [![PHP v7.0](https://img.shields.io/badge/php-v7.0-yellow.svg)](http://www.php.net)
 [![PHP v7.1](https://img.shields.io/badge/php-v7.1-yellow.svg)](http://www.php.net)
 
+----
+**IMPORTANT INFORMATION**  
+You are visiting a shop extension which will become obsolete in the near future and will not be continued.  
+Please take a look at [our online documentation](https://doc.wirecard.com), which describes in more detail how to integrate the Wirecard Payment Gateway into your online shop.  
+If you have any questions, please contact shop-systems-support@wirecard.com  
+
+----
+
 Wirecard Checkout Page plugin for xt:Commerce 4 and xt:Commerce 5. 
 
 Our [Online Guides](https://guides.wirecard.at/) provide further information on payment methods and additional features. Please observe our [terms of use](https://guides.wirecard.at/shop_plugins:info#terms_of_use) regarding plugins.
